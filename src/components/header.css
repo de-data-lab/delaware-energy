@@ -1,0 +1,67 @@
+.header {
+    background-color: var(--navy);
+    color: var(--white);
+    padding: var(--padding-md) var(--padding-lg);
+}
+ 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-title {
+    font-size: var(--font-size-lg);
+    font-weight: 400;
+}
+
+.header-tab-bar {
+    display: flex;
+    align-items: center;
+}
+
+.header-toggle-label {
+    padding: 0 .5rem;
+    font-size: var(--font-size-md);
+}
+
+.form-switch {
+    padding-left: 3.15em;
+}
+
+/* input[type="checkbox"].toggle {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    left: -9000px;
+    top: -9000px;
+}
+
+input[type="checkbox"].toggle:checked + label {
+    color: red;
+} */
+
+/* 
+.header-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50%;
+    padding: var(--padding-md);
+    background-color: var(--light-navy);
+    color: var(--white);
+    border: 0;
+    border-left: 1px solid var(--navy);
+    border-right: 1px solid var(--navy);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+} */
+
+/* .header-tab:hover {
+    background-color: var(--dark-navy);
+    transition: .3s ease-out;
+} */

@@ -1,0 +1,15 @@
+.footer {
+    background-color: var(--white);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    row-gap: var(--padding-xs);
+    column-gap: var(--padding-xl);
+    padding: var(--padding-xs);
+    border: .5px solid var(--grey);
+}
+
+.footer-logo {
+    width: 12rem;
+}

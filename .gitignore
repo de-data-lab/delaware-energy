@@ -260,4 +260,4 @@ CensusAPIKey.txt
 .Rhistory
 
 # ignore the folder containing data
-data
+# data

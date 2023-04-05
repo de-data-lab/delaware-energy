@@ -6,7 +6,7 @@ import senateData from './data/aggregated_senate_new.json';
 import { Map } from './components/Map';
 import { MapContainer } from './components/MapContainer';
 import { Footer } from './components/Footer';
-import Header from './components/header';
+import Header from './components/Header';
 import { DropdownMenu } from './components/DropdownMenu';
 
 

@@ -32,7 +32,7 @@
 }
 
 .content-container {
-    padding: var(--padding-sm) var(--padding-lg);
+    padding: var(--padding-sm) var(--padding-sm);
 }
 
 .photo {
@@ -48,13 +48,26 @@
       font-weight: 400;
   }
 
+  .sumPopup-container {
+    /* position: relative; */
+    /* margin: 0rem 0 1rem; */
+    display: flex;
+    flex-direction: column;
+  }
+
   /* Table styles on sumPopup */
   table {
     width: 100%;
   }
 
-  td {
-    width: 50%;
+  th {
+    padding-bottom: .25rem;
+    font-size: var(--font-size-xxs);
+  }
+
+  /* td */
+  .district-number {
+    width: 40%;
   }
 
   .table-data, .total {
@@ -68,9 +81,19 @@
   }
 
   .button {
-    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: .5rem;
-    margin: 1rem 0;
+    border-radius: 0 0 10px 10px;
+    border: none;
+    background-color: var(--navy);
+    color: var(--white);
+  }
+
+  .button-text {
+    font-size: var(--font-size-xxs);
+    padding: 0 .5rem;
   }
 
   @media only screen and (max-width: 450px)  {

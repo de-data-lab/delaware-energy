@@ -1,6 +1,6 @@
 #mapDiv {
-    height: 100%;
-    width: 100%; 
+  height: 100%;
+  width: 100%;
 }
 
 .mapboxgl-popup {
@@ -22,16 +22,16 @@
   background-size: 80%;
 }
 
-/* Mapboxgl-legend overrides */ 
+/* Mapboxgl-legend overrides */
 
 :root {
   --map-legend-minwidth: 30vw !important;
   /* --map-legend-maxwidth: 25vw !important; */
-  --map-legend-background: rgba(255,255,255,.95) !important;
-  --map-legend-font: var(--font-size-md) var(--primary-font) !important; 
-  --map-legend-radius: var(--border-sm) !important; 
+  --map-legend-background: rgba(255, 255, 255, 0.95) !important;
+  --map-legend-font: var(--font-size-md) var(--primary-font) !important;
+  --map-legend-radius: var(--border-sm) !important;
   --map-legend-shadow: var(--box-shadow) !important;
-  --map-legend-title-size: var(--font-size-xs) !important; 
+  --map-legend-title-size: var(--font-size-xs) !important;
 }
 
 .mapboxgl-ctrl-legend {
@@ -40,6 +40,17 @@
 }
 
 .mapboxgl-ctrl-legend summary {
-  text-transform: none !important; 
-  color: var(--navy) !important; 
+  text-transform: none !important;
+  color: var(--navy) !important;
+}
+
+@media only screen and (max-width: 1000px) {
+  :root {
+    --map-legend-minwidth: 18rem !important;
+  }
+
+  .mapboxgl-ctrl-legend {
+    margin: 0 var(--margin-sm) !important;
+    padding: 0;
+  }
 }

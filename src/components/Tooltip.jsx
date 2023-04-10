@@ -29,11 +29,11 @@ export const Tooltip = ({feature, variable, fundingSource}) => {
             <>
                 {/* <div className="content-container"> */}
                     <label>Senator:</label>
-                    <h3>{senatorName}</h3>        
+                    <h3 className="info-text">{senatorName}</h3>        
                     <label>District:</label>
-                    <h3>{districtName}</h3>        
+                    <h3 className="info-text">{districtName}</h3>        
                     <label>{variableName}:</label>
-                    <h3>{variableValue}</h3> 
+                    <h3 className="info-text">{variableValue}</h3> 
                 {/* </div> */}
             </>
     )

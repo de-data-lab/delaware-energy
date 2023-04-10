@@ -28,14 +28,14 @@ export const PointInfo = ({feature, variable, fundingSource}) => {
                 <h3 className="dropdown-header">{projectName}</h3>
                 <img src={photo} className="photo"></img>
                 <div className="content-container">
-                    <label>Address:</label>
-                    <h3>{address}</h3>        
-                    <label>Developer's Fees:</label>
-                    <h3>{developerFees}%</h3>        
-                    <label>Type of Property:</label>
-                    <h3>{propertyType}</h3>        
-                    <label>{variableName}:</label>
-                    <h3>{variableValue}</h3> 
+                    <label><strong>Address:</strong></label>
+                    <h3 className="info-text">{address}</h3>        
+                    <label><strong>Developer's Fees:</strong></label>
+                    <h3 className="info-text">{developerFees}%</h3>        
+                    <label><strong>Type of Property:</strong></label>
+                    <h3 className="info-text">{propertyType}</h3>        
+                    <label><strong>{variableName}:</strong></label>
+                    <h3 className="info-text">{variableValue}</h3> 
                 </div>
             </div>
     )

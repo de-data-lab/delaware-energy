@@ -45,7 +45,7 @@
     font-size: var(--font-size-md);
     background-color: var(--navy);
     color: var(--white);
-    padding: var(--padding-md);
+    padding: var(--padding-sm);
     border-radius: var(--border-sm) var(--border-sm) 0 0;
     text-align: center;
   }

@@ -16,6 +16,7 @@ import LegendControl from "mapboxgl-legend";
 import { PointInfo } from "./PointInfo";
 import { SumPopup } from "./SumPopup";
 import { Tooltip } from "./Tooltip";
+// import {onHover, offHover} from "../utils/onHover";
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 
@@ -46,36 +47,32 @@ export const Map = ({ lng, lat, zoom }) => {
     })
   );
 
-// Creates popup for Tooltip
-const tooltipRef = useRef(
-  new mapboxgl.Popup({
-    className: "tooltip",
-    closeButton: false,
-    closeOnClick: false,
-    anchor: "top-left",
-    offset: [5, 20],
-  })
-);
-const tooltipDiv = document.createElement("div");
-const tooltip = ReactDOM.createRoot(tooltipDiv);
-  
+  // Creates popup for Tooltip
+  const tooltipRef = useRef(
+    new mapboxgl.Popup({
+      className: "map-tooltip",
+      closeButton: false,
+      closeOnClick: false,
+      anchor: "top-left",
+      offset: [5, 20],
+    })
+  );
+  const tooltipDiv = document.createElement("div");
+  const tooltip = ReactDOM.createRoot(tooltipDiv);
 
   // Adds map layers
   const addMapLayers = () => {
     // ids for feature-states
     let hoverId = null;
     let clickId = null;
-    let clickedPointId = null;
-    const array = [];
+    let array = [];
 
-    // let sumArray = [];
-
-    let numberFormatter = mapData.features.map((tract) => tract.properties[variable])
+    let numberFormatter = mapData.features.map(
+      (tract) => tract.properties[variable]
+    );
 
     // Color way for choropleth
-    let stops = colorPalette(
-      numberFormatter
-    );
+    let stops = colorPalette(numberFormatter);
 
     const colorArray = [
       "interpolate",
@@ -105,7 +102,7 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
         ],
       },
       metadata: {
-        name: mapInfo[fundingSource].columns[variable]
+        name: mapInfo[fundingSource].columns[variable],
       },
     });
 
@@ -123,7 +120,7 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
           4,
           ["boolean", ["feature-state", "click"], false],
           4,
-          1
+          1,
         ],
         "line-opacity": [
           "case",
@@ -136,57 +133,59 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
       },
     });
 
-    // Hover functionality for districts
-   const onHover = (e) => {
-    map.current.getCanvas().style.cursor = "pointer";
-
-    // new polygon hovered, previous one turned to false
-    if (hoverId !== null) {
-      map.current.setFeatureState(
-        { source: "delaware", id: hoverId },
-        { hover: false }
-      );
-    }
-
-    // new polygon hovered
-    hoverId = e.features[0].id;
-
-    // new polygon hovered turned to true
-    map.current.setFeatureState(
-      { source: "delaware", id: hoverId },
-      { hover: true }
-    );
-
-    // Making tooltip appear on map
-
-    const features = map.current.queryRenderedFeatures(e.point, {
-      layers: ["fill"],
-    });
-
-    if (features.length > 0) {
-      const feature = features[0];
-
-      // create tooltip for hovering on districts
-      tooltip.render(
-        <Tooltip
-          feature={feature}
-          variable={variable}
-          fundingSource={fundingSource}
-        />
-      );
-
-      // add popup to map
-      tooltipRef.current
-        .setLngLat(e.lngLat)
-        .setDOMContent(tooltipDiv)
-        .addTo(map.current);
-    }
-    }
     // Hover on
-    map.current.on("mousemove", "fill", e => onHover(e));
+    map.current.on("mousemove", "fill", (e) => onHover(e));
 
     // Hover off
-    map.current.on("mouseleave", "fill", (e) => {
+    map.current.on("mouseleave", "fill", (e) => offHover());
+
+    function onHover(e) {
+      map.current.getCanvas().style.cursor = "pointer";
+
+      // new polygon hovered, previous one turned to false
+      if (hoverId !== null) {
+        map.current.setFeatureState(
+          { source: "delaware", id: hoverId },
+          { hover: false }
+        );
+      }
+
+      // new polygon hovered
+      hoverId = e.features[0].id;
+
+      // new polygon hovered turned to true
+      map.current.setFeatureState(
+        { source: "delaware", id: hoverId },
+        { hover: true }
+      );
+
+      // Making tooltip appear on map
+
+      const features = map.current.queryRenderedFeatures(e.point, {
+        layers: ["fill"],
+      });
+
+      if (features.length > 0) {
+        const feature = features[0];
+
+        // create tooltip for hovering on districts
+        tooltip.render(
+          <Tooltip
+            feature={feature}
+            variable={variable}
+            fundingSource={fundingSource}
+          />
+        );
+
+        // add popup to map
+        tooltipRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(tooltipDiv)
+          .addTo(map.current);
+      }
+    }
+
+    function offHover() {
       map.current.getCanvas().style.cursor = "";
 
       if (hoverId !== null) {
@@ -198,93 +197,6 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
 
       hoverId = null;
       tooltipRef.current.remove();
-    });
-
-    
-
-    // if show buildings button is toggled, add point layer, and popups
-    if (building === true) {
-      map.current.addLayer({
-        id: "properties",
-        type: "circle",
-        source: "points",
-        paint: {
-          "circle-color": [
-            "case",
-            ["boolean", ["feature-state", "clicked"], false],
-            "#1878dd",
-            "#000000",
-          ],
-          "circle-radius": 5,
-        },
-      });
-
-          // Remove fill and outline layer when properties on
-        map.current.removeLayer("fill");
-        map.current.removeLayer("outline");
-        // Remove sumPopup when properties on
-        sumRef.current.remove();
-
-
-      // Pop-up functionality for point info
-
-      // Change the cursor to a pointer when the mouse is over the points layer.
-      map.current.on("mouseenter", "properties", () => {
-        map.current.getCanvas().style.cursor = "pointer";
-      });
-
-      // Change it back to a pointer when it leaves.
-      map.current.on("mouseleave", "properties", () => {
-        map.current.getCanvas().style.cursor = "";
-      });
-
-      // Displays pop-up on click of point
-      map.current.on("click", "properties", (e) => {
-        const features = map.current.queryRenderedFeatures(e.point, {
-          layers: ["properties"],
-        });
-
-        if (features.length > 0) {
-          const feature = features[0];
-
-          if (clickedPointId !== null) {
-            map.current.removeFeatureState({
-              source: "points",
-              id: clickedPointId,
-            });
-          }
-
-          // create popup node
-          const popupNode = document.createElement("div");
-          ReactDOM.createRoot(popupNode).render(
-            <PointInfo
-              feature={feature}
-              variable={variable}
-              fundingSource={fundingSource}
-            />
-          );
-          // add popup to map
-          popUpRef.current
-            .setLngLat(e.lngLat)
-            .setDOMContent(popupNode)
-            .addTo(map.current);
-        }
-
-        clickedPointId = e.features[0].id;
-
-        map.current.setFeatureState(
-          { source: "points", id: clickedPointId },
-          { clicked: true }
-        );
-      });
-    }
-
-    if (building === false ) {
-      // Check if point layer already exists
-    if (map.current.getLayer("properties")) {
-      map.current.removeLayer("properties");
-    }
-      popUpRef.current.remove();
     }
 
     // Home button functionality
@@ -295,12 +207,17 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
         zoom: zoom,
       });
     });
+    
+    // function handles clearing selected districts
+    const clearSelection = () => {
+      map.current.removeFeatureState({source: "delaware"})
+      array = []
+      sumRef.current.remove();
+    };
 
-   
-// Click functionality for districts
+    // Click functionality for districts
     // Left click
     map.current.on("click", "fill", (e) => {
-      
       const features = map.current.queryRenderedFeatures(e.point, {
         layers: ["fill"],
       });
@@ -314,13 +231,12 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
         array.push(e.features[0]);
       }
 
-      console.log(array)
-
       map.current.setFeatureState(
         { source: "delaware", id: clickId },
         { click: true }
       );
 
+      
 
       // create popup node
       const sumPopup = document.createElement("div");
@@ -329,6 +245,7 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
           variable={variable}
           fundingSource={fundingSource}
           array={array}
+          clearSelection={clearSelection}
         />
       );
       // add popup to map
@@ -336,9 +253,22 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
         .setLngLat(e.lngLat)
         .setDOMContent(sumPopup)
         .addTo(map.current);
-      return array
-
+      return array;
     });
+
+    function offHover() {
+      map.current.getCanvas().style.cursor = "";
+
+      if (hoverId !== null) {
+        map.current.setFeatureState(
+          { source: "delaware", id: hoverId },
+          { hover: false }
+        );
+      }
+
+      hoverId = null;
+      tooltipRef.current.remove();
+    }
 
     // right click
     map.current.on("contextmenu", "fill", (e) => {
@@ -349,22 +279,22 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
       if (index > -1) {
         // 2nd parameter means remove one item only
         array.splice(index, 1);
-        
-        // create popup node
-      const sumPopup = document.createElement("div");
-      ReactDOM.createRoot(sumPopup).render(
-        <SumPopup
-          variable={variable}
-          fundingSource={fundingSource}
-          array={array}
-        />
-      );
-      // add popup to map
-      sumRef.current
-        .setLngLat(e.lngLat)
-        .setDOMContent(sumPopup)
-        .addTo(map.current);
 
+        // create popup node
+        const sumPopup = document.createElement("div");
+        ReactDOM.createRoot(sumPopup).render(
+          <SumPopup
+            variable={variable}
+            fundingSource={fundingSource}
+            array={array}
+            clearSelection={clearSelection}
+          />
+        );
+        // add popup to map
+        sumRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(sumPopup)
+          .addTo(map.current);
       }
 
       if (array <= 0) {
@@ -377,7 +307,80 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
       );
     });
   };
-    
+
+  const showProperties = () => {
+    // Change the cursor to a pointer when the mouse is over the points layer.
+    map.current.on("mouseenter", "properties", () => {
+      map.current.getCanvas().style.cursor = "pointer";
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.current.on("mouseleave", "properties", () => {
+      map.current.getCanvas().style.cursor = "";
+    });
+
+    map.current.addLayer({
+      id: "properties",
+      type: "circle",
+      source: "points",
+      paint: {
+        "circle-color": [
+          "case",
+          ["boolean", ["feature-state", "clicked"], false],
+          "#1878dd",
+          "#000000",
+        ],
+        "circle-radius": 5,
+      },
+    });
+
+    // Remove fill and outline layer when properties on
+    map.current.removeLayer("fill");
+    map.current.removeLayer("outline");
+
+    // Pop-up functionality for point info
+    let clickedPointId = null;
+
+    // Displays pop-up on click of point
+    map.current.on("click", "properties", (e) => {
+      const features = map.current.queryRenderedFeatures(e.point, {
+        layers: ["properties"],
+      });
+
+      if (features.length > 0) {
+        const feature = features[0];
+
+        if (clickedPointId !== null) {
+          map.current.removeFeatureState({
+            source: "points",
+            id: clickedPointId,
+          });
+        }
+
+        // create popup node
+        const popupNode = document.createElement("div");
+        ReactDOM.createRoot(popupNode).render(
+          <PointInfo
+            feature={feature}
+            variable={variable}
+            fundingSource={fundingSource}
+          />
+        );
+        // add popup to map
+        popUpRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(popupNode)
+          .addTo(map.current);
+      }
+
+      clickedPointId = e.features[0].id;
+
+      map.current.setFeatureState(
+        { source: "points", id: clickedPointId },
+        { clicked: true }
+      );
+    });
+  };
 
   // Initial loading of data, setting global settings, adding nav controls
   useEffect(() => {
@@ -431,14 +434,32 @@ const tooltip = ReactDOM.createRoot(tooltipDiv);
 
   // Deletes layers and re-adds them whenever user changes funding source variable or building locations
   const update = () => {
+    // Remove any existing layers
     if (map.current.getLayer("outline")) {
-    map.current.removeLayer("outline");
+      map.current.removeLayer("outline");
     }
     if (map.current.getLayer("fill")) {
       map.current.removeLayer("fill");
     }
+    if (map.current.getLayer("properties")) {
+      map.current.removeLayer("properties");
+    }
 
+    // remove popup windows when changing variables
+    popUpRef.current.remove();
+    sumRef.current.remove();
+
+    // remove any selections made to either layer
+    map.current.removeFeatureState({ source: "delaware" });
+    map.current.removeFeatureState({ source: "points" });
+
+    // adds default/initial map layers
     addMapLayers();
+
+    // if properties is toggled then run function to add property layer
+    if (building === true) {
+      showProperties();
+    }
   };
 
   useUpdateEffect(update, [variable, fundingSource, building]);

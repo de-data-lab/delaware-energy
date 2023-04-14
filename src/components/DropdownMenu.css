@@ -16,7 +16,7 @@
     /* needed to get rid of bootstrap styling */
     padding: 0;
     /* PROBABLY NEED BETTER OPTION */
-    width: 25vw;
+    width: 18rem;
     /* max-width: 22rem; */
     
     /* color */
@@ -48,6 +48,7 @@
     padding: var(--padding-sm);
     border-radius: var(--border-sm) var(--border-sm) 0 0;
     text-align: center;
+    white-space: normal;
   }
   
   /* Dropdowns layout and spacing */
@@ -84,7 +85,7 @@
     font-size: var(--font-size-xs);
     padding: var(--padding-xs);
     /* PROBABLY NEED TO ADJUST */
-    /* width: 18vw; */
+    width: 13rem;
   }
   
   .data-source-text, .link-list {
@@ -121,12 +122,12 @@
     text-decoration: underline;
   }
 
-  @media only screen and (max-width: 1000px)  {
+  @media only screen and (min-width: 1281px)  {
     .dropdown-menu {
-      width: 20rem;
+      width: 20vw;
     }
 
     .select-text {
-      width: 15rem;
+      width: 15vw;
     }
   }

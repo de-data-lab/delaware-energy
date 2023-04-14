@@ -24,7 +24,7 @@
 
   .button-open {
     position: absolute;
-    left: calc(25vw + .125rem);
+    left: calc(18rem + .125rem);
     top: 200px;
     transition: all .5s ease-out;
   }
@@ -32,13 +32,20 @@
   .toggle-button-close {
     position: absolute;
     transform: rotate(180deg);
-    top: var(--margin-lg);
-    left: var(--margin-sm);
+    top: var(--margin-xxs);
+    left: var(--margin-xxs);
     transition: all .5s ease-out;
   }
 
-  @media only screen and (max-width: 1000px)  {
+  @media only screen and (min-width: 1281px)  {
+    
     .button-open {
-      left: calc(20rem + .125rem);
+      left: calc(20vw + .125rem);
     }
+
+    .toggle-button-close {
+      top: var(--margin-lg);
+      left: var(--margin-sm);
+    }
+
   }

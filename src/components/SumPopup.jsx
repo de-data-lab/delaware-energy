@@ -180,19 +180,21 @@ export const SumPopup = ({
   clearSelection,
 }) => {
   return (
-    <div tabIndex={0} className="sumPopup-container">
-      {/* <h2 className="dropdown-header">
-          Selected Districts
-      </h2> */}
-      <PopupText
-        fundingSource={fundingSource}
-        variable={variable}
-        array={array}
-      />
-      <button className="button" onClick={clearSelection}>
-        <i className="fa-solid fa-trash"></i>
-        <h3 className="button-text">Clear Selection</h3>
-      </button>
+    <div tabIndex={0} className="popup-container">
+      <div className="sumPopup-button-container">
+        {/* <h2 className="dropdown-header">
+            Selected Districts
+        </h2> */}
+        <PopupText
+          fundingSource={fundingSource}
+          variable={variable}
+          array={array}
+        />
+        <button className="button" onClick={clearSelection}>
+          <i className="fa-solid fa-trash"></i>
+          <h3 className="button-text">Clear Selection</h3>
+        </button>
+      </div>
     </div>
   );
 };

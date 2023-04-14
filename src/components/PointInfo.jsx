@@ -24,18 +24,20 @@ export const PointInfo = ({feature, variable, fundingSource}) => {
         const propertyType = feature?.properties?.["Type of Property"];
     
     return (
-            <div tabIndex={0}>
-                <h3 className="dropdown-header">{projectName}</h3>
-                <img src={photo} className="photo"></img>
-                <div className="content-container">
-                    <label><strong>Address:</strong></label>
-                    <h3 className="info-text">{address}</h3>        
-                    <label><strong>Developer's Fees:</strong></label>
-                    <h3 className="info-text">{developerFees}%</h3>        
-                    <label><strong>Type of Property:</strong></label>
-                    <h3 className="info-text">{propertyType}</h3>        
-                    <label><strong>{variableName}:</strong></label>
-                    <h3 className="info-text">{variableValue}</h3> 
+            <div tabIndex={0} className="popup-container">
+                <div tabIndex={0} className="sumPopup-button-container">
+                    <h3 className="dropdown-header">{projectName}</h3>
+                    <img src={photo} className="photo"></img>
+                    <div className="content-container">
+                        <label><strong>Address:</strong></label>
+                        <h3 className="info-text">{address}</h3>        
+                        <label><strong>Developer's Fees:</strong></label>
+                        <h3 className="info-text">{developerFees}%</h3>        
+                        <label><strong>Type of Property:</strong></label>
+                        <h3 className="info-text">{propertyType}</h3>        
+                        <label><strong>{variableName}:</strong></label>
+                        <h3 className="info-text">{variableValue}</h3> 
+                    </div>
                 </div>
             </div>
     )

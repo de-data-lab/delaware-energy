@@ -44,13 +44,13 @@
   color: var(--navy) !important;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 550px) {
   :root {
     --map-legend-minwidth: 18rem !important;
   }
 
   .mapboxgl-ctrl-legend {
-    margin: 0 var(--margin-sm) !important;
+    margin: 0 var(--margin-xxs) !important;
     padding: 0;
   }
 }

@@ -207,11 +207,11 @@ export const Map = ({ lng, lat, zoom }) => {
         zoom: zoom,
       });
     });
-    
+
     // function handles clearing selected districts
     const clearSelection = () => {
-      map.current.removeFeatureState({source: "delaware"})
-      array = []
+      map.current.removeFeatureState({ source: "delaware" });
+      array = [];
       sumRef.current.remove();
     };
 
@@ -223,20 +223,31 @@ export const Map = ({ lng, lat, zoom }) => {
       });
       clickId = e.features[0].id;
 
-      // Handles adding selected features to aggregated list
+      // Gets index of clicked feature for removing it from array
+      let index = array.map((feature) => feature.id).indexOf(clickId);
+
       // checks if feature already exists in array
       let exists = array.findIndex((feature) => feature.id == clickId);
+
+      // Handles adding selected features to aggregated list
+
       //  if feature doesn't exist yet push to array
       if (exists < 0) {
         array.push(e.features[0]);
+        map.current.setFeatureState(
+          { source: "delaware", id: clickId },
+          { click: true }
+        );
       }
 
-      map.current.setFeatureState(
-        { source: "delaware", id: clickId },
-        { click: true }
-      );
-
-      
+      // Handles removing selected features from list
+      if (index > -1) {
+        array.splice(index, 1);
+        map.current.setFeatureState(
+          { source: "delaware", id: clickId },
+          { click: false }
+        );
+      }
 
       // create popup node
       const sumPopup = document.createElement("div");
@@ -253,6 +264,12 @@ export const Map = ({ lng, lat, zoom }) => {
         .setLngLat(e.lngLat)
         .setDOMContent(sumPopup)
         .addTo(map.current);
+
+      // if sum list is empty then remove popup 
+      if (array <= 0) {
+        sumRef.current.remove();
+      }
+
       return array;
     });
 
@@ -271,41 +288,41 @@ export const Map = ({ lng, lat, zoom }) => {
     }
 
     // right click
-    map.current.on("contextmenu", "fill", (e) => {
-      clickId = e.features[0].id;
-      // Look for index of right-clicked feature
-      let index = array.map((feature) => feature.id).indexOf(clickId);
-      // only splice array when item is found
-      if (index > -1) {
-        // 2nd parameter means remove one item only
-        array.splice(index, 1);
+    // map.current.on("contextmenu", "fill", (e) => {
+    //   clickId = e.features[0].id;
+    //   // Look for index of right-clicked feature
+    //   let index = array.map((feature) => feature.id).indexOf(clickId);
+    //   // only splice array when item is found
+    //   if (index > -1) {
+    //     // 2nd parameter means remove one item only
+    //     array.splice(index, 1);
 
-        // create popup node
-        const sumPopup = document.createElement("div");
-        ReactDOM.createRoot(sumPopup).render(
-          <SumPopup
-            variable={variable}
-            fundingSource={fundingSource}
-            array={array}
-            clearSelection={clearSelection}
-          />
-        );
-        // add popup to map
-        sumRef.current
-          .setLngLat(e.lngLat)
-          .setDOMContent(sumPopup)
-          .addTo(map.current);
-      }
+    //     // create popup node
+    //     const sumPopup = document.createElement("div");
+    //     ReactDOM.createRoot(sumPopup).render(
+    //       <SumPopup
+    //         variable={variable}
+    //         fundingSource={fundingSource}
+    //         array={array}
+    //         clearSelection={clearSelection}
+    //       />
+    //     );
+    //     // add popup to map
+    //     sumRef.current
+    //       .setLngLat(e.lngLat)
+    //       .setDOMContent(sumPopup)
+    //       .addTo(map.current);
+    //   }
 
-      if (array <= 0) {
-        sumRef.current.remove();
-      }
+    //   if (array <= 0) {
+    //     sumRef.current.remove();
+    //   }
 
-      map.current.setFeatureState(
-        { source: "delaware", id: clickId },
-        { click: false }
-      );
-    });
+    //   map.current.setFeatureState(
+    //     { source: "delaware", id: clickId },
+    //     { click: false }
+    //   );
+    // });
   };
 
   const showProperties = () => {

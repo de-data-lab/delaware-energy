@@ -353,7 +353,9 @@ export const Map = ({ lng, lat, zoom }) => {
 
     // Remove fill and outline layer when properties on
     map.current.removeLayer("fill");
-    map.current.removeLayer("outline");
+    // map.current.removeLayer("outline");
+    map.current.setPaintProperty("outline", "line-opacity", 1)
+    
 
     // Pop-up functionality for point info
     let clickedPointId = null;

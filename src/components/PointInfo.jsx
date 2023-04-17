@@ -5,24 +5,22 @@ import photo from "/images/harrington.png"
 
 export const PointInfo = ({feature, variable, fundingSource}) => {
 
-
-    if (fundingSource && variable && feature) {
-        const variableName = mapInfo[fundingSource].columns[variable]; 
-        let variableValue = feature?.properties?.[variable];
-        if (variable === "aggregated_allocation_amount") {
-            variableValue = (feature?.properties?.["ALLOCATION AMOUNT"]).toLocaleString("en-US");
-        }
-        if (variable === "aggregated_tax_credits") {
-            variableValue = feature?.properties?.["# of Tax Credit Units"];
-        }
-        
-    
         const projectName = feature?.properties?.["PROJECT NAME & ADDRESS"];
         const districtName = feature?.properties?.["Senate District"];
+        const senatorName = feature?.properties?.["name"];
         const address = feature?.properties?.["address"];
         const developerFees = feature?.properties?.["Applicable Credit Rate"];
         const propertyType = feature?.properties?.["Type of Property"];
-    
+        
+        const allocationAmountName = mapInfo[fundingSource].columns["aggregated_allocation_amount"]
+        let allocationAmount = feature?.properties?.["ALLOCATION AMOUNT"]
+        if (allocationAmount !== "TBD") {
+            allocationAmount = `$${parseInt(allocationAmount).toLocaleString()}`
+        }
+        
+        const taxCreditsName = mapInfo[fundingSource].columns["aggregated_tax_credits"]
+        const taxCredits = feature?.properties?.["# of Tax Credit Units"]
+
     return (
             <div tabIndex={0} className="popup-container">
                 <div tabIndex={0} className="sumPopup-button-container">
@@ -31,16 +29,18 @@ export const PointInfo = ({feature, variable, fundingSource}) => {
                     <div className="content-container">
                         <label><strong>Address:</strong></label>
                         <h3 className="info-text">{address}</h3>        
+                        <label><strong>District:</strong></label>
+                        <h3 className="info-text">{districtName}</h3>        
                         <label><strong>Developer's Fees:</strong></label>
                         <h3 className="info-text">{developerFees}%</h3>        
                         <label><strong>Type of Property:</strong></label>
                         <h3 className="info-text">{propertyType}</h3>        
-                        <label><strong>{variableName}:</strong></label>
-                        <h3 className="info-text">{variableValue}</h3> 
+                        <label><strong>{allocationAmountName}:</strong></label>
+                        <h3 className="info-text">{allocationAmount}</h3> 
+                        <label><strong>{taxCreditsName}:</strong></label>
+                        <h3 className="info-text">{taxCredits}</h3> 
                     </div>
                 </div>
             </div>
     )
-    }
- 
 };

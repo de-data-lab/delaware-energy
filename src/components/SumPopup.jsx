@@ -41,7 +41,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         setSumValue({
           sumValue: `$${sum.toLocaleString(undefined, {
             maximumFractionDigits: 2,
-            minimumFractionDigits: 0,
+            minimumFractionDigits: 2,
           })}`,
           sumPercent: `${((sum / 28016290) * 100).toFixed(1)}%`,
         });
@@ -54,7 +54,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             (item) =>
               `$${item.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 2,
               })}`
           ),
           districtName: districtArray,
@@ -63,7 +63,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         setSumValue({
           sumValue: `$${sum.toLocaleString(undefined, {
             maximumFractionDigits: 2,
-            minimumFractionDigits: 0,
+            minimumFractionDigits: 2,
           })}`,
           sumPercent: `${((sum / 213679.7769) * 100).toFixed(2)}%`,
         });
@@ -76,7 +76,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             (item) =>
               `$${item.toLocaleString(undefined, {
                 maximumFractionDigits: 2,
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 2,
               })}`
           ),
           districtName: districtArray,
@@ -85,7 +85,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         setSumValue({
           sumValue: `$${sum.toLocaleString(undefined, {
             maximumFractionDigits: 2,
-            minimumFractionDigits: 0,
+            minimumFractionDigits: 2,
           })}`,
           sumPercent: `${((sum / 60340.24) * 100).toFixed(1)}%`,
         });

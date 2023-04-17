@@ -13,7 +13,7 @@ export const Tooltip = ({feature, variable, fundingSource}) => {
             case "aggregated_allocation_amount":
             case "avg_allocation_per_unit":
             case "avg_allocation_per_100_persons":
-                variableValue = `$${variableValue.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 0})}`
+                variableValue = `$${variableValue.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2})}`
                 break;
             default:
                 variableValue = `${variableValue.toLocaleString(undefined, {maximumFractionDigits: 0, minimumFractionDigits: 0})}`

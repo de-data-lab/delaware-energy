@@ -2,7 +2,7 @@ export const mapInfo = {
   LIHTC: {
     meta: {
       source: [
-        {name: "DSHA Housing Data", link: "https://www.cdc.gov/places"},
+        {name: "DSHA Housing Data", link: "http://www.destatehousing.com"},
       ],
       title: "Low-income Housing Tax Credits",
       displayName: "LIHTC"

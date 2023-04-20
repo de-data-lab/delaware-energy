@@ -19,6 +19,12 @@
     font-weight: 400;
 }
 
+.header-link {
+    color: var(--white);
+    text-decoration: none;
+}
+
+
 .header-tab-bar {
     display: flex;
     align-items: center;

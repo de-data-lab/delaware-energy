@@ -1,14 +1,18 @@
-import "./header.css";
+import "./Header.css";
 
 const HeaderLogo = () => {
   return (
     <div className="header-logo">
-      <h1 className="header-title">DSHA Test App</h1>
+      <h1 className="header-title">
+        <a href="/" className="header-link">
+          DSHA Test App
+        </a>
+      </h1>
     </div>
   );
 };
 
-const HeaderTabBar = ({page, setPage}) => {
+const HeaderTabBar = ({ page, setPage }) => {
   // Toggle Button for map + explorer
   const handlePageChange = () => {
     setPage(!page);
@@ -22,11 +26,11 @@ const HeaderTabBar = ({page, setPage}) => {
       </label>
       <div className="form-check form-switch">
         <input
-            className="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="toggle-switch"
-            onClick={handlePageChange}
+          className="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="toggle-switch"
+          onClick={handlePageChange}
         ></input>
       </div>
       <label className="header-toggle-label" htmlFor="toggle-switch">

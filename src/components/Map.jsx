@@ -1,9 +1,11 @@
 import { useRef, useEffect, useContext } from "react";
 import ReactDOM from "react-dom/client";
 import { useUpdateEffect } from "react-use";
-
+// Mapbox import
+import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "mapboxgl-legend/dist/style.css";
+
 import "./Map.css";
 
 import colorPalette from "../utils/colorPalette";
@@ -103,6 +105,7 @@ export const Map = ({ lng, lat, zoom }) => {
       },
       metadata: {
         name: mapInfo[fundingSource].columns[variable],
+        unit: ""
       },
     });
 
@@ -130,7 +133,7 @@ export const Map = ({ lng, lat, zoom }) => {
           1,
           0.2,
         ],
-      },
+      }
     });
 
     // Hover on
@@ -265,7 +268,7 @@ export const Map = ({ lng, lat, zoom }) => {
         .setDOMContent(sumPopup)
         .addTo(map.current);
 
-      // if sum list is empty then remove popup 
+      // if sum list is empty then remove popup
       if (array <= 0) {
         sumRef.current.remove();
       }
@@ -351,11 +354,11 @@ export const Map = ({ lng, lat, zoom }) => {
       },
     });
 
-    // Remove fill and outline layer when properties on
-    map.current.removeLayer("fill");
-    // map.current.removeLayer("outline");
-    map.current.setPaintProperty("outline", "line-opacity", 1)
+    // do this by setting toggler to true 
     
+    // Remove fill and darken outline layer when properties on
+    // map.current.removeLayer("fill");
+    // map.current.setPaintProperty("outline", "line-opacity", 1);
 
     // Pop-up functionality for point info
     let clickedPointId = null;
@@ -425,16 +428,19 @@ export const Map = ({ lng, lat, zoom }) => {
       );
       map.current.addControl(new mapboxgl.GeolocateControl(), "bottom-left");
       map.current.addControl(new HomeControl(), "bottom-left");
+
+      const legend = new LegendControl({
+        toggler: true,
+        layers: {
+          fill: true,
+        },
+      })
+
       map.current.addControl(
-        new LegendControl({
-          collapsed: false,
-          layers: {
-            fill: true,
-          },
-        }),
+        legend,
         "bottom-right"
       );
-
+      
       map.current.addSource("delaware", {
         type: "geojson",
         data: mapData,

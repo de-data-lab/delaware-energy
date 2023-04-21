@@ -130,9 +130,9 @@ export const PopupText = ({ fundingSource, variable, array }) => {
           <tr>
             <td className="district-number">
               {featureProps.districtName.map((item, i) => (
-                <h3 key={i} className="info-text">
+                <h2 key={i} className="info-text">
                   District {item}
-                </h3>
+                </h2>
               ))}
             </td>
             <td className="table-data">

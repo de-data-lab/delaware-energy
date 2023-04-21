@@ -66,12 +66,18 @@ th {
   font-size: var(--font-size-xxs);
 }
 
+td > h2 {
+  text-align: left;
+}
+td > h3 {
+  text-align: right;
+}
+
 /* td */
 .district-number {
   width: 40%;
 }
 
-.table-data,
 .total {
   text-align: right;
 }

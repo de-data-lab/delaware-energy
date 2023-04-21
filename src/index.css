@@ -37,6 +37,9 @@
   --margin-xs: 1.5rem;
   --margin-sm: 2rem;
   --margin-lg: 2.625rem;
+  /* Menu sizing */
+  --map-menu-minwidth: 18rem;
+  --map-menu-maxwidth: 25rem;
 }
 
 /* Main Layout */

@@ -137,7 +137,7 @@ td > h3 {
   }
 
   .sumPopup-button-container {
-    width: var(-map-menu-maxwidth);
+    width: var(--map-menu-maxwidth);
   }
 
   .info-text {

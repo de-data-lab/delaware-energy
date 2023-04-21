@@ -25,8 +25,8 @@
 /* Mapboxgl-legend overrides */
 
 :root {
-  --map-legend-minwidth: 30vw !important;
-  /* --map-legend-maxwidth: 25vw !important; */
+  --map-legend-minwidth: 18rem !important;
+  --map-legend-maxwidth: 22vw !important;
   --map-legend-background: rgba(255, 255, 255, 0.95) !important;
   --map-legend-font: var(--font-size-md) var(--primary-font) !important;
   --map-legend-radius: var(--border-sm) !important;
@@ -35,8 +35,7 @@
 }
 
 .mapboxgl-ctrl-legend {
-  margin: var(--margin-sm) !important;
-  padding: var(--padding-xxs);
+  margin: var(--margin-xxxs) !important;
 }
 
 .mapboxgl-ctrl-legend summary {
@@ -44,13 +43,9 @@
   color: var(--navy) !important;
 }
 
-@media only screen and (max-width: 550px) {
-  :root {
-    --map-legend-minwidth: 18rem !important;
-  }
-
+@media only screen and (min-width: 1280px) {
   .mapboxgl-ctrl-legend {
-    margin: 0 var(--margin-xxs) !important;
-    padding: 0;
+    margin: var(--margin-xxs) !important;
+    padding: var(--padding-xxs) !important;
   }
 }

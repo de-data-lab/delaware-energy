@@ -92,6 +92,10 @@ export const Map = ({ lng, lat, zoom }) => {
       id: "fill",
       type: "fill",
       source: "delaware",
+      layout: {
+        // Make the layer visible by default.
+        visibility: "visible",
+      },
       paint: {
         "fill-color": colorArray,
         "fill-opacity": [
@@ -105,7 +109,7 @@ export const Map = ({ lng, lat, zoom }) => {
       },
       metadata: {
         name: mapInfo[fundingSource].columns[variable],
-        unit: ""
+        unit: "",
       },
     });
 
@@ -133,7 +137,7 @@ export const Map = ({ lng, lat, zoom }) => {
           1,
           0.2,
         ],
-      }
+      },
     });
 
     // Hover on
@@ -350,15 +354,25 @@ export const Map = ({ lng, lat, zoom }) => {
           "#1878dd",
           "#000000",
         ],
-        "circle-radius": 5,
+        "circle-radius": [
+          "case",
+          ["boolean", ["feature-state", "clicked"], false],
+          8,
+          5,
+        ],
       },
     });
 
-    // do this by setting toggler to true 
-    
-    // Remove fill and darken outline layer when properties on
-    // map.current.removeLayer("fill");
-    // map.current.setPaintProperty("outline", "line-opacity", 1);
+      // Remove fill if exists and darken outline layer when properties on
+      const visibility = map.current.getLayoutProperty("fill", "visibility");
+
+      if (visibility === "visible") {
+        map.current.setLayoutProperty("fill", "visibility", "none");
+        map.current.setPaintProperty("outline", "line-opacity", 1);
+      } else {
+        map.current.setLayoutProperty("fill", "visibility", "visible");
+        // map.current.setPaintProperty("outline", "line-opacity", .2);
+      }
 
     // Pop-up functionality for point info
     let clickedPointId = null;
@@ -434,13 +448,10 @@ export const Map = ({ lng, lat, zoom }) => {
         layers: {
           fill: true,
         },
-      })
+      });
 
-      map.current.addControl(
-        legend,
-        "bottom-right"
-      );
-      
+      map.current.addControl(legend, "bottom-right");
+
       map.current.addSource("delaware", {
         type: "geojson",
         data: mapData,
@@ -470,8 +481,7 @@ export const Map = ({ lng, lat, zoom }) => {
       map.current.removeLayer("properties");
     }
 
-    // remove popup windows when changing variables
-    popUpRef.current.remove();
+    // remove sumPopup when changing variables
     sumRef.current.remove();
 
     // remove any selections made to either layer

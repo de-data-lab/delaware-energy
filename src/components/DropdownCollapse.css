@@ -13,19 +13,20 @@
   .toggle-button::after {
     content: "";
     background-repeat: no-repeat; 
-    top: .55rem;
-    left: .4rem;
+    top: .95rem;
+    left: .8rem;
     width: 100%;  
     height:100%; 
     position: absolute;
     background-image: url('../assets/arrow-icon.svg');
-    background-size:2.5rem;
+    background-size: 1.75rem;
   }
 
   .button-open {
     position: absolute;
-    left: calc(18rem + .125rem);
-    top: 200px;
+    left: calc(var(--map-legend-minwidth) - (var(--margin-xxs)));
+    /* (Dropdown menu width + button height) / 2 */
+    top: calc((var(--map-legend-minwidth) + 3.625rem) / 2);
     transition: all .5s ease-out;
   }
   
@@ -37,10 +38,12 @@
     transition: all .5s ease-out;
   }
 
+  /* Desktop Styles */
   @media only screen and (min-width: 1281px)  {
     
     .button-open {
-      left: calc(20vw + .125rem);
+      left: var(--map-legend-maxwidth);
+      top: 200px;
     }
 
     .toggle-button-close {

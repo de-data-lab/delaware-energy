@@ -12,12 +12,11 @@
     /* layout and size*/
     display: flex;
     flex-direction: column;
-    margin: var(--margin-lg) var(--margin-sm);
+    margin: var(--margin-xxs);
     /* needed to get rid of bootstrap styling */
     padding: 0;
     /* PROBABLY NEED BETTER OPTION */
-    width: 18rem;
-    /* max-width: 22rem; */
+    width: var(--map-legend-minwidth);
     
     /* color */
     color: var(--navy);
@@ -57,6 +56,7 @@
   .select {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
   
   .select-container {
@@ -84,8 +84,6 @@
   .select-text {
     font-size: var(--font-size-xs);
     padding: var(--padding-xs);
-    /* PROBABLY NEED TO ADJUST */
-    width: 13rem;
   }
   
   .data-source-text, .link-list {
@@ -122,12 +120,10 @@
     text-decoration: underline;
   }
 
+/* Desktop Styles */
   @media only screen and (min-width: 1281px)  {
     .dropdown-menu {
-      width: 20vw;
-    }
-
-    .select-text {
-      width: 15vw;
+      width: var(--map-legend-maxwidth);
+      margin: var(--margin-lg) var(--margin-sm);
     }
   }

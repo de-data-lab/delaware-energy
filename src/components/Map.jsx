@@ -2,9 +2,9 @@ import { useRef, useEffect, useContext } from "react";
 import ReactDOM from "react-dom/client";
 import { useUpdateEffect } from "react-use";
 // Mapbox import
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "mapboxgl-legend/dist/style.css";
+// import mapboxgl from "mapbox-gl";
+// import "mapbox-gl/dist/mapbox-gl.css";
+// import "mapboxgl-legend/dist/style.css";
 
 import "./Map.css";
 

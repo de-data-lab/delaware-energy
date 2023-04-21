@@ -16,7 +16,7 @@
     /* needed to get rid of bootstrap styling */
     padding: 0;
     /* PROBABLY NEED BETTER OPTION */
-    width: var(--map-legend-minwidth);
+    width: var(--map-menu-minwidth);
     
     /* color */
     color: var(--navy);
@@ -123,7 +123,7 @@
 /* Desktop Styles */
   @media only screen and (min-width: 1281px)  {
     .dropdown-menu {
-      width: var(--map-legend-maxwidth);
+      width: var(--map-menu-maxwidth);
       margin: var(--margin-lg) var(--margin-sm);
     }
   }

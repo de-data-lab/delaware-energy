@@ -14,7 +14,7 @@
     content: "";
     background-repeat: no-repeat; 
     top: .95rem;
-    left: .8rem;
+    left: .785rem;
     width: 100%;  
     height:100%; 
     position: absolute;
@@ -24,9 +24,9 @@
 
   .button-open {
     position: absolute;
-    left: calc(var(--map-legend-minwidth) - (var(--margin-xxs)));
+    left: calc(var(--map-menu-minwidth) - (var(--margin-xxs)));
     /* (Dropdown menu width + button height) / 2 */
-    top: calc((var(--map-legend-minwidth) + 3.625rem) / 2);
+    top: calc((var(--map-menu-minwidth) + 3.625rem) / 2);
     transition: all .5s ease-out;
   }
   
@@ -42,8 +42,8 @@
   @media only screen and (min-width: 1281px)  {
     
     .button-open {
-      left: var(--map-legend-maxwidth);
-      top: 200px;
+      left: var(--map-menu-maxwidth);
+      top: 210px;
     }
 
     .toggle-button-close {

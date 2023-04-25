@@ -44,9 +44,9 @@
 }
 
 /* Desktop Styles */
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-width: 1281px) {
   :root {
-    --map-legend-minwidth: 20vw !important;
+    --map-legend-minwidth: 25rem !important;
   }
 
 

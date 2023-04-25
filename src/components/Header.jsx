@@ -1,13 +1,13 @@
 import "./header.css";
+import logo from "/logos/dsha-logo-transparent.svg"
 
 const HeaderLogo = () => {
   return (
     <div className="header-logo">
-      <h1 className="header-title">
         <a href="/" className="header-link">
-          DSHA Test App
+          <img src={logo} className="logo"></img>
+          <h1 className="header-title">DSHA Test App</h1>
         </a>
-      </h1>
     </div>
   );
 };

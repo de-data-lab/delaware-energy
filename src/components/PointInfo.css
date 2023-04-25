@@ -29,9 +29,9 @@
   aspect-ratio: 16/9;
 }
 
-.info-card:hover {
+/* .info-card:hover {
    cursor: grabbing; 
-  }
+  } */
 
 .info-text {
   font-size: var(--font-size-xs);

@@ -1,3 +1,8 @@
-.content-container {
-    
-}
+.tooltip-text {
+    font-size: var(--font-size-xs);
+    padding: .15rem 0;
+  }
+  
+  .tooltip-spacing {
+    padding-right: .25rem;
+  }

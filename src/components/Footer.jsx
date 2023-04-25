@@ -1,5 +1,5 @@
 import "./Footer.css"
-import TILogo from "/images/techimpact_mainlogo_clear_space.svg"
+import TILogo from "/logos/techimpact_mainlogo_clear_space.svg"
 
 export const Footer = () => {
 

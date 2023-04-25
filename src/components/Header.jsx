@@ -1,5 +1,5 @@
 import "./header.css";
-import logo from "../assets/dsha-logo-transparent.svg"
+import logo from "/logos/dsha-logo-transparent.svg"
 
 const HeaderLogo = () => {
   return (

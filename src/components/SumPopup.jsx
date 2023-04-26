@@ -11,37 +11,65 @@ export const PopupText = ({ fundingSource, variable, array }) => {
     sumValue: null,
     sumPercent: null,
   });
-  const [featureProps, setFeatureProps] = useState({
-    districtName: [],
-    sumValues: [],
-  });
+  const [featureProps, setFeatureProps] = useState([
+    { districtName: null, value: null },
+  ]);
 
   useEffect(() => {
-    // Array of variable amounts
-    let variableArray = array.map((item) =>
-      !item.properties[variable] ? 0 : Number(item.properties[variable])
-    );
-    let districtArray = array.map((item) => item.properties["district"]);
+    let tempArray = array.map((item) => ({
+      districtName: item.properties["district"],
+      value: !item.properties[variable] ? 0 : Number(item.properties[variable]),
+    }));
 
+    let variableArray = tempArray.map((item) => item.value);
+
+    setFeatureProps(tempArray);
     setVariableName(mapInfo[fundingSource].columns[variable]);
-    setFeatureProps({ districtName: districtArray, sumValues: variableArray });
 
     let sum = variableArray.reduce((a, b) => a + b, 0);
+
+    const moneyFormatter = (maxDeci, minDeci) => {
+      setFeatureProps(
+        tempArray.map((item) => ({
+          districtName: item.districtName,
+          value: `$${item.value.toLocaleString(undefined, {
+            maximumFractionDigits: maxDeci,
+            minimumFractionDigits: minDeci,
+          })}`,
+        }))
+      );
+    };
+
+    const wholeNumberFormatter = (maxDeci, minDeci) => {
+      setFeatureProps(
+        tempArray.map((item) => ({
+          districtName: item.districtName,
+          value: `${item.value.toLocaleString(undefined, {
+            maximumFractionDigits: maxDeci,
+            minimumFractionDigits: minDeci,
+          })}`,
+        }))
+      );
+    };
+
+    // const sortByDistrict = () => setFeatureProps(featureProps.sort((a, b) => parseFloat(a.districtName) - parseFloat(b.districtName)))
 
     switch (variable) {
       case "aggregated_tax_credits":
         setSumValue({
           sumValue: `${sum} units`,
-          sumPercent: `${((sum / 2210) * 100).toFixed(2)}%`,
+          sumPercent: `${((sum / 2210) * 100).toFixed(1)}%`,
         });
         break;
       // 2210 total units in DE
 
       case "aggregated_allocation_amount":
+        moneyFormatter(0, 0);
+
         setSumValue({
           sumValue: `$${sum.toLocaleString(undefined, {
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2,
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0,
           })}`,
           sumPercent: `${((sum / 28016290) * 100).toFixed(1)}%`,
         });
@@ -49,38 +77,20 @@ export const PopupText = ({ fundingSource, variable, array }) => {
       // 28016290 total allocation amount in DE
 
       case "avg_allocation_per_unit":
-        setFeatureProps({
-          sumValues: variableArray.map(
-            (item) =>
-              `$${item.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
-              })}`
-          ),
-          districtName: districtArray,
-        });
+        moneyFormatter(2, 2);
 
         setSumValue({
           sumValue: `$${sum.toLocaleString(undefined, {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
           })}`,
-          sumPercent: `${((sum / 213679.7769) * 100).toFixed(2)}%`,
+          sumPercent: `${((sum / 213679.7769) * 100).toFixed(1)}%`,
         });
         break;
       // 28016290 total avg allocation amount in DE
 
       case "avg_allocation_per_100_persons":
-        setFeatureProps({
-          sumValues: variableArray.map(
-            (item) =>
-              `$${item.toLocaleString(undefined, {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
-              })}`
-          ),
-          districtName: districtArray,
-        });
+        moneyFormatter(2, 2);
 
         setSumValue({
           sumValue: `$${sum.toLocaleString(undefined, {
@@ -92,16 +102,8 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         break;
 
       case "avg_population_per_tax_credit":
-        setFeatureProps({
-          sumValues: variableArray.map(
-            (item) =>
-              `${item.toLocaleString(undefined, {
-                maximumFractionDigits: 0,
-                minimumFractionDigits: 0,
-              })}`
-          ),
-          districtName: districtArray,
-        });
+        
+        wholeNumberFormatter(0, 0)
 
         setSumValue({
           sumValue: `${sum.toLocaleString(undefined, {
@@ -109,6 +111,19 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             minimumFractionDigits: 0,
           })}`,
           sumPercent: `${((sum / 10632) * 100).toFixed(1)}%`,
+        });
+        break;
+      
+        case "adj_popula":
+        
+        wholeNumberFormatter(0, 0)
+
+        setSumValue({
+          sumValue: `${sum.toLocaleString(undefined, {
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0,
+          })}`,
+          sumPercent: `${((sum / 989598) * 100).toFixed(1)}%`,
         });
         break;
 
@@ -129,32 +144,18 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         <tbody>
           <tr>
             <td className="district-number">
-              {featureProps.districtName.map((item, i) => (
+              {featureProps.map((item, i) => (
                 <h2 key={i} className="info-text">
-                  District {item}
+                  District {item.districtName}
                 </h2>
               ))}
             </td>
             <td className="table-data">
-              {variable ===
-              ("aggregated_allocation_amount" || "avg_allocation_per_unit")
-                ? featureProps.sumValues.map((item, i) => (
-                    <h3 key={i} className="info-text">
-                      $
-                      {item.toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                        minimumFractionDigits: 0,
-                      })}
-                    </h3>
-                  ))
-                : featureProps.sumValues.map((item, i) => (
-                    <h3 key={i} className="info-text">
-                      {item.toLocaleString(undefined, {
-                        maximumFractionDigits: 2,
-                        minimumFractionDigits: 0,
-                      })}
-                    </h3>
-                  ))}
+              {featureProps.map((item, i) => (
+                <h3 key={i} className="info-text">
+                  {item.value}
+                </h3>
+              ))}
             </td>
           </tr>
           <tr>

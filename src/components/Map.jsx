@@ -5,7 +5,7 @@ import { useUpdateEffect } from "react-use";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "mapboxgl-legend/dist/style.css";
-
+// import icon from "/icons/home-icon.svg"
 import "./Map.css";
 import colorPalette from "../utils/colorPalette";
 import HomeControl from "../utils/HomeControl.js";
@@ -85,6 +85,11 @@ export const Map = ({ lng, lat, zoom }) => {
       colorArray.push(arr[1]);
     });
 
+    // let img = new Image(20,20)
+    // img.onload = () => map.current.addImage('home', img, { sdf: true })
+    // img.src = icon
+
+    // Legend Name
     let legendName = mapInfo[fundingSource].columns[variable];
     // Legend Units
     switch (variable) {
@@ -92,6 +97,9 @@ export const Map = ({ lng, lat, zoom }) => {
         legendName = `${mapInfo[fundingSource].columns[variable]} (in millions)`;
         break;
       case "avg_allocation_per_unit":
+        legendName = `${mapInfo[fundingSource].columns[variable]} (in thousands)`;
+        break;
+      case "adj_popula":
         legendName = `${mapInfo[fundingSource].columns[variable]} (in thousands)`;
         break;
 
@@ -133,6 +141,12 @@ export const Map = ({ lng, lat, zoom }) => {
           20000: "$20K",
           25000: "$25K",
           30000: "$30K",
+          44000: "44K",
+          45000: "45K",
+          46000: "46K",
+          47000: "47K",
+          48000: "48K",
+          49000: "49K",
           2000000: "$2M",
           4000000: "$4M",
           6000000: "$6M",
@@ -390,6 +404,18 @@ export const Map = ({ lng, lat, zoom }) => {
         ],
       },
     });
+    // map.current.addLayer({
+    //   id: "properties",
+    //   type: "symbol",
+    //   source: "points",
+    //   layout: {
+    //     "icon-image": "home",
+    //     "icon-size": .95,
+    //   },
+    //   paint: {
+    //     "icon-color": "#000000",
+    //   },
+    // });
 
     // Remove fill if exists and darken outline layer when properties on
     const visibility = map.current.getLayoutProperty("fill", "visibility");

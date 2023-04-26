@@ -10,9 +10,9 @@ export const mapInfo = {
     columns: {
       ["aggregated_tax_credits"]: "Total tax credit units",
       ["aggregated_allocation_amount"]: "Total allocation amount",
-      ["avg_allocation_per_unit"]: "Average allocation amount per unit",
+      ["avg_allocation_per_unit"]: "Average allocation amount per tax credit unit",
       ["avg_allocation_per_100_persons"]: "Average allocation amount per 100 persons",
-      ["avg_population_per_tax_credit"]: "Average population per tax credit",
+      ["avg_population_per_tax_credit"]: "Average population per tax credit unit",
       ["adj_popula"]: "Population",
     },
   },

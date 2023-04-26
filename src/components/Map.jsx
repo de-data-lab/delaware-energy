@@ -7,7 +7,6 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "mapboxgl-legend/dist/style.css";
 
 import "./Map.css";
-
 import colorPalette from "../utils/colorPalette";
 import HomeControl from "../utils/HomeControl.js";
 import mapInfo from "../utils/mapInfo";
@@ -25,7 +24,6 @@ mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-
   const { pointData, mapData, variable, fundingSource, building } =
     useContext(MapContext);
 
@@ -87,6 +85,20 @@ export const Map = ({ lng, lat, zoom }) => {
       colorArray.push(arr[1]);
     });
 
+    let legendName = mapInfo[fundingSource].columns[variable];
+    // Legend Units
+    switch (variable) {
+      case "aggregated_allocation_amount":
+        legendName = `${mapInfo[fundingSource].columns[variable]} (in millions)`;
+        break;
+      case "avg_allocation_per_unit":
+        legendName = `${mapInfo[fundingSource].columns[variable]} (in thousands)`;
+        break;
+
+      default:
+        break;
+    }
+
     // Fill
     map.current.addLayer({
       id: "fill",
@@ -108,8 +120,24 @@ export const Map = ({ lng, lat, zoom }) => {
         ],
       },
       metadata: {
-        name: mapInfo[fundingSource].columns[variable],
-        unit: "",
+        name: legendName,
+        // temp fix for legend formatting
+        labels: {
+          0: "0",
+          1000: "1,000",
+          1500: "1,500",
+          2000: "2,000",
+          5000: "$5K",
+          10000: "$10K",
+          15000: "$15K",
+          20000: "$20K",
+          25000: "$25K",
+          30000: "$30K",
+          2000000: "$2M",
+          4000000: "$4M",
+          6000000: "$6M",
+          8000000: "$8M",
+        },
       },
     });
 
@@ -363,16 +391,16 @@ export const Map = ({ lng, lat, zoom }) => {
       },
     });
 
-      // Remove fill if exists and darken outline layer when properties on
-      const visibility = map.current.getLayoutProperty("fill", "visibility");
+    // Remove fill if exists and darken outline layer when properties on
+    const visibility = map.current.getLayoutProperty("fill", "visibility");
 
-      if (visibility === "visible") {
-        map.current.setLayoutProperty("fill", "visibility", "none");
-        map.current.setPaintProperty("outline", "line-opacity", 1);
-      } else {
-        map.current.setLayoutProperty("fill", "visibility", "visible");
-        // map.current.setPaintProperty("outline", "line-opacity", .2);
-      }
+    if (visibility === "visible") {
+      map.current.setLayoutProperty("fill", "visibility", "none");
+      map.current.setPaintProperty("outline", "line-opacity", 1);
+    } else {
+      map.current.setLayoutProperty("fill", "visibility", "visible");
+      // map.current.setPaintProperty("outline", "line-opacity", .2);
+    }
 
     // Pop-up functionality for point info
     let clickedPointId = null;

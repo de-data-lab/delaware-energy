@@ -5,7 +5,8 @@ export const Tooltip = ({ feature, variable, fundingSource }) => {
   if (fundingSource && variable && feature) {
     const variableName = mapInfo[fundingSource].columns[variable];
     let variableValue = feature?.properties?.[variable];
-    variableValue == null ? (variableValue = 0) : variableValue;
+    // Check if variable value is null and set to 0, otherwise make sure its a number
+    (variableValue == null) ? (variableValue = 0) : (variableValue = parseInt(variableValue));
 
     switch (variable) {
       case "aggregated_allocation_amount":

@@ -1,0 +1,129 @@
+/* Menu Layout */
+
+.dropdown-menu {
+    visibility: visible;
+    
+    /* position */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
+    /* layout and size*/
+    display: flex;
+    flex-direction: column;
+    margin: var(--margin-xxs);
+    /* needed to get rid of bootstrap styling */
+    padding: 0;
+    /* PROBABLY NEED BETTER OPTION */
+    width: var(--map-menu-minwidth);
+    
+    /* color */
+    color: var(--navy);
+    background-color: var(--white);
+    opacity: 95%;
+    
+    /* shape */
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-sm);
+    
+    /* transition  */
+    transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+    transition-delay: 0s;
+  }
+  
+  .menu-close {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+  }
+  
+  /* Header font size and styles */
+  
+  .dropdown-header {
+    font-size: var(--font-size-md);
+    background-color: var(--navy);
+    color: var(--white);
+    padding: var(--padding-sm);
+    border-radius: var(--border-sm) var(--border-sm) 0 0;
+    text-align: center;
+    white-space: normal;
+  }
+  
+  /* Dropdowns layout and spacing */
+  
+  .select-container,
+  .select {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .select-container {
+    gap: var(--padding-md);
+    padding: var(--padding-lg);
+    padding-right: 3.75rem;
+  }
+  
+  .select {
+    gap: var(--padding-xs);
+  }
+
+  .toggle-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Dropdowns font size and styles */
+  
+  .label-text {
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+  }
+  
+  .select-text {
+    font-size: var(--font-size-xs);
+    padding: var(--padding-xs);
+  }
+  
+  .data-source-text, .link-list {
+    font-size: var(--font-size-xxs);
+  }
+  
+  /* Data source link list */
+  
+  .data-source-flex {
+    display: flex;
+  }
+  
+  .data-source-text {
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  
+  .link-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding-left: var(--padding-xxs);
+  }
+  
+  /* Data source link */
+  
+  .data-source-link {
+    text-decoration: none;
+    color: var(--blue);
+  }
+  
+  .data-source-link:hover {
+    text-decoration: underline;
+  }
+
+/* Desktop Styles */
+  @media only screen and (min-width: 1281px)  {
+    .dropdown-menu {
+      width: var(--map-menu-maxwidth);
+      margin: var(--margin-lg) var(--margin-sm);
+    }
+  }

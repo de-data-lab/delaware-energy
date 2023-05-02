@@ -1,0 +1,81 @@
+:root {
+  /* Colors */
+  --navy: #0a2552;
+  --white: #fdfdfd;
+  --grey: rgb(96, 96, 96, .9);
+  --blue: #1878dd;
+  --red: #d91e18;
+  --black: rgb(0, 0, 0, .1);
+  --light-navy: #354b62;
+  --dark-navy: #1b2734;
+  /* Font styles */
+  --primary-font: "Lato", Helvetica, sans-serif;
+  --secondary-font: "Helvetica Neue", mono;
+  /* Font sizes */
+  --font-size-xxl: clamp(1.3rem, 2.1vw + 0.8rem, 4.2rem);
+  --font-size-xl: clamp(1.2rem, 1.4vw + 0.9rem, 3.2rem);
+  --font-size-lg: clamp(1.1rem, 0.9vw + 0.9rem, 2.4rem);
+  --font-size-md: clamp(1rem, 0.6vw + 0.8rem, 1.8rem);
+  --font-size-sm: clamp(0.9rem, 0.3vw + 0.8rem, 1.3rem);
+  --font-size-xs: clamp(0.8rem, 0.1vw + 0.8rem, 1rem);
+  --font-size-xxs: clamp(0.8rem, 0vw + 0.8rem, 0.8rem);
+  /* Border Radius */
+  --border-sm: 10px;
+  --border-lg: 35px;
+  /* Box Shadow */
+  --box-shadow: 3px 6px 9px var(--black);
+  /* Padding */
+  --padding-xl: 1.75rem;
+  --padding-lg: 1.5rem;
+  --padding-md: 1.25rem;
+  --padding-sm: 1rem;
+  --padding-xs: 0.625rem;
+  --padding-xxs: 0.325rem;
+  /* Margin */
+  --margin-xxxs: .5rem;
+  --margin-xxs: 1rem;
+  --margin-xs: 1.5rem;
+  --margin-sm: 2rem;
+  --margin-lg: 2.625rem;
+  /* Menu sizing */
+  --map-menu-minwidth: 18rem;
+  --map-menu-maxwidth: 25rem;
+}
+
+/* Main Layout */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--primary-font);
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+#page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+#content-container {
+  position: relative;
+  height: 100%;
+  z-index: 0;
+}

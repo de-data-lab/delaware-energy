@@ -1,52 +1,71 @@
+import { NavLink, Link } from "react-router-dom";
 import "./header.css";
-import logo from "/logos/dsha-logo-transparent.svg"
+import logo from "/logos/dsha-logo-transparent.svg";
+import info from "/icons/info-icon.svg";
+import infoActive from "/icons/info-icon-curved.svg";
 
 const HeaderLogo = () => {
   return (
     <div className="header-logo">
-        <a href="/" className="header-link">
-          <img src={logo} className="logo"></img>
-          <h1 className="header-title">DSHA Test App</h1>
-        </a>
+      <Link to="/" className="logo-link">
+        <img src={logo} className="logo" alt="Delaware State Housing Authority logo"></img>
+        <h1 className="header-title">DSHA Test App</h1>
+      </Link>
     </div>
   );
 };
 
-const HeaderTabBar = ({ page, setPage }) => {
-  // Toggle Button for map + explorer
-  const handlePageChange = () => {
-    setPage(!page);
-  };
+const HeaderLinks = () => {
+  return (
+    <div className="collapse navbar-collapse nav-links" id="navbarNavAltMarkup">
+      <div className="navbar-nav">
+        <NavLink className="nav-link" to="/">
+          Map
+        </NavLink>
+        <NavLink className="nav-link" to="/explorer">
+          District Explorer
+        </NavLink>
+        <NavLink
+          className="nav-link"
+          to="/info"
+        >
+          Information
+          <img
+            className="info-icon"
+            src={info}
+          ></img>
+        </NavLink>
+      </div>
+    </div>
+  );
+};
 
+const HeaderTabBar = () => {
   return (
     <div className="header-tab-bar">
-      {/* <button onClick={handlePageChange}>Here</button> */}
-      <label className="header-toggle-label" htmlFor="toggle-switch">
-        Map
-      </label>
-      <div className="form-check form-switch">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="toggle-switch"
-          onClick={handlePageChange}
-        ></input>
-      </div>
-      <label className="header-toggle-label" htmlFor="toggle-switch">
-        District Explorer
-      </label>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
     </div>
   );
 };
 
-const Header = ({ page, setPage }) => {
+const Header = () => {
   return (
     <div className="header">
-      <div className="header-container">
+      <nav className="navbar navbar-expand-lg navbar-dark">
         <HeaderLogo />
-        <HeaderTabBar page={page} setPage={setPage} />
-      </div>
+        <HeaderTabBar />
+        <HeaderLinks />
+      </nav>
     </div>
   );
 };

@@ -10,6 +10,18 @@
     border: .5px solid var(--grey);
 }
 
-.footer-logo {
+.ti-logo {
     width: 12rem;
+}
+
+.footer-logo {
+    width: 3.25rem;
+    aspect-ratio: 16/9;
+}
+
+@media only screen and (min-width: 1281px) {
+    
+    .footer-logo {
+        width: 4.375rem;
+    }
 }

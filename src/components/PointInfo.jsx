@@ -12,13 +12,13 @@ export const PointInfo = ({feature, variable, fundingSource}) => {
         const developerFees = feature?.properties?.["Applicable Credit Rate"];
         const propertyType = feature?.properties?.["Type of Property"];
         
-        const allocationAmountName = mapInfo[fundingSource].columns["aggregated_allocation_amount"]
+        const allocationAmountName = mapInfo[fundingSource].columns["ALLOCATION AMOUNT"]
         let allocationAmount = feature?.properties?.["ALLOCATION AMOUNT"]
         if (allocationAmount !== "TBD") {
             allocationAmount = `$${parseInt(allocationAmount).toLocaleString()}`
         }
         
-        const taxCreditsName = mapInfo[fundingSource].columns["aggregated_tax_credits"]
+        const taxCreditsName = mapInfo[fundingSource].columns["# of Tax Credit Units"]
         const taxCredits = feature?.properties?.["# of Tax Credit Units"]
 
     return (

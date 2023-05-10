@@ -55,7 +55,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
     // const sortByDistrict = () => setFeatureProps(featureProps.sort((a, b) => parseFloat(a.districtName) - parseFloat(b.districtName)))
 
     switch (variable) {
-      case "aggregated_tax_credits":
+      case "# of Tax Credit Units":
         setSumValue({
           sumValue: `${sum} units`,
           sumPercent: `${((sum / 2210) * 100).toFixed(1)}%`,
@@ -63,7 +63,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         break;
       // 2210 total units in DE
 
-      case "aggregated_allocation_amount":
+      case "ALLOCATION AMOUNT":
         moneyFormatter(0, 0);
 
         setSumValue({
@@ -76,7 +76,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         break;
       // 28016290 total allocation amount in DE
 
-      case "avg_allocation_per_unit":
+      case "Average Allocation per Tax Credit Unit":
         moneyFormatter(2, 2);
 
         setSumValue({
@@ -89,7 +89,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         break;
       // 28016290 total avg allocation amount in DE
 
-      case "avg_allocation_per_100_persons":
+      case "Average Allocation per 100 Persons":
         moneyFormatter(2, 2);
 
         setSumValue({
@@ -101,7 +101,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
         });
         break;
 
-      case "avg_population_per_tax_credit":
+      case "Average Population per Tax Credit Unit":
         
         wholeNumberFormatter(0, 0)
 

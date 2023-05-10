@@ -1,0 +1,22 @@
+.info-container {
+    background-color: var(--white);
+    padding: var(--padding-xl);
+    color: var(--navy);
+    margin-top: var(--margin-lg); 
+    border-radius: var(--border-sm)
+}
+
+.information-text {
+    font-size: var(--font-size-sm);
+}
+
+.information-header {
+    font-weight: bold;
+    font-size: var(--font-size-md);
+    text-align: center;
+    padding: 0 0 var(--padding-sm);
+}
+
+.information-header:not(:first-child) {
+    padding: var(--padding-sm) 0;
+}

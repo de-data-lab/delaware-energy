@@ -88,6 +88,8 @@
   
   .data-source-text, .link-list {
     font-size: var(--font-size-xxs);
+    /* color: var(--navy); */
+
   }
   
   /* Data source link list */

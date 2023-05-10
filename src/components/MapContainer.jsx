@@ -1,8 +1,8 @@
-// import './MapContainer.css'; 
 import React, { useState } from "react";
 
 import dshaData from "../data/DSHA_districted.json";
-import senateData from "../data/aggregated_senate_new.json";
+import senateData from "../data/aggregated_with_geo.json";
+
 
 import { DropdownMenu } from '../components/DropdownMenu';
 import { Map } from '../components/Map';
@@ -20,7 +20,7 @@ export const MapContainer = ({ MapContext }) => {
     // Dropdowns
     const [fundingSource, setFundingSource] = useState("LIHTC");
     // Dropdown for variable
-    const [variable, setVariable] = useState("aggregated_tax_credits");
+    const [variable, setVariable] = useState("# of Tax Credit Units");
     // building toggle
     const [building, setBuilding] = useState(false);
 

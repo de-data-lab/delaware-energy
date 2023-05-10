@@ -2,20 +2,20 @@ export const mapInfo = {
   LIHTC: {
     meta: {
       source: [
-        {name: "DSHA Housing Data", link: "http://www.destatehousing.com"},
+        { name: "DSHA Housing Data", link: "http://www.destatehousing.com" },
       ],
       title: "Low-income Housing Tax Credits",
-      displayName: "LIHTC"
+      displayName: "LIHTC",
     },
     columns: {
-      ["aggregated_tax_credits"]: "Total tax credit units",
-      ["aggregated_allocation_amount"]: "Total allocation amount",
-      ["avg_allocation_per_unit"]: "Average allocation amount per tax credit unit",
-      ["avg_allocation_per_100_persons"]: "Average allocation amount per 100 persons",
-      ["avg_population_per_tax_credit"]: "Average population per tax credit unit",
+      ["# of Tax Credit Units"]: "Total tax credit units",
+      ["ALLOCATION AMOUNT"]: "Total allocation amount",
+      ["Average Allocation per Tax Credit Unit"]: "Average allocation amount per tax credit unit",
+      ["Average Allocation per 100 Persons"]: "Average allocation amount per 100 persons",
+      ["Average Population per Tax Credit Unit"]: "Average population per tax credit unit",
       ["adj_popula"]: "Population",
     },
   },
 };
 
-export default mapInfo; 
+export default mapInfo;

@@ -8,6 +8,7 @@
   --black: rgb(0, 0, 0, .1);
   --light-navy: #354b62;
   --dark-navy: #1b2734;
+  --background: #DDDDDD;
   /* Font styles */
   --primary-font: "Lato", Helvetica, sans-serif;
   --secondary-font: "Helvetica Neue", mono;
@@ -19,6 +20,7 @@
   --font-size-sm: clamp(0.9rem, 0.3vw + 0.8rem, 1.3rem);
   --font-size-xs: clamp(0.8rem, 0.1vw + 0.8rem, 1rem);
   --font-size-xxs: clamp(0.8rem, 0vw + 0.8rem, 0.8rem);
+  --font-size-xxxs: clamp(0.7rem, 0vw + 0.7rem, 0.7rem);
   /* Border Radius */
   --border-sm: 10px;
   --border-lg: 35px;
@@ -71,11 +73,12 @@ p {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
 }
 
 #content-container {
   position: relative;
-  height: 100%;
   z-index: 0;
+  flex: 1;
+  background-color: var(--background);
 }

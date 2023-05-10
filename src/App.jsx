@@ -4,11 +4,11 @@ export const MapContext = React.createContext();
 
 import "./index.css";
 
-import { MapContainer } from "./components/MapContainer";
-import { Footer } from "./components/Footer";
 import Header from "./components/Header";
+import { MapContainer } from "./components/MapContainer";
 import { DistrictExplorer } from "./components/DistrictExplorer";
-
+import { Info } from "./components/Info";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -17,9 +17,9 @@ function App() {
         <Header />
           <div id="content-container">
           <Routes>
-            <Route path="/" element={<MapContainer MapContext={MapContext} />} />
-            <Route path="/explorer" element={<DistrictExplorer />} />
-            <Route path="/info" element={<DistrictExplorer />} />
+            <Route path="" element={<MapContainer MapContext={MapContext} />} />
+            <Route path="explorer" element={<DistrictExplorer />}/>
+            <Route path="info" element={<Info />} />
           </Routes>
           </div>
         <Footer />

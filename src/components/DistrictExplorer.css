@@ -1,0 +1,53 @@
+.interaction-container {
+    background-color: rgb(255,255,255,.7);
+    box-shadow: var(--box-shadow);
+    padding: .5rem;
+}
+
+.options-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.select-explorer {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    margin: var(--margin-xxxs);
+    color: var(--navy);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.explorer-button {
+    padding: var(--padding-xs);
+    margin: var(--margin-xxxs);
+    border: none;
+    color: var(--white);
+    width: 20rem;
+    border-radius: var(--border-sm);
+}
+.explorer-button:hover, .explorer-button:focus, .explorer-button:active {
+    background-color: var(--light-navy);
+    transition: ease-in .3s;
+}
+.selected {
+    background-color: var(--light-navy);
+}
+.unselected {
+    background-color: var(--navy);
+}
+
+/* @media only screen and (min-width: 1281px) {
+    .explorer-button {
+        margin: var(--margin-xxs);
+        padding: var(--padding-sm);
+    }
+    .select-explorer {
+        margin: var(--margin-xxs);
+    }
+  } */

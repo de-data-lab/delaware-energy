@@ -58,11 +58,11 @@
 }
 
 /* Table styles on sumPopup */
-table {
+.sumPopup-table {
   width: 100%;
 }
 
-th {
+.table-head {
   padding-bottom: 0.25rem;
   font-size: var(--font-size-xxs);
 }
@@ -107,7 +107,7 @@ td > h3 {
 }
 
 .button-text {
-  font-size: var(--font-size-xxs);
+  font-size: var(--font-size-sm);
   padding: 0 0.5rem;
 }
 

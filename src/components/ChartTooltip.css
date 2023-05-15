@@ -4,14 +4,10 @@
     gap: 1rem;
 }
 
-.sire-tooltip {
-    padding: 1rem;
-}
-
 .tooltip-title h3 {
    font-weight: 600;
-   font-size: 1rem; 
-   /* margin: 0 .5rem 0 0; */
+   font-size: 1rem;
+
 }
 
 .tooltip-row-title {

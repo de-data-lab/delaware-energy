@@ -9,6 +9,8 @@
   --light-navy: #354b62;
   --dark-navy: #1b2734;
   --background: #DDDDDD;
+  --table-header: hsl(0 0% 0% / .35);
+  --table-row: hsl(0 0% 0% / .1);
   /* Font styles */
   --primary-font: "Lato", Helvetica, sans-serif;
   --secondary-font: "Helvetica Neue", mono;
@@ -81,4 +83,9 @@ p {
   z-index: 0;
   flex: 1;
   background-color: var(--background);
+}
+
+/* makes sure react-select dropdowns are in front of custom collapse button */
+#react-select {
+  z-index: 3;
 }

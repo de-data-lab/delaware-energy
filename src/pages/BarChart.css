@@ -5,7 +5,7 @@
   }
   
   .chart { 
-    width: 100%;
+    max-width: 100%;
     border: 1px solid #eaeaea;
     background: rgb(240,240,240);
     background: linear-gradient(43deg, rgba(240,240,240,1) 0%, rgba(255,255,255,1) 10%, rgba(255,255,255,1) 55%, rgba(255,255,255,1) 90%, rgba(240,240,240,1) 100%);
@@ -35,19 +35,11 @@
     font-weight: 100;
   }
   
-  .point, .lines {
-    transition: var(--transition);
-  }
-  
   .bar {
     transition: var(--transition); 
     animation: 1s bar-animate ease-in-out backwards;
   }
   
-  .legend-entry:hover > .legend-text, .legend-entry:hover > .legend-rect {
-    opacity: .6;
-    cursor: pointer; 
-  }
   
   /*  */
   
@@ -70,28 +62,18 @@
     r: 5; 
   }
   
-  .line:hover { 
-    cursor: pointer; 
-  }
-  
-  
-  .legend text {
-    font-size: var(--font-size-xxxs);
-    font-family: var(--main-font);
-    font-weight: 600;
-  }
-  
   .title {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-lg);
     font-family: var(--main-font);
     font-weight: 600;
-    fill:black;
+    fill: var(--navy);
   }
   
   .subtitle { 
-    font-size: var(--font-size-xxs);
+    font-size: var(--font-size-md);
     font-family: var(--main-font);
     font-weight: 200; 
+    fill: var(--navy);
   }
 
   /* Responsive layout */
@@ -103,19 +85,18 @@
     margin: 1rem 0;
   }
 
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  .x-axis {
+    font-size: var(--font-size-sm);
   }
 
   .chart-container {
-    padding: 0 5rem;
+    padding: 0 6rem;
     flex: 1;
   }
 
   .legend-container {
-    width: 30%;
+    width: 40%;
+    color: var(--navy);
   }
 
   .chart-legend { 
@@ -124,11 +105,12 @@
     background: linear-gradient(43deg, rgba(240,240,240,1) 0%, rgba(255,255,255,1) 10%, rgba(255,255,255,1) 55%, rgba(255,255,255,1) 90%, rgba(240,240,240,1) 100%);
   }
 
+ 
 
   /* mobile + tablet only */
 @media only screen and (max-width: 991px) {
   .chart-container {
-    padding: .5rem;
+    padding: 0 .5rem;
     flex-grow: 1;
   }
 
@@ -146,19 +128,26 @@
 /* SM Desktop */
 @media only screen and (min-width: 1280px) {
   .chart-container {
-    padding: 0 15rem;
+    /* padding: 0 15rem; */
   }
 }
 /* MD/LG Desktop */
 @media only screen and (min-width: 1920px) {
   .chart-container {
-    padding: 0 25rem;
+    /* padding: 0 25rem; */
+  }
+  .title {
+    font-size: var(--font-size-md);
+  }
+  
+  .subtitle { 
+    font-size: var(--font-size-sm);
   }
 }
 
 /* XL Desktop */
 @media only screen and (min-width: 2100px) {
   .chart-container {
-    padding: 0 30rem;
+    /* padding: 0 30rem; */
   }
 }

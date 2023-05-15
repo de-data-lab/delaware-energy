@@ -6,20 +6,15 @@ export const Tooltip = ({ feature, variable, fundingSource }) => {
     const variableName = mapInfo[fundingSource].columns[variable];
     let variableValue = feature?.properties?.[variable];
     // Check if variable value is null and set to 0, otherwise make sure its a number
-    (variableValue == null) ? (variableValue = 0) : (variableValue = parseInt(variableValue));
+    (variableValue == null) ? (variableValue = 0) : (variableValue = parseFloat(variableValue));
 
     switch (variable) {
-      case "aggregated_allocation_amount":
-        variableValue = `$${variableValue.toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-          minimumFractionDigits: 0,
-        })}`;
-        break;
-      case "avg_allocation_per_unit":
-      case "avg_allocation_per_100_persons":
+      case "ALLOCATION AMOUNT":
+      case "Average Allocation per Tax Credit Unit":
+      case "Average Allocation per 100 Persons":
         variableValue = `$${variableValue.toLocaleString(undefined, {
           maximumFractionDigits: 2,
-          minimumFractionDigits: 2,
+          minimumFractionDigits: 0,
         })}`;
         break;
       default:

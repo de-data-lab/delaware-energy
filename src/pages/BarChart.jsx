@@ -1,6 +1,7 @@
 import mapInfo from "../utils/mapInfo";
+import Select from "react-select";
 import "./BarChart.css";
-import ChartTooltip, { useTooltip } from "./ChartTooltip";
+import ChartTooltip, { useTooltip } from "../components/ChartTooltip";
 
 // @ts-check
 
@@ -46,11 +47,15 @@ function BarChart({
   subtitle,
   xAxis,
   yAxis,
-  yAxisFormat,
   filterColumn,
   filterValue,
   districtFilterValue,
-  tooltipConfig
+  tooltipConfig,
+  handleDistrictChange,
+  district,
+  districtOptions,
+  collapseButton,
+  reference,
 }) {
   const [data, setData] = useState([]);
   const [hovered, setHovered] = useState(null);
@@ -59,25 +64,26 @@ function BarChart({
 
   const svg = useRef(null);
 
-  const { 
-    tooltipData, 
-    showTooltip, 
-    tooltipRef 
-  } = useTooltip(); 
+  const { tooltipData, showTooltip, tooltipRef } = useTooltip();
+
+  const [isSearchable, setIsSearchable] = useState(true);
 
   useEffect(() => {
     csv(chartData).then((result) => {
       const variableFilteredData = result.filter((i) =>
         filterColumn ? i[filterColumn] === `${filterValue}` : i
       );
-      const filteredData = variableFilteredData.filter(item => {
+      const filteredData = variableFilteredData.filter((item) => {
         return districtFilterValue.some((f) => {
-          return f.value === parseInt(item.district);
+          return (
+            f.value === parseInt(item.district) || item.district === reference
+          );
         });
-      })
-      setData(filteredData.filter((d) => parseInt(d[xAxis]) !== 0));
+      });
+      setData(filteredData);
     });
   }, [filterValue, districtFilterValue]);
+
   /**
    * @todo Abstract this out into a reusable type/object, figure out responsive sizing
    * @typedef {object} ConfigObject
@@ -93,32 +99,12 @@ function BarChart({
 
   /** @type ConfigObject */
   const config = {
-    mt: 60,
-    mr: 100,
+    mt: 100,
+    mr: 60,
     mb: 0,
-    ml: 100,
+    ml: 120,
     ch: 400,
     cw: 700,
-    height: function () {
-      return this.ch + this.mb + this.mt;
-    },
-    width: function () {
-      return this.cw + this.mr + this.ml;
-    },
-  };
-
-  // const groupedData = Array.from(group(data, (d) => d[series])).sort((a, b) =>
-  //   a[0][0] > b[0][0] ? 1 : -1
-  // );
-  // iterable list of data grouped by level
-
-  const legend = {
-    mt: 60,
-    mr: 0,
-    mb: 60,
-    ml: 60,
-    ch: 400,
-    cw: 250,
     height: function () {
       return this.ch + this.mb + this.mt;
     },
@@ -151,6 +137,30 @@ function BarChart({
       .range(colorScheme),
   };
 
+  const yAxisFormat = (d) => {
+    switch (filterValue) {
+      case "ALLOCATION AMOUNT":
+      case "Average Allocation per Tax Credit Unit":
+      case "Average Allocation per 100 Persons":
+        return `$${parseFloat(d).toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+          minimumFractionDigits: 0,
+        })}`;
+
+      case "adj_popula":
+      case "Average Population per Tax Credit Unit":
+        return `${parseFloat(d).toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+          minimumFractionDigits: 0,
+        })}`;
+
+      default:
+        return `${parseFloat(d).toLocaleString(undefined, {
+          maximumFractionDigits: 1,
+          minimumFractionDigits: 0,
+        })}`;
+    }
+  };
 
   /**
    * Draws or redraws the x and y axes
@@ -162,15 +172,19 @@ function BarChart({
       .call(
         axisBottom(scales.x)
           .tickSize(10)
-          // .tickFormat((d) => "District " + d)
+          .tickFormat((d) => {
+            if (isNaN(parseFloat(d))) {
+              return "State Average";
+            }
+            return d;
+          })
       );
-
     select(svg.current)
       .select(".y-axis")
       .transition()
       .call(
         axisLeft(scales.y)
-          .tickSize(-(config.width() - config.mr -config.ml))
+          .tickSize(-(config.width() - config.mr - config.ml))
           .tickPadding(20)
           // Incorporate money formatter
           .tickFormat(yAxisFormat)
@@ -184,11 +198,33 @@ function BarChart({
 
   const handleMouseOver = (anchor, data) => {
     showTooltip(anchor, data);
-  }
+  };
 
   return (
     <>
-      <div className="svg-container">
+      <div
+        className={
+          "svg-container " + (collapseButton ? "container-margin" : "")
+        }
+      >
+        <div className="legend-container">
+          <label className="label-text">Select districts to compare:</label>
+          <Select
+            onChange={(e) => handleDistrictChange(e)}
+            options={districtOptions.filter((item) => {
+              return !district.some((f) => {
+                return f.value === item.value;
+              });
+            })}
+            id="react-select"
+            name="districts"
+            className="basic-multi-select"
+            classNamePrefix="select"
+            isSearchable={isSearchable}
+            defaultValue={district}
+            isMulti
+          ></Select>
+        </div>
         <svg
           ref={svg}
           className="chart"
@@ -202,7 +238,7 @@ function BarChart({
               {" "}
               {title}{" "}
             </text>
-            <text className="subtitle" dy={20} textAnchor="middle">
+            <text className="subtitle" dy={25} textAnchor="middle">
               {" "}
               {subtitle}{" "}
             </text>
@@ -215,45 +251,69 @@ function BarChart({
           </g>
 
           <g className="bars">
-            {data.map((d, seriesIndex) => (
-              <rect
-                key={d[seriesIndex]}
-                x={scales.x(parseInt(d[xAxis]))}
-                y={scales.y(d[yAxis])}
-                fill="var(--blue)"
-                width={scales.x.bandwidth()}
-                height={config.ch - scales.y(d[yAxis])}
-                className={`bar ${
-                  hiddenSeries.includes(d[0])
-                    ? "hidden"
-                    : hovered && d[0] !== hovered
-                    ? "unfocus"
-                    : ""
-                }`}
-                rx="5"
-                style={{
-                  animationDelay: `${.5}s`,
-                  marginRight: `${2}rem`
-                }}
-                onMouseOver = {(e) => {
-                  setHovered(d[0])
-                  handleMouseOver(e, d);
-                }}
-              ></rect>
-            ))}
+            {data.map((d, seriesIndex) =>
+              d[xAxis] !== reference ? (
+                <rect
+                  key={d[xAxis]}
+                  x={scales.x(parseInt(d[xAxis]))}
+                  y={scales.y(d[yAxis])}
+                  fill="var(--blue)"
+                  width={scales.x.bandwidth()}
+                  height={config.ch - scales.y(d[yAxis])}
+                  className={`bar ${
+                    hiddenSeries.includes(d[0])
+                      ? "hidden"
+                      : hovered && d[0] !== hovered
+                      ? "unfocus"
+                      : ""
+                  }`}
+                  rx="5"
+                  style={{
+                    animationDelay: `${0.2 * seriesIndex}s`,
+                  }}
+                  onMouseOver={(e) => {
+                    setHovered(d[0]);
+                    handleMouseOver(e, d);
+                  }}
+                ></rect>
+              ) : (
+                <rect
+                  key={d[xAxis]}
+                  x={scales.x(parseInt(d[xAxis]))}
+                  y={scales.y(d[yAxis])}
+                  fill="var(--red)"
+                  width={scales.x.bandwidth()}
+                  height={config.ch - scales.y(d[yAxis])}
+                  className={`bar ${
+                    hiddenSeries.includes(d[0])
+                      ? "hidden"
+                      : hovered && d[0] !== hovered
+                      ? "unfocus"
+                      : ""
+                  }`}
+                  rx="5"
+                  style={{
+                    animationDelay: `${0.2 * seriesIndex}s`,
+                  }}
+                  onMouseOver={(e) => {
+                    setHovered(d[0]);
+                    handleMouseOver(e, d);
+                  }}
+                ></rect>
+              )
+            )}
           </g>
         </svg>
       </div>
       <div></div>
-      <ChartTooltip 
-          data = {tooltipData}
-          xAxis = {xAxis}
-          yAxis = {yAxis}
-          title = {`District ${xAxis}`}
-          anchor = {tooltipRef}
-          colorScale = {scales.color}
-          {...tooltipConfig}
-        />
+      <ChartTooltip
+        data={tooltipData}
+        xAxis={xAxis}
+        yAxis={yAxis}
+        anchor={tooltipRef}
+        colorScale={scales.color}
+        {...tooltipConfig}
+      />
     </>
   );
 }

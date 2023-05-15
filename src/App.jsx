@@ -4,11 +4,11 @@ export const MapContext = React.createContext();
 
 import "./index.css";
 
-import Header from "./components/Header";
-import { MapContainer } from "./components/MapContainer";
-import { DistrictExplorer } from "./components/DistrictExplorer";
-import { Info } from "./components/Info";
-import { Footer } from "./components/Footer";
+import Header from "./layout/Header";
+import { MapContainer } from "./pages/MapContainer";
+import { DistrictExplorer } from "./pages/DistrictExplorer";
+import { Info } from "./pages/Info";
+import { Footer } from "./layout/Footer";
 
 function App() {
   return (

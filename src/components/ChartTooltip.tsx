@@ -123,9 +123,9 @@ export interface TooltipConfig {
         backgroundColor: "rgba(255,255,255,0.9)",
         zIndex: 900,
         boxShadow: "1px 1px 10px rgba(0,0,0,0.2)",
-        borderRadius: "10px",
-        color: "#696969",
-        fontFamily: "var(--main-font)"
+        borderRadius: "var(--border-sm)",
+        color: "var(--navy)",
+        fontFamily: "var(--primary-font)"
         }
 
     return (
@@ -148,7 +148,7 @@ export interface TooltipConfig {
                 customContent &&
                 <>
                 <div className="tooltip-title">
-                      <div style={{backgroundColor: colorScale(data[title!]), height: "10px", width: "10px", borderRadius: "2px"}}></div>
+                      {/* <div style={{backgroundColor: "var(--blue)", height: "10px", width: "10px", borderRadius: "2px"}}></div> */}
                       <h3>{!customTitle ? data[title!] : customTitle(data)}</h3>
                    </div>
                <div dangerouslySetInnerHTML={{__html: customContent(data)}}/>  {/* Refactor not to use dangerouslySetInnerHTML... */}

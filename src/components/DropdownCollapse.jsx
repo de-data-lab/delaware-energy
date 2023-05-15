@@ -1,10 +1,10 @@
 import "./DropdownCollapse.css";
 
-export const DropdownCollapse = ({button, toggleButton}) => {
+export const DropdownCollapse = ({button, toggleButton, openClass, closeClass}) => {
 
   return (
     <button
-    className={"toggle-button " + (button ? "toggle-button-close" : "button-open")}
+    className={"toggle-button " + (button ? closeClass : openClass)}
     aria-expanded={!button}
     aria-controls="dropdown-menu"
     aria-label="Toggle Dropdown Menu"

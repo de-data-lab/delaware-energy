@@ -1,8 +1,8 @@
 import { NavLink, Link } from "react-router-dom";
 import "./header.css";
 import logo from "/logos/dsha-logo-transparent.svg";
-import info from "/icons/info-icon.svg";
-import infoActive from "/icons/info-icon-curved.svg";
+// import info from "/icons/info-icon.svg";
+import info from "/icons/info-icon-curved.svg";
 
 const HeaderLogo = () => {
   return (

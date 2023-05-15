@@ -134,30 +134,28 @@ export const PopupText = ({ fundingSource, variable, array }) => {
 
   return (
     <div className="content-container">
-      <table>
+      <table className="sumPopup-table">
         <thead>
           <tr className="label-text">
-            <th>District</th>
-            <th>{variableName}</th>
+            <th className="table-head">District</th>
+            <th className="table-head">{variableName}</th>
           </tr>
         </thead>
         <tbody>
+          {featureProps.map((item, i) => (
           <tr>
             <td className="district-number">
-              {featureProps.map((item, i) => (
                 <h2 key={i} className="info-text">
                   District {item.districtName}
                 </h2>
-              ))}
             </td>
             <td className="table-data">
-              {featureProps.map((item, i) => (
                 <h3 key={i} className="info-text">
                   {item.value}
                 </h3>
-              ))}
             </td>
           </tr>
+          ))}
           <tr>
             <td></td>
             <td className="total">

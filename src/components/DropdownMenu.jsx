@@ -24,7 +24,7 @@ export const DropdownMenu = ({}) => {
 
     return (
     <>
-    <DropdownCollapse button={button} toggleButton={toggleButton}/>
+    <DropdownCollapse button={button} toggleButton={toggleButton} openClass={"button-open"} closeClass={"toggle-button-close"}/>
     
     <div className={"dropdown-menu " + (button ? "menu-close" : "")} id="dropdown-menu">
         <h2 className="dropdown-header">

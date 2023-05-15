@@ -1,0 +1,111 @@
+district,name,Funding Source,variable,value
+0,0,LIHTC,# of Tax Credit Units,70.0
+1,Sarah Mcbride,LIHTC,# of Tax Credit Units,260.0
+10,Stephanie L. Hansen,LIHTC,# of Tax Credit Units,106.0
+11,Bryan Townsend,LIHTC,# of Tax Credit Units,60.0
+13,Marie Pinkney,LIHTC,# of Tax Credit Units,120.0
+14,Kyra Hoffner,LIHTC,# of Tax Credit Units,54.0
+15,Dave Lawson,LIHTC,# of Tax Credit Units,158.0
+16,Eric Buckson,LIHTC,# of Tax Credit Units,36.0
+17,Trey Paradee,LIHTC,# of Tax Credit Units,210.0
+18,Dave Wilson,LIHTC,# of Tax Credit Units,102.0
+19,Brian G. Pettyjohn,LIHTC,# of Tax Credit Units,24.0
+2,Darius J. Brown,LIHTC,# of Tax Credit Units,210.0
+20,Gerald W. Hocker,LIHTC,# of Tax Credit Units,178.0
+21,Bryant L. Richardson,LIHTC,# of Tax Credit Units,34.0
+3,S. Elizabeth Lockman,LIHTC,# of Tax Credit Units,626.0
+6,Russ Huxtable,LIHTC,# of Tax Credit Units,32.0
+4,Laura Sturgeon,LIHTC,# of Tax Credit Units,0
+7,Spiros Mantzavinos,LIHTC,# of Tax Credit Units,0
+12,Nicole Poore,LIHTC,# of Tax Credit Units,0
+9,Jack Walsh,LIHTC,# of Tax Credit Units,0
+5,Kyle Evans Gay,LIHTC,# of Tax Credit Units,0
+8,David P. Sokola,LIHTC,# of Tax Credit Units,0
+0,0,LIHTC,ALLOCATION AMOUNT,1247683.0
+1,Sarah Mcbride,LIHTC,ALLOCATION AMOUNT,2345086.0
+10,Stephanie L. Hansen,LIHTC,ALLOCATION AMOUNT,656670.0
+11,Bryan Townsend,LIHTC,ALLOCATION AMOUNT,774946.0
+13,Marie Pinkney,LIHTC,ALLOCATION AMOUNT,497801.0
+14,Kyra Hoffner,LIHTC,ALLOCATION AMOUNT,0
+15,Dave Lawson,LIHTC,ALLOCATION AMOUNT,3013465.0
+16,Eric Buckson,LIHTC,ALLOCATION AMOUNT,999013.0
+17,Trey Paradee,LIHTC,ALLOCATION AMOUNT,620003.0
+18,Dave Wilson,LIHTC,ALLOCATION AMOUNT,1021863.0
+19,Brian G. Pettyjohn,LIHTC,ALLOCATION AMOUNT,808468.0
+2,Darius J. Brown,LIHTC,ALLOCATION AMOUNT,3677286.0
+20,Gerald W. Hocker,LIHTC,ALLOCATION AMOUNT,3836714.0
+21,Bryant L. Richardson,LIHTC,ALLOCATION AMOUNT,643394.0
+3,S. Elizabeth Lockman,LIHTC,ALLOCATION AMOUNT,8603537.0
+6,Russ Huxtable,LIHTC,ALLOCATION AMOUNT,518044.0
+4,Laura Sturgeon,LIHTC,ALLOCATION AMOUNT,0
+7,Spiros Mantzavinos,LIHTC,ALLOCATION AMOUNT,0
+12,Nicole Poore,LIHTC,ALLOCATION AMOUNT,0
+9,Jack Walsh,LIHTC,ALLOCATION AMOUNT,0
+5,Kyle Evans Gay,LIHTC,ALLOCATION AMOUNT,0
+8,David P. Sokola,LIHTC,ALLOCATION AMOUNT,0
+0,0,LIHTC,adj_popula,0
+1,Sarah Mcbride,LIHTC,adj_popula,44856
+10,Stephanie L. Hansen,LIHTC,adj_popula,47281
+11,Bryan Townsend,LIHTC,adj_popula,48203
+13,Marie Pinkney,LIHTC,adj_popula,48294
+14,Kyra Hoffner,LIHTC,adj_popula,49253
+15,Dave Lawson,LIHTC,adj_popula,47104
+16,Eric Buckson,LIHTC,adj_popula,47958
+17,Trey Paradee,LIHTC,adj_popula,49042
+18,Dave Wilson,LIHTC,adj_popula,48592
+19,Brian G. Pettyjohn,LIHTC,adj_popula,48726
+2,Darius J. Brown,LIHTC,adj_popula,44817
+20,Gerald W. Hocker,LIHTC,adj_popula,49198
+21,Bryant L. Richardson,LIHTC,adj_popula,49233
+3,S. Elizabeth Lockman,LIHTC,adj_popula,44811
+6,Russ Huxtable,LIHTC,adj_popula,48512
+4,Laura Sturgeon,LIHTC,adj_popula,44999
+7,Spiros Mantzavinos,LIHTC,adj_popula,45401
+12,Nicole Poore,LIHTC,adj_popula,47368
+9,Jack Walsh,LIHTC,adj_popula,45280
+5,Kyle Evans Gay,LIHTC,adj_popula,45037
+8,David P. Sokola,LIHTC,adj_popula,45633
+0,0,LIHTC,Average Allocation per 100 Persons,0
+1,Sarah Mcbride,LIHTC,Average Allocation per 100 Persons,5228.031924380239
+10,Stephanie L. Hansen,LIHTC,Average Allocation per 100 Persons,1388.8665637359616
+11,Bryan Townsend,LIHTC,Average Allocation per 100 Persons,1607.671721677074
+13,Marie Pinkney,LIHTC,Average Allocation per 100 Persons,1030.7719385430903
+14,Kyra Hoffner,LIHTC,Average Allocation per 100 Persons,0
+15,Dave Lawson,LIHTC,Average Allocation per 100 Persons,6397.471552309783
+16,Eric Buckson,LIHTC,Average Allocation per 100 Persons,2083.099795654531
+17,Trey Paradee,LIHTC,Average Allocation per 100 Persons,1264.2286203662168
+18,Dave Wilson,LIHTC,Average Allocation per 100 Persons,2102.9449292064537
+19,Brian G. Pettyjohn,LIHTC,Average Allocation per 100 Persons,1659.2127406312852
+2,Darius J. Brown,LIHTC,Average Allocation per 100 Persons,8205.114130798582
+20,Gerald W. Hocker,LIHTC,Average Allocation per 100 Persons,7798.516199845522
+21,Bryant L. Richardson,LIHTC,Average Allocation per 100 Persons,1306.8348465460158
+3,S. Elizabeth Lockman,LIHTC,Average Allocation per 100 Persons,19199.609470888845
+6,Russ Huxtable,LIHTC,Average Allocation per 100 Persons,1067.8677440633246
+4,Laura Sturgeon,LIHTC,Average Allocation per 100 Persons,0
+7,Spiros Mantzavinos,LIHTC,Average Allocation per 100 Persons,0
+12,Nicole Poore,LIHTC,Average Allocation per 100 Persons,0
+9,Jack Walsh,LIHTC,Average Allocation per 100 Persons,0
+5,Kyle Evans Gay,LIHTC,Average Allocation per 100 Persons,0
+8,David P. Sokola,LIHTC,Average Allocation per 100 Persons,0
+0,0,LIHTC,Average Population per Tax Credit Unit,0
+1,Sarah Mcbride,LIHTC,Average Population per Tax Credit Unit,172.52307692307693
+10,Stephanie L. Hansen,LIHTC,Average Population per Tax Credit Unit,446.04716981132077
+11,Bryan Townsend,LIHTC,Average Population per Tax Credit Unit,803.3833333333333
+13,Marie Pinkney,LIHTC,Average Population per Tax Credit Unit,402.45
+14,Kyra Hoffner,LIHTC,Average Population per Tax Credit Unit,912.0925925925926
+15,Dave Lawson,LIHTC,Average Population per Tax Credit Unit,298.126582278481
+16,Eric Buckson,LIHTC,Average Population per Tax Credit Unit,1332.1666666666667
+17,Trey Paradee,LIHTC,Average Population per Tax Credit Unit,233.53333333333333
+18,Dave Wilson,LIHTC,Average Population per Tax Credit Unit,476.3921568627451
+19,Brian G. Pettyjohn,LIHTC,Average Population per Tax Credit Unit,2030.25
+2,Darius J. Brown,LIHTC,Average Population per Tax Credit Unit,213.4142857142857
+20,Gerald W. Hocker,LIHTC,Average Population per Tax Credit Unit,276.39325842696627
+21,Bryant L. Richardson,LIHTC,Average Population per Tax Credit Unit,1448.0294117647059
+3,S. Elizabeth Lockman,LIHTC,Average Population per Tax Credit Unit,71.58306709265176
+6,Russ Huxtable,LIHTC,Average Population per Tax Credit Unit,1516.0
+4,Laura Sturgeon,LIHTC,Average Population per Tax Credit Unit,0
+7,Spiros Mantzavinos,LIHTC,Average Population per Tax Credit Unit,0
+12,Nicole Poore,LIHTC,Average Population per Tax Credit Unit,0
+9,Jack Walsh,LIHTC,Average Population per Tax Credit Unit,0
+5,Kyle Evans Gay,LIHTC,Average Population per Tax Credit Unit,0
+8,David P. Sokola,LIHTC,Average Population per Tax Credit Unit,0

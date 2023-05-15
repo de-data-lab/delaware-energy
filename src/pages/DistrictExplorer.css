@@ -1,7 +1,35 @@
 .interaction-container {
     background-color: rgb(255,255,255,.7);
     box-shadow: var(--box-shadow);
-    padding: .5rem;
+    margin-bottom: 3rem;
+    padding: 1rem 0 2rem;
+    /* padding-bottom: 2rem; */
+    height: 12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.container-close {
+    display: none;
+}
+
+.collapse-button-close {
+    position: absolute;
+    transform: rotate(270deg);
+    top: var(--margin-xxs);
+    left: var(--margin-xxs);
+    transition: all .5s ease-out;
+    margin-bottom: 2rem;
+}
+
+.collapse-button-open {
+    position: absolute;
+    transform: rotate(90deg);
+    left: calc(50% - 29px);
+    /* (Dropdown menu width + button height) / 2 */
+    top: calc(12rem - 29px);
+    transition: all .5s ease-out;
 }
 
 .options-container {
@@ -51,3 +79,16 @@
         margin: var(--margin-xxs);
     }
   } */
+
+@media only screen and (max-width: 750px) {
+    .interaction-container {
+        height: 20rem;
+    }
+
+    .collapse-button-open {
+        left: calc(50% - 29px);
+        /* (Dropdown menu width + button height) / 2 */
+        top: calc(20rem - 29px);
+    }
+
+  }

@@ -14,9 +14,9 @@ import mapInfo from "../utils/mapInfo";
 import { MapContext } from "../App";
 import LegendControl from "mapboxgl-legend";
 
-import { PointInfo } from "./PointInfo";
-import { SumPopup } from "./SumPopup";
-import { Tooltip } from "./Tooltip";
+import { PointInfo } from "../components/PointInfo";
+import { SumPopup } from "../components/SumPopup";
+import { Tooltip } from "../components/Tooltip";
 // import {onHover, offHover} from "../utils/onHover";
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
@@ -84,10 +84,6 @@ export const Map = ({ lng, lat, zoom }) => {
       colorArray.push(arr[0]);
       colorArray.push(arr[1]);
     });
-
-    // let img = new Image(20,20)
-    // img.onload = () => map.current.addImage('home', img, { sdf: true })
-    // img.src = icon
 
     // Legend Name
     let legendName = mapInfo[fundingSource].columns[variable];
@@ -254,6 +250,8 @@ export const Map = ({ lng, lat, zoom }) => {
       map.current.easeTo({
         center: [lng, lat],
         zoom: zoom,
+        bearing: 0,
+        pitch: 0
       });
     });
 

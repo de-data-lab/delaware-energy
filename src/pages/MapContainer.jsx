@@ -5,7 +5,7 @@ import senateData from "../data/aggregated_with_geo.json";
 
 
 import { DropdownMenu } from '../components/DropdownMenu';
-import { Map } from '../components/Map';
+import { Map } from './Map';
 
 
 export const MapContainer = ({ MapContext }) => { 

@@ -27,7 +27,7 @@
 
 .header-title {
   font-size: var(--font-size-lg);
-  font-weight: 400;
+  /* font-weight: 300; */
 }
 
 /* HEADER LINKS */
@@ -91,7 +91,7 @@
     padding: var(--padding-sm);
   }
   .header-tab-bar {
-    padding: 0 var(--padding-sm);
+    padding: var(--padding-sm);
   }
   .nav-link:not(:first-child) {
     border-top: 1px solid var(--dark-navy);

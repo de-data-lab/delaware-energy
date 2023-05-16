@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 
 import mapInfo from "../utils/mapInfo";
 import "./PointInfo.css";
+import "./SumPopup.css";
 
-export const PopupText = ({ fundingSource, variable, array }) => {
+export const PopupText = ({ fundingSource, variable, array, mapData }) => {
   const [variableName, setVariableName] = useState(null);
   //   after summing
   const [sumValue, setSumValue] = useState({
@@ -14,6 +15,9 @@ export const PopupText = ({ fundingSource, variable, array }) => {
   const [featureProps, setFeatureProps] = useState([
     { districtName: null, value: null },
   ]);
+
+  // takes all variable values and sums them up
+  const totalVariable = mapData.features.map(district => !district.properties[variable] ? 0 : Number(district.properties[variable])).reduce((a, b) => a + b);
 
   useEffect(() => {
     let tempArray = array.map((item) => ({
@@ -52,13 +56,12 @@ export const PopupText = ({ fundingSource, variable, array }) => {
       );
     };
 
-    // const sortByDistrict = () => setFeatureProps(featureProps.sort((a, b) => parseFloat(a.districtName) - parseFloat(b.districtName)))
 
     switch (variable) {
       case "# of Tax Credit Units":
         setSumValue({
           sumValue: `${sum} units`,
-          sumPercent: `${((sum / 2210) * 100).toFixed(1)}%`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
       // 2210 total units in DE
@@ -71,7 +74,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}`,
-          sumPercent: `${((sum / 28016290) * 100).toFixed(1)}%`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
       // 28016290 total allocation amount in DE
@@ -84,10 +87,10 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
           })}`,
-          sumPercent: `${((sum / 213679.7769) * 100).toFixed(1)}%`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
-      // 28016290 total avg allocation amount in DE
+      // 213679.7769 total avg allocation pet tax credit
 
       case "Average Allocation per 100 Persons":
         moneyFormatter(2, 2);
@@ -97,9 +100,10 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             maximumFractionDigits: 2,
             minimumFractionDigits: 2,
           })}`,
-          sumPercent: `${((sum / 60340.24) * 100).toFixed(1)}%`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
+        // total avg allocation per 100 =  60340.24
 
       case "Average Population per Tax Credit Unit":
         
@@ -110,9 +114,11 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}`,
-          sumPercent: `${((sum / 10632) * 100).toFixed(1)}%`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
+        // avg pop per tax credit unit = 10632
+
       
         case "adj_popula":
         
@@ -123,9 +129,11 @@ export const PopupText = ({ fundingSource, variable, array }) => {
             maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}`,
-          sumPercent: `${((sum / 989598) * 100).toFixed(1)}%`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
+        // total pop 989598
+
 
       default:
         break;
@@ -150,7 +158,7 @@ export const PopupText = ({ fundingSource, variable, array }) => {
                 </h2>
             </td>
             <td className="table-data">
-                <h3 key={i} className="info-text">
+                <h3 key={item.districtName} className="info-text">
                   {item.value}
                 </h3>
             </td>
@@ -177,6 +185,7 @@ export const SumPopup = ({
   variable,
   array,
   clearSelection,
+  mapData
 }) => {
   return (
     <div tabIndex={0} className="popup-container">
@@ -188,6 +197,7 @@ export const SumPopup = ({
           fundingSource={fundingSource}
           variable={variable}
           array={array}
+          mapData={mapData}
         />
         <button className="button" onClick={clearSelection}>
           <i className="fa-solid fa-trash"></i>

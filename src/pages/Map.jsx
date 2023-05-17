@@ -457,19 +457,6 @@ export const Map = ({ lng, lat, zoom }) => {
       },
     });
 
-    // map.current.addLayer({
-    //   id: "properties",
-    //   type: "symbol",
-    //   source: "points",
-    //   layout: {
-    //     "icon-image": "home",
-    //     "icon-size": .95,
-    //   },
-    //   paint: {
-    //     "icon-color": "#000000",
-    //   },
-    // });
-
     // Remove fill if exists and darken outline layer when properties on
     const visibility = map.current.getLayoutProperty("fill", "visibility");
 
@@ -481,40 +468,41 @@ export const Map = ({ lng, lat, zoom }) => {
       // map.current.setPaintProperty("outline", "line-opacity", .2);
     }
 
-    // const onClickSpider = (e, spiderLeg) => {
-    //   console.log("Clicked on ", spiderLeg);
+    const onClickSpider = (e, spiderLeg) => {
+      console.log("Clicked on ", spiderLeg);
 
-    //   if (clickedPointId !== null) {
-    //     map.current.removeFeatureState({
-    //       source: "points",
-    //       id: clickedPointId,
-    //     });
-    //   }
+      if (clickedPointId !== null) {
+        map.current.removeFeatureState({
+          source: "points",
+          id: clickedPointId,
+        });
+      }
 
-    //   const feature = spiderLeg.feature
-    //   // create popup node
-    //   const popupNode = document.createElement("div");
-    //   ReactDOM.createRoot(popupNode).render(
-    //     <PointInfo
-    //       feature={feature}
-    //       variable={variable}
-    //       fundingSource={fundingSource}
-    //     />
-    //   );
-    //   console.log(feature)
-    //   // add popup to map
-    //   popUpRef.current
-    //     .setLngLat(feature.geometry.coordinates)
-    //     .setDOMContent(popupNode)
-    //     .addTo(map.current);
-    // }
+      const feature = spiderLeg.feature
+      console.log(feature);
+      // create popup node
+      const popupNode = document.createElement("div");
+      ReactDOM.createRoot(popupNode).render(
+        <PointInfo
+          feature={feature}
+          fundingSource={fundingSource}
+        />
+      );
+      // add popup to map
+      popUpRef.current
+        .setLngLat(feature.geometry.coordinates)
+        .setDOMContent(popupNode)
+        .addTo(map.current);
 
-    // const spiderifier = new MapboxglSpiderifier(map.current, {
-    //   onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
-    //   markerWidth: 40,
-    //   markerHeight: 40,
-    // });
-    
+      // spiderifier.unspiderfy();
+    }
+
+    const spiderifier = new MapboxglSpiderifier(map.current, {
+      animate: true,
+      animationSpeed: 200,
+      customPin: true,
+      onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
+    });
 
     // inspect a cluster on click
     map.current.on("click", "clusters", (e) => {
@@ -523,7 +511,6 @@ export const Map = ({ lng, lat, zoom }) => {
         layers: ["clusters"],
       });
       const clusterId = features[0].properties.cluster_id;
-      // spiderifier.unspiderfy();
       if (!features.length) {
         return;
       } else if (map.current.getZoom() < SPIDERFY_FROM_ZOOM) {
@@ -568,8 +555,12 @@ export const Map = ({ lng, lat, zoom }) => {
         layers: ["properties"],
       });
 
-      if (features.length <= 2) {
-        const feature = features[0];
+      const uniqueFeatures = features.filter((value, index, self) => {
+        return self.findIndex(v => v.id  === value.id) === index;
+      });
+
+      if (uniqueFeatures.length < 2) {
+        const feature = uniqueFeatures[0];
 
         if (clickedPointId !== null) {
           map.current.removeFeatureState({
@@ -604,10 +595,9 @@ export const Map = ({ lng, lat, zoom }) => {
         }
 
         // const clickedFeatures = features.map()
-        
-        const clickedOnFeature = features[0];
+        const clickedOnFeature = uniqueFeatures[0];
         // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
-        spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, features);
+        spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, uniqueFeatures);
         // create spiderMarker
         
         // const spiderMarkerNode = document.createElement("div");

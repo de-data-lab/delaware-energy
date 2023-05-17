@@ -17,6 +17,7 @@ import LegendControl from "mapboxgl-legend";
 import { PointInfo } from "../components/PointInfo";
 import { SumPopup } from "../components/SumPopup";
 import { Tooltip } from "../components/Tooltip";
+import MapboxglSpiderifier from "mapboxgl-spiderifier";
 // import {onHover, offHover} from "../utils/onHover";
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
@@ -40,7 +41,7 @@ export const Map = ({ lng, lat, zoom }) => {
   // Creates popup for sum popup
   const sumRef = useRef(
     new mapboxgl.Popup({
-      className: "info-card",
+      className: "sumPopup",
       closeButton: false,
       closeOnClick: false,
       anchor: "none",
@@ -245,13 +246,12 @@ export const Map = ({ lng, lat, zoom }) => {
     }
 
     // Home button functionality
-
     map.current.on("home", () => {
       map.current.easeTo({
         center: [lng, lat],
         zoom: zoom,
         bearing: 0,
-        pitch: 0
+        pitch: 0,
       });
     });
 
@@ -265,19 +265,13 @@ export const Map = ({ lng, lat, zoom }) => {
     // Click functionality for districts
     // Left click
     map.current.on("click", "fill", (e) => {
-      const features = map.current.queryRenderedFeatures(e.point, {
-        layers: ["fill"],
-      });
       clickId = e.features[0].id;
-
       // Gets index of clicked feature for removing it from array
       let index = array.map((feature) => feature.id).indexOf(clickId);
-
       // checks if feature already exists in array
       let exists = array.findIndex((feature) => feature.id == clickId);
 
       // Handles adding selected features to aggregated list
-
       //  if feature doesn't exist yet push to array
       if (exists < 0) {
         array.push(e.features[0]);
@@ -303,6 +297,7 @@ export const Map = ({ lng, lat, zoom }) => {
           variable={variable}
           fundingSource={fundingSource}
           array={array}
+          mapData={mapData}
           clearSelection={clearSelection}
         />
       );
@@ -319,20 +314,6 @@ export const Map = ({ lng, lat, zoom }) => {
 
       return array;
     });
-
-    function offHover() {
-      map.current.getCanvas().style.cursor = "";
-
-      if (hoverId !== null) {
-        map.current.setFeatureState(
-          { source: "delaware", id: hoverId },
-          { hover: false }
-        );
-      }
-
-      hoverId = null;
-      tooltipRef.current.remove();
-    }
 
     // right click
     // map.current.on("contextmenu", "fill", (e) => {
@@ -372,6 +353,40 @@ export const Map = ({ lng, lat, zoom }) => {
     // });
   };
 
+  // function mouseClick(e) {
+  //   var features = map.current.queryRenderedFeatures(e.point, {
+  //     layers: ["clusters"],
+  //   });
+
+  //   spiderifier.unspiderfy();
+  //   if (!features.length) {
+  //     return;
+  //   } else {
+  //     console.log(
+  //       map.current
+  //         .getSource("points")
+  //         .getClusterLeaves(
+  //           features[0].properties.cluster_id,
+  //           100,
+  //           0,
+  //           function (err, leafFeatures) {
+  //             if (err) {
+  //               return console.error(
+  //                 "error while getting leaves of a cluster",
+  //                 err
+  //               );
+  //             }
+  //             var markers = leafFeatures.map(
+  //               (leafFeature) => leafFeature.properties
+  //             );
+  //             // console.log(markers)
+  //             spiderifier.spiderfy(features[0].geometry.coordinates, markers);
+  //           }
+  //         )
+  //     );
+  //   }
+  // }
+
   const showProperties = () => {
     // Change the cursor to a pointer when the mouse is over the points layer.
     map.current.on("mouseenter", "properties", () => {
@@ -383,25 +398,63 @@ export const Map = ({ lng, lat, zoom }) => {
       map.current.getCanvas().style.cursor = "";
     });
 
+    map.current.on("mouseenter", "clusters", () => {
+      map.current.getCanvas().style.cursor = "pointer";
+    });
+    map.current.on("mouseleave", "clusters", () => {
+      map.current.getCanvas().style.cursor = "";
+    });
+
+    // cluster points
+    map.current.addLayer({
+      id: "clusters",
+      type: "circle",
+      source: "points",
+      filter: ["has", "point_count"],
+      paint: {
+        "circle-color": "#0a2552",
+        "circle-radius": ["step", ["get", "point_count"], 8, 2, 10, 5, 15],
+      },
+    });
+
+    // cluster count
+    map.current.addLayer({
+      id: "cluster-count",
+      type: "symbol",
+      source: "points",
+      filter: ["has", "point_count"],
+      layout: {
+        "text-field": ["get", "point_count_abbreviated"],
+        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+        "text-size": 14,
+      },
+      paint: {
+        "text-color": "#ffffff",
+      },
+    });
+
+    // unclustered points
     map.current.addLayer({
       id: "properties",
       type: "circle",
       source: "points",
+      filter: ["!", ["has", "point_count"]],
       paint: {
         "circle-color": [
           "case",
           ["boolean", ["feature-state", "clicked"], false],
           "#1878dd",
-          "#000000",
+          "#0a2552",
         ],
         "circle-radius": [
           "case",
           ["boolean", ["feature-state", "clicked"], false],
           8,
-          5,
+          6,
         ],
       },
     });
+
     // map.current.addLayer({
     //   id: "properties",
     //   type: "symbol",
@@ -426,6 +479,84 @@ export const Map = ({ lng, lat, zoom }) => {
       // map.current.setPaintProperty("outline", "line-opacity", .2);
     }
 
+    const onClickSpider = (e, spiderLeg) => {
+      console.log("Clicked on ", spiderLeg);
+
+      if (clickedPointId !== null) {
+        map.current.removeFeatureState({
+          source: "points",
+          id: clickedPointId,
+        });
+      }
+
+      const feature = spiderLeg.feature
+      // create popup node
+      const popupNode = document.createElement("div");
+      ReactDOM.createRoot(popupNode).render(
+        <PointInfo
+          feature={feature}
+          variable={variable}
+          fundingSource={fundingSource}
+        />
+      );
+      console.log(feature)
+      // add popup to map
+      popUpRef.current
+        .setLngLat(feature.geometry.coordinates)
+        .setDOMContent(popupNode)
+        .addTo(map.current);
+    }
+
+    const spiderifier = new MapboxglSpiderifier(map.current, {
+      onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
+      markerWidth: 40,
+      markerHeight: 40,
+    });
+    
+
+    // inspect a cluster on click
+    map.current.on("click", "clusters", (e) => {
+      const SPIDERFY_FROM_ZOOM = 14;
+      const features = map.current.queryRenderedFeatures(e.point, {
+        layers: ["clusters"],
+      });
+      const clusterId = features[0].properties.cluster_id;
+      // spiderifier.unspiderfy();
+      if (!features.length) {
+        return;
+      } else if (map.current.getZoom() < SPIDERFY_FROM_ZOOM) {
+        map.current
+          .getSource("points")
+          .getClusterExpansionZoom(clusterId, (err, zoom) => {
+            if (err) return;
+
+            map.current.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom,
+            });
+          });
+        }
+      // else {
+      //   map.current
+      //     .getSource("points")
+      //     .getClusterLeaves(
+      //       features[0].properties.cluster_id,
+      //       100,
+      //       0,
+      //       function (err, leafFeatures) {
+      //         if (err) {
+      //           return console.error(
+      //             "error while getting leaves of a cluster",
+      //             err
+      //           );
+      //         }
+      //         var markers = leafFeatures.map((leafFeature) => leafFeature.properties);
+      //         spiderifier.spiderfy(features[0].geometry.coordinates, markers);
+      //       }
+      //     );
+      // }
+    });
+
     // Pop-up functionality for point info
     let clickedPointId = null;
 
@@ -435,7 +566,7 @@ export const Map = ({ lng, lat, zoom }) => {
         layers: ["properties"],
       });
 
-      if (features.length > 0) {
+      if (features.length <= 2) {
         const feature = features[0];
 
         if (clickedPointId !== null) {
@@ -444,7 +575,7 @@ export const Map = ({ lng, lat, zoom }) => {
             id: clickedPointId,
           });
         }
-
+        console.log(feature.geometry)
         // create popup node
         const popupNode = document.createElement("div");
         ReactDOM.createRoot(popupNode).render(
@@ -459,7 +590,39 @@ export const Map = ({ lng, lat, zoom }) => {
           .setLngLat(e.lngLat)
           .setDOMContent(popupNode)
           .addTo(map.current);
+      } 
+      // More than one feature per point
+      else {
+
+        if (clickedPointId !== null) {
+          map.current.removeFeatureState({
+            source: "points",
+            id: clickedPointId,
+          });
+        }
+
+        // const clickedFeatures = features.map()
+        
+        const clickedOnFeature = features[0];
+        // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
+        spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, features);
+        // create spiderMarker
+        
+        // const spiderMarkerNode = document.createElement("div");
+        // ReactDOM.createRoot(spiderMarkerNode).render(
+        //   <PointInfo
+        //     feature={feature}
+        //     variable={variable}
+        //     fundingSource={fundingSource}
+        //   />
+        // );
+        // add popup to map
+        // popUpRef.current
+        //   .setLngLat(e.lngLat)
+        //   .setDOMContent(spiderMarkerNode)
+        //   .addTo(map.current);
       }
+      
 
       clickedPointId = e.features[0].id;
 
@@ -486,12 +649,7 @@ export const Map = ({ lng, lat, zoom }) => {
 
     // Navigation controls and legend
     map.current.on("load", () => {
-      map.current.addControl(
-        new mapboxgl.FullscreenControl({
-          container: document.querySelector("#map-container"),
-        }),
-        "bottom-left"
-      );
+      map.current.addControl(new mapboxgl.FullscreenControl(), "bottom-left");
       map.current.addControl(new mapboxgl.GeolocateControl(), "bottom-left");
       map.current.addControl(new HomeControl(), "bottom-left");
 
@@ -514,6 +672,9 @@ export const Map = ({ lng, lat, zoom }) => {
         type: "geojson",
         data: pointData,
         generateId: true,
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50,
       });
 
       addMapLayers();
@@ -531,6 +692,12 @@ export const Map = ({ lng, lat, zoom }) => {
     }
     if (map.current.getLayer("properties")) {
       map.current.removeLayer("properties");
+    }
+    if (map.current.getLayer("cluster-count")) {
+      map.current.removeLayer("cluster-count");
+    }
+    if (map.current.getLayer("clusters")) {
+      map.current.removeLayer("clusters");
     }
 
     // remove sumPopup when changing variables

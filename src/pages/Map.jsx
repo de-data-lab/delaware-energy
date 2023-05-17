@@ -40,7 +40,7 @@ export const Map = ({ lng, lat, zoom }) => {
   // Creates popup for sum popup
   const sumRef = useRef(
     new mapboxgl.Popup({
-      className: "info-card",
+      className: "sumPopup",
       closeButton: false,
       closeOnClick: false,
       anchor: "none",
@@ -303,6 +303,7 @@ export const Map = ({ lng, lat, zoom }) => {
           variable={variable}
           fundingSource={fundingSource}
           array={array}
+          mapData={mapData}
           clearSelection={clearSelection}
         />
       );

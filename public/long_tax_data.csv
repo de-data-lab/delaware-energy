@@ -109,9 +109,31 @@ district,name,Funding Source,variable,value
 9,Jack Walsh,LIHTC,Average Population per Tax Credit Unit,0.0
 5,Kyle Evans Gay,LIHTC,Average Population per Tax Credit Unit,0.0
 8,David P. Sokola,LIHTC,Average Population per Tax Credit Unit,0.0
+0,0,LIHTC,Average Allocation per Tax Credit Unit,17824.042857142857
+1,Sarah Mcbride,LIHTC,Average Allocation per Tax Credit Unit,9019.561538461538
+10,Stephanie L. Hansen,LIHTC,Average Allocation per Tax Credit Unit,6195.0
+11,Bryan Townsend,LIHTC,Average Allocation per Tax Credit Unit,12915.766666666666
+13,Marie Pinkney,LIHTC,Average Allocation per Tax Credit Unit,4148.341666666666
+14,Kyra Hoffner,LIHTC,Average Allocation per Tax Credit Unit,0.0
+15,Dave Lawson,LIHTC,Average Allocation per Tax Credit Unit,19072.563291139242
+16,Eric Buckson,LIHTC,Average Allocation per Tax Credit Unit,27750.36111111111
+17,Trey Paradee,LIHTC,Average Allocation per Tax Credit Unit,2952.3952380952383
+18,Dave Wilson,LIHTC,Average Allocation per Tax Credit Unit,10018.264705882353
+19,Brian G. Pettyjohn,LIHTC,Average Allocation per Tax Credit Unit,33686.166666666664
+2,Darius J. Brown,LIHTC,Average Allocation per Tax Credit Unit,17510.885714285716
+20,Gerald W. Hocker,LIHTC,Average Allocation per Tax Credit Unit,21554.573033707864
+21,Bryant L. Richardson,LIHTC,Average Allocation per Tax Credit Unit,18923.352941176472
+3,S. Elizabeth Lockman,LIHTC,Average Allocation per Tax Credit Unit,13743.669329073482
+6,Russ Huxtable,LIHTC,Average Allocation per Tax Credit Unit,16188.875
+4,Laura Sturgeon,LIHTC,Average Allocation per Tax Credit Unit,0.0
+7,Spiros Mantzavinos,LIHTC,Average Allocation per Tax Credit Unit,0.0
+12,Nicole Poore,LIHTC,Average Allocation per Tax Credit Unit,0.0
+9,Jack Walsh,LIHTC,Average Allocation per Tax Credit Unit,0.0
+5,Kyle Evans Gay,LIHTC,Average Allocation per Tax Credit Unit,0.0
+8,David P. Sokola,LIHTC,Average Allocation per Tax Credit Unit,0.0
 District Average,0,LIHTC,# of Tax Credit Units,142.5
 District Average,0,LIHTC,ALLOCATION AMOUNT,1950931.5333333334
-District Average,0,LIHTC,adj_popula,44981.72727272727
 District Average,0,LIHTC,Average Allocation per 100 Persons,4310.01729847478
+District Average,0,LIHTC,Average Allocation per Tax Credit Unit,15433.587984005057
 District Average,0,LIHTC,Average Population per Tax Credit Unit,708.8256623200107
-
+District Average,0,LIHTC,adj_popula,44981.72727272727

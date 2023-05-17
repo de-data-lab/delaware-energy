@@ -63,14 +63,14 @@
   }
   
   .title {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     font-family: var(--main-font);
     font-weight: 600;
     fill: var(--navy);
   }
   
   .subtitle { 
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-sm);
     font-family: var(--main-font);
     font-weight: 200; 
     fill: var(--navy);
@@ -137,11 +137,11 @@
     /* padding: 0 25rem; */
   }
   .title {
-    font-size: var(--font-size-md);
+    /* font-size: var(--font-size-md); */
   }
   
   .subtitle { 
-    font-size: var(--font-size-sm);
+    /* font-size: var(--font-size-sm); */
   }
 }
 

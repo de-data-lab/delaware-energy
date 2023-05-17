@@ -25,7 +25,7 @@ mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const { pointData, mapData, variable, fundingSource, building } =
+  const { pointData, mapData, variable, fundingSource, building, year } =
     useContext(MapContext);
 
   // Creates popup for point info
@@ -72,6 +72,8 @@ export const Map = ({ lng, lat, zoom }) => {
       (tract) => tract.properties[variable]
     );
 
+    console.log(numberFormatter)
+
     // Color way for choropleth
     let stops = colorPalette(numberFormatter);
 
@@ -90,10 +92,10 @@ export const Map = ({ lng, lat, zoom }) => {
     let legendName = mapInfo[fundingSource].columns[variable];
     // Legend Units
     switch (variable) {
-      case "aggregated_allocation_amount":
+      case "ALLOCATION AMOUNT":
         legendName = `${mapInfo[fundingSource].columns[variable]} (in millions)`;
         break;
-      case "avg_allocation_per_unit":
+      case "Average Allocation per Tax Credit Unit":
         legendName = `${mapInfo[fundingSource].columns[variable]} (in thousands)`;
         break;
       case "adj_popula":
@@ -716,7 +718,7 @@ export const Map = ({ lng, lat, zoom }) => {
     }
   };
 
-  useUpdateEffect(update, [variable, fundingSource, building]);
+  useUpdateEffect(update, [variable, fundingSource, building, year]);
 
   return <div ref={mapDiv} id="mapDiv"></div>;
 };

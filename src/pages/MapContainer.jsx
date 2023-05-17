@@ -21,11 +21,13 @@ export const MapContainer = ({ MapContext }) => {
     const [fundingSource, setFundingSource] = useState("LIHTC");
     // Dropdown for variable
     const [variable, setVariable] = useState("# of Tax Credit Units");
+    // year
+    const [year, setYear] = useState(2022);
     // building toggle
     const [building, setBuilding] = useState(false);
 
     return (
-        <MapContext.Provider value={{  pointData, mapData, fundingSource, setFundingSource, variable, setVariable, building, setBuilding, }}>
+        <MapContext.Provider value={{  pointData, mapData, fundingSource, setFundingSource, variable, setVariable, building, setBuilding, year, setYear }}>
             <DropdownMenu />
             <Map lng={lng} lat={lat} zoom={zoom} />
         </MapContext.Provider>

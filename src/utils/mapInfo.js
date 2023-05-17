@@ -15,6 +15,15 @@ export const mapInfo = {
       ["Average Population per Tax Credit Unit"]: "Average population per tax credit unit",
       ["adj_popula"]: "Population",
     },
+    years: {
+      2016: 2016,
+      2017: 2017,
+      2018: 2018,
+      2019: 2019,
+      2020: 2020,
+      2021: 2021,
+      2022: 2022,
+    },
   },
 };
 

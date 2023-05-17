@@ -7,7 +7,7 @@ import { DropdownCollapse } from "./DropdownCollapse";
 
 
 export const DropdownMenu = ({}) => {
-    const { setVariable, fundingSource, setFundingSource, building, setBuilding } = useContext(MapContext);
+    const { setVariable, fundingSource, setFundingSource, building, setBuilding, year, setYear } = useContext(MapContext);
 
     const [button, setButton] = useState(false);
     const { source } = mapInfo[fundingSource].meta; 
@@ -31,6 +31,23 @@ export const DropdownMenu = ({}) => {
           Legislative Districts
         </h2>
       <div className="select-container">
+          {/* YEAR */}
+          <div className="select">
+            <label className="label-text">Select a year:</label>
+            <select
+              className="select-text"
+              onChange={(e) => {
+                setYear(e.target.value);
+              }}
+            >
+              {Object.keys(mapInfo[fundingSource].years).map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+          
           {/* FUNDING SOURCE */}
           <div className="select">
             <label className="label-text">Select a funding source:</label>

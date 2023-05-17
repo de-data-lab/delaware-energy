@@ -89,3 +89,19 @@ p {
 #react-select {
   z-index: 3;
 }
+
+.spider-leg-container .spider-leg-pin{
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin-left: -8px;
+  margin-top: -18px;
+  background-image: url(https://api.mapbox.com/styles/v1/mapbox/dark-v9/sprite.png?access_token=pk.eyJ1Ijoic29jcmF0YSIsImEiOiJjaXJxc2wzam0waGU5ZmZtODhqd2ttamdxIn0.1ZQEByXoDD7fGIa9lUHIqg);
+  background-position: -110px -110px;
+}
+.spider-leg-container .spider-leg-line {
+  background-color: #f4f4f4;
+}
+.spider-leg-container:hover .spider-leg-line {
+  background-color: #f404f4;
+}

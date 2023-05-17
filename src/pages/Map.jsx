@@ -479,44 +479,44 @@ export const Map = ({ lng, lat, zoom }) => {
       // map.current.setPaintProperty("outline", "line-opacity", .2);
     }
 
-    const onClickSpider = (e, spiderLeg) => {
-      console.log("Clicked on ", spiderLeg);
+    // const onClickSpider = (e, spiderLeg) => {
+    //   console.log("Clicked on ", spiderLeg);
 
-      if (clickedPointId !== null) {
-        map.current.removeFeatureState({
-          source: "points",
-          id: clickedPointId,
-        });
-      }
+    //   if (clickedPointId !== null) {
+    //     map.current.removeFeatureState({
+    //       source: "points",
+    //       id: clickedPointId,
+    //     });
+    //   }
 
-      const feature = spiderLeg.feature
-      // create popup node
-      const popupNode = document.createElement("div");
-      ReactDOM.createRoot(popupNode).render(
-        <PointInfo
-          feature={feature}
-          variable={variable}
-          fundingSource={fundingSource}
-        />
-      );
-      console.log(feature)
-      // add popup to map
-      popUpRef.current
-        .setLngLat(feature.geometry.coordinates)
-        .setDOMContent(popupNode)
-        .addTo(map.current);
-    }
+    //   const feature = spiderLeg.feature
+    //   // create popup node
+    //   const popupNode = document.createElement("div");
+    //   ReactDOM.createRoot(popupNode).render(
+    //     <PointInfo
+    //       feature={feature}
+    //       variable={variable}
+    //       fundingSource={fundingSource}
+    //     />
+    //   );
+    //   console.log(feature)
+    //   // add popup to map
+    //   popUpRef.current
+    //     .setLngLat(feature.geometry.coordinates)
+    //     .setDOMContent(popupNode)
+    //     .addTo(map.current);
+    // }
 
-    const spiderifier = new MapboxglSpiderifier(map.current, {
-      onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
-      markerWidth: 40,
-      markerHeight: 40,
-    });
+    // const spiderifier = new MapboxglSpiderifier(map.current, {
+    //   onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
+    //   markerWidth: 40,
+    //   markerHeight: 40,
+    // });
     
 
     // inspect a cluster on click
     map.current.on("click", "clusters", (e) => {
-      const SPIDERFY_FROM_ZOOM = 14;
+      const SPIDERFY_FROM_ZOOM = 15;
       const features = map.current.queryRenderedFeatures(e.point, {
         layers: ["clusters"],
       });

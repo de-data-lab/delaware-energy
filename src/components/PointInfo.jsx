@@ -3,7 +3,7 @@ import "./PointInfo.css"
 import photo from "/images/harrington.png"
 
 
-export const PointInfo = ({feature, variable, fundingSource}) => {
+export const PointInfo = ({feature, fundingSource}) => {
 
         const projectName = feature?.properties?.["PROJECT NAME & ADDRESS"];
         const districtName = feature?.properties?.["Senate District"];

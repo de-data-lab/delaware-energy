@@ -566,7 +566,7 @@ export const Map = ({ lng, lat, zoom }) => {
         layers: ["properties"],
       });
 
-      if (features.length <= 2) {
+      // if (features.length <= 2) {
         const feature = features[0];
 
         if (clickedPointId !== null) {
@@ -590,22 +590,22 @@ export const Map = ({ lng, lat, zoom }) => {
           .setLngLat(e.lngLat)
           .setDOMContent(popupNode)
           .addTo(map.current);
-      } 
+      // } 
       // More than one feature per point
-      else {
+      // else {
 
-        if (clickedPointId !== null) {
-          map.current.removeFeatureState({
-            source: "points",
-            id: clickedPointId,
-          });
-        }
+        // if (clickedPointId !== null) {
+        //   map.current.removeFeatureState({
+        //     source: "points",
+        //     id: clickedPointId,
+        //   });
+        // }
 
         // const clickedFeatures = features.map()
         
-        const clickedOnFeature = features[0];
+        // const clickedOnFeature = features[0];
         // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
-        spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, features);
+        // spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, features);
         // create spiderMarker
         
         // const spiderMarkerNode = document.createElement("div");
@@ -621,7 +621,7 @@ export const Map = ({ lng, lat, zoom }) => {
         //   .setLngLat(e.lngLat)
         //   .setDOMContent(spiderMarkerNode)
         //   .addTo(map.current);
-      }
+      // }
       
 
       clickedPointId = e.features[0].id;

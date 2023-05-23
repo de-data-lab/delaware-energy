@@ -174,26 +174,26 @@ function StackedBar({
   
 
   useEffect(() => { 
-    let nested = Array.from(group(data, d => d.district));
+    let nested = Array.from(group(data, d => d[xAxis]));
 
     let lihtcWide = nested.map(g => {
       let obj = {};
       obj["district"] = g[0]
-      for (let year of Array.from(new Set(data.map(d => d["Tax Allocation Year"])))) {
-        const match = g[1].find(d => { return d["Tax Allocation Year"]==year }); 
+      for (let year of Array.from(new Set(data.map(d => d[series])))) {
+        const match = g[1].find(d => { return d[series]==year }); 
         obj[year] = match ? match.value : null
       }
       return obj
     })
 
     let stacked =  stack()
-        .keys(Array.from(new Set(data.map(d => d["Tax Allocation Year"]))))(lihtcWide)
+        .keys(Array.from(new Set(data.map(d => d[series]))))(lihtcWide)
     
     
     let stackedWithKey = stacked.map(d => {
           d.forEach(v => {
             v.key = d.key; 
-            v.data.name = v.data.district
+            v.data.name = v.data[xAxis]
           })
           return d
         }).sort((a, b) => a.key > b.key ? 1 : -1)

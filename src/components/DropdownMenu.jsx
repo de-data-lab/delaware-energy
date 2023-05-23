@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import Select from "react-select";
 import { MapContext } from "../App";
 import mapInfo from "../utils/mapInfo";
 
@@ -20,7 +21,28 @@ export const DropdownMenu = ({}) => {
       setBuilding(!building);
     };
 
-    
+    // React multi select options
+  const variableOptions = Object.keys(mapInfo[fundingSource].columns).map((item) => ({
+    value: item,
+    label: mapInfo[fundingSource].columns[item],
+  }));
+
+  const yearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
+    value: (item !== "All Time") ? (mapInfo[fundingSource].years[item]) : ("All Time"),
+    label: mapInfo[fundingSource].years[item],
+  }));
+
+  // Handle change of select dropdowns
+  const handleChange = (selectedOption) => {
+    setVariable(selectedOption.value);
+  };
+  const handleYearChange = (e) => {
+    setYear(e.value);
+  };
+
+  // React select features
+  const [isSearchable, setIsSearchable] = useState(true);
+  const [isRtl, setIsRtl] = useState(false);
 
     return (
     <>
@@ -28,30 +50,30 @@ export const DropdownMenu = ({}) => {
     
     <div className={"dropdown-menu " + (button ? "menu-close" : "")} id="dropdown-menu">
         <h2 className="dropdown-header">
-          Legislative Districts
+          Senate Districts
         </h2>
       <div className="select-container">
           {/* YEAR */}
           <div className="select">
-            <label className="label-text">Select a year:</label>
-            <select
-              className="select-text"
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
-            >
-              {Object.keys(mapInfo[fundingSource].years).map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <label className="label-text" htmlFor="year">Select a year:</label>
+            <Select
+            id="year"
+            onChange={(e) => handleYearChange(e)}
+            className="basic-single"
+            classNamePrefix="select"
+            isSearchable={isSearchable}
+            isRtl={isRtl}
+            name="year"
+            options={yearOptions}
+            defaultValue={yearOptions[0]}
+            />
           </div>
-          
+            
           {/* FUNDING SOURCE */}
-          <div className="select">
-            <label className="label-text">Select a funding source:</label>
+          {/* <div className="select">
+            <label className="label-text" htmlFor="funding">Select a funding source:</label>
             <select
+              id="funding"
               className="select-text"
               onChange={(e) => {
                 setFundingSource(e.target.value);
@@ -63,28 +85,27 @@ export const DropdownMenu = ({}) => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* VARIABLE */}
           <div className="select">
-            <label className="label-text">Select a variable:</label>
-            <select
-              className="select-text"
-              onChange={(e) => {
-                setVariable(e.target.value);
-              }}
-            >
-              {Object.keys(mapInfo[fundingSource].columns).map((item) => (
-                <option key={item} value={item}>
-                  {mapInfo[fundingSource].columns[item]}
-                </option>
-              ))}
-            </select>
+            <label className="label-text" htmlFor="variable">Select a variable:</label>
+            <Select
+              id="variable"
+              onChange={(e) => handleChange(e)}
+              className="basic-single"
+              classNamePrefix="select"
+              isSearchable={isSearchable}
+              isRtl={isRtl}
+              name="variable"
+              options={variableOptions}
+              defaultValue={variableOptions[0]}
+            />
           </div>
 
           {/* Building toggle */}
           <div className="toggle-container">
-            <label className="label-text">Show property locations:</label>
+            <label className="label-text" htmlFor="flexSwitchCheckDefault">Show property locations:</label>
             <div className="form-check form-switch">
             <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={toggleBuildings}></input>
             </div>

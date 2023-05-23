@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Select from "react-select";
+import { useState, Children, Component } from "react";
+import Select, { components } from "react-select";
 import mapInfo from "../utils/mapInfo";
 import BarChart from "./BarChart";
 import "./DistrictExplorer.css";
@@ -8,10 +8,16 @@ import { DropdownCollapse } from "../components/DropdownCollapse";
 import ExploreDistrict from "./ExploreDistrict";
 import StackedBar from "./StackedBar";
 
-export const DistrictExplorer = ({fundingSource, variable, setVariable, year, setYear}) => {
+export const DistrictExplorer = ({
+  fundingSource,
+  variable,
+  setVariable,
+  year,
+  setYear,
+}) => {
   // chart data
   const chartData = "/long_tax_data_new.csv";
-  
+
   // Dropdown for district
   const [district, setDistrict] = useState([
     { value: 1, label: "District 1 - Sarah Mcbride" },
@@ -58,7 +64,9 @@ export const DistrictExplorer = ({fundingSource, variable, setVariable, year, se
     number: feature.properties.district,
     senator: feature.properties.name,
   }));
-  districts = [...new Map(districts.map(item => [item.number, item])).values()];
+  districts = [
+    ...new Map(districts.map((item) => [item.number, item])).values(),
+  ];
   districts.sort((a, b) => a.number - b.number);
 
   // tooltip formatter
@@ -93,10 +101,12 @@ export const DistrictExplorer = ({fundingSource, variable, setVariable, year, se
     label: `${item.name} - ${item.senator}`,
   }));
 
-  const variableOptions = Object.keys(mapInfo[fundingSource].columns).map((item) => ({
-    value: item,
-    label: mapInfo[fundingSource].columns[item],
-  }));
+  const variableOptions = Object.keys(mapInfo[fundingSource].columns).map(
+    (item) => ({
+      value: item,
+      label: mapInfo[fundingSource].columns[item],
+    })
+  );
 
   const fundingOptions = Object.keys(mapInfo).map((item) => ({
     value: item,
@@ -104,7 +114,8 @@ export const DistrictExplorer = ({fundingSource, variable, setVariable, year, se
   }));
 
   const yearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
-    value: (item !== "All Time") ? (mapInfo[fundingSource].years[item]) : ("All Time"),
+    value:
+      item !== "All Time" ? mapInfo[fundingSource].years[item] : "All Time",
     label: mapInfo[fundingSource].years[item],
   }));
 
@@ -131,7 +142,10 @@ export const DistrictExplorer = ({fundingSource, variable, setVariable, year, se
           <CompareDistrictButtons
             variableOptions={variableOptions}
             fundingOptions={fundingOptions}
+            districtOptions={districtOptions}
+            district={district}
             handleChange={handleChange}
+            handleDistrictChange={handleDistrictChange}
           />
         )}
       </div>
@@ -257,15 +271,15 @@ const ExploreDistrictButtons = ({
   handleExploreDistrictChange,
   handleYearChange,
   fundingOptions,
-  yearOptions
+  yearOptions,
 }) => {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
   return (
     <>
       <div className="options-container">
-        <div className="select-explorer">
-          <label className="label-text">Select a funding source:</label>
+        {/* <div className="select-explorer">
+          <label className="label-text" htmlFor="funding">Select a funding source:</label>
           <Select
             id="funding"
             className="basic-single react-select"
@@ -276,9 +290,11 @@ const ExploreDistrictButtons = ({
             options={fundingOptions}
             defaultValue={fundingOptions[0]}
           />
-        </div>
+        </div> */}
         <div className="select-explorer">
-          <label className="label-text">Select district to explore:</label>
+          <label className="label-text" htmlFor="district">
+            Select district to explore:
+          </label>
           <Select
             id="district"
             onChange={(e) => handleExploreDistrictChange(e)}
@@ -289,20 +305,28 @@ const ExploreDistrictButtons = ({
             name="districts"
             options={districtOptions}
             defaultValue={districtOptions[0]}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
         </div>
         <div className="select-explorer">
-          <label className="label-text">Select a year:</label>
+          <label className="label-text" htmlFor="year">
+            Select a year:
+          </label>
           <Select
-            id="years"
+            id="year"
             onChange={(e) => handleYearChange(e)}
             className="basic-single react-select"
             classNamePrefix="select"
             isSearchable={isSearchable}
             isRtl={isRtl}
-            name="years"
+            name="year"
             options={yearOptions}
             defaultValue={yearOptions[0]}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
         </div>
       </div>
@@ -310,20 +334,43 @@ const ExploreDistrictButtons = ({
   );
 };
 
+const ValueContainer = ({ children, getValue, ...props }) => {
+  var values = getValue();
+  var valueLabel = "";
+
+  // if more than one value selected, add "& x more" to end of value
+  if (values.length > 0) valueLabel += props.selectProps.getOptionLabel(values[0]);
+  if (values.length > 1) valueLabel += ` & ${values.length - 1} more...`;
+
+  // Keep standard placeholder and input from react-select
+  var childsToRender = Children.toArray(children).filter((child) => ['Input', 'DummyInput', 'Placeholder'].indexOf(child.type.name) >= 0);
+
+  return (
+    <components.ValueContainer {...props}>
+      {!props.selectProps.inputValue && valueLabel }
+      { childsToRender }
+    </components.ValueContainer>
+  );
+};
+
 const CompareDistrictButtons = ({
   variableOptions,
   fundingOptions,
   handleChange,
+  handleDistrictChange,
+  districtOptions,
+  district,
 }) => {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
+
   return (
     <>
       <div className="options-container">
-        <div className="select-explorer">
-          <label className="label-text">Select a funding source:</label>
+        {/* <div className="select-explorer">
+          <label className="label-text" htmlFor="funding">Select a funding source:</label>
           <Select
-            id="react-select"
+            id="funding"
             className="basic-single react-select"
             classNamePrefix="select"
             isSearchable={isSearchable}
@@ -332,19 +379,47 @@ const CompareDistrictButtons = ({
             options={fundingOptions}
             defaultValue={fundingOptions[0]}
           />
+        </div> */}
+        <div className="select-explorer">
+          <label className="label-text">Select districts to compare:</label>
+          <Select
+            onChange={(e) => handleDistrictChange(e)}
+            options={districtOptions}
+            id="districts"
+            name="districts"
+            className="basic-multi-select react-select"
+            classNamePrefix="select"
+            isSearchable={isSearchable}
+            defaultValue={district}
+            isMulti
+            // controlShouldRenderValue={false}
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            components={{
+              ValueContainer
+            }}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+          />
         </div>
         <div className="select-explorer">
-          <label className="label-text">Select a variable:</label>
+          <label className="label-text" htmlFor="variable">
+            Select a variable:
+          </label>
           <Select
-            id="react-select"
+            id="variable"
             onChange={handleChange}
-            className="basic-single react-select"
+            className="basic-single"
             classNamePrefix="select"
             isSearchable={isSearchable}
             isRtl={isRtl}
             name="variable"
             options={variableOptions}
             defaultValue={variableOptions[0]}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
         </div>
       </div>

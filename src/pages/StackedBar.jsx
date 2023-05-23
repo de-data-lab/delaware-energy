@@ -318,6 +318,7 @@ function StackedBar({
                   key={d[xAxis]}
                   x={scales.x(parseInt(d.data[xAxis]))}
                   y={scales.y(d[1])}
+                  // rx="2"
                   fill={d.data[xAxis] !== reference ? (scales.color(year)) : ("var(--grey)")}
                   width={scales.x.bandwidth()}
                   height={ (scales.y(d[0]) - scales.y(d[1]))}
@@ -341,31 +342,7 @@ function StackedBar({
              )}
           </g>
 
-          {/* <g className="bars">
-            {groupedData.map((series, seriesIndex) => series[1].map((d, i) =>
-                <rect
-                  key={d[xAxis]}
-                  x={scales.x(parseInt(d[xAxis]))}
-                  y={scales.y(d[yAxis])}
-                  fill={d[xAxis] !== reference ? (scales.color(series)) : ("var(--grey)")}
-                  width={scales.x.bandwidth()}
-                  height={(config.ch - scales.y(parseInt(d.value)))}
-                  className={`bar ${
-                    hiddenSeries.includes(d[0])
-                      ? "hidden"
-                      : hovered && d[0] !== hovered
-                      ? "unfocus"
-                      : ""
-                  }`}
-                  rx="10"
-                  onMouseOver={(e) => {
-                    setHovered(d[0]);
-                    handleMouseOver(e, d);
-                  }}
-                ></rect>
-              )
-            )}
-          </g> */}
+         
         </svg>
       </div>
       <div></div>

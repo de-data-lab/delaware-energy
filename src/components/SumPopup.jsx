@@ -5,7 +5,37 @@ import mapInfo from "../utils/mapInfo";
 import "./PointInfo.css";
 import "./SumPopup.css";
 
-export const PopupText = ({ fundingSource, variable, array, mapData }) => {
+export const SumPopup = ({
+  fundingSource,
+  variable,
+  year,
+  array,
+  clearSelection,
+  mapData
+}) => {
+  return (
+    <div tabIndex={0} className="popup-container">
+      <div className="sumPopup-button-container">
+        {/* <h2 className="dropdown-header">
+            Selected Districts
+        </h2> */}
+        <PopupText
+          fundingSource={fundingSource}
+          variable={variable}
+          year={year}
+          array={array}
+          mapData={mapData}
+        />
+        <button className="button" onClick={clearSelection}>
+          <i className="fa-solid fa-trash"></i>
+          <h3 className="button-text">Clear Selection</h3>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export const PopupText = ({ fundingSource, variable, year, array, mapData }) => {
   const [variableName, setVariableName] = useState(null);
   //   after summing
   const [sumValue, setSumValue] = useState({
@@ -17,7 +47,8 @@ export const PopupText = ({ fundingSource, variable, array, mapData }) => {
   ]);
 
   // takes all variable values and sums them up
-  const totalVariable = mapData.features.map(district => !district.properties[variable] ? 0 : Number(district.properties[variable])).reduce((a, b) => a + b);
+  const variableArray = mapData.map(district => !district.properties[variable] ? 0 : district.properties[variable])
+  const totalVariable = variableArray.length > 0 ? variableArray.reduce((a, b) => a + b) : ("");
 
   useEffect(() => {
     let tempArray = array.map((item) => ({
@@ -174,36 +205,8 @@ export const PopupText = ({ fundingSource, variable, array, mapData }) => {
       </table>
       <br></br>
       <h3 className="info-text">
-        <strong>{sumValue.sumPercent}</strong> of {variableName}
+        <strong>{sumValue.sumPercent}</strong> of {variableName} in {year}
       </h3>
-    </div>
-  );
-};
-
-export const SumPopup = ({
-  fundingSource,
-  variable,
-  array,
-  clearSelection,
-  mapData
-}) => {
-  return (
-    <div tabIndex={0} className="popup-container">
-      <div className="sumPopup-button-container">
-        {/* <h2 className="dropdown-header">
-            Selected Districts
-        </h2> */}
-        <PopupText
-          fundingSource={fundingSource}
-          variable={variable}
-          array={array}
-          mapData={mapData}
-        />
-        <button className="button" onClick={clearSelection}>
-          <i className="fa-solid fa-trash"></i>
-          <h3 className="button-text">Clear Selection</h3>
-        </button>
-      </div>
     </div>
   );
 };

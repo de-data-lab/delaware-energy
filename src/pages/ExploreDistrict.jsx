@@ -7,12 +7,11 @@ import dshaData from "../data/DSHA_districted.json";
 
 function ExploreDistrict({
   chartData,
-  districtFilterValue,
   collapseButton,
   filterColumn,
   fundingSource,
   exploreDistrict,
-  year,
+  year
 }) {
   const [data, setData] = useState([]);
 
@@ -103,7 +102,7 @@ function ExploreDistrict({
               {selectedDistrict.map((district, i) => (
                 <>
                   {district.variable === "adj_popula" ? (
-                    <h2 className="information-text">{district.value}</h2>
+                    <h2 className="information-text">{district.value}*</h2>
                   ) : (
                     ""
                   )}
@@ -121,7 +120,7 @@ function ExploreDistrict({
           <table className="explore-table">
             <tbody>
               <tr>
-                <th className="table-header">{year}</th>
+                <th className="table-header">{mapInfo[fundingSource].years[year]}</th>
                 <th className="table-header">
                   District {exploreDistrict.value}
                 </th>
@@ -155,6 +154,7 @@ function ExploreDistrict({
           </table>
         </div>
       </div>
+      <p className="data-note">*District population is from 2020 census</p>
     </>
   );
 }

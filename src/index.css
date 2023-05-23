@@ -87,8 +87,8 @@ p {
 }
 
 /* makes sure react-select dropdowns are in front of custom collapse button */
-#react-select {
-  z-index: 3;
+.react-select {
+  z-index: 4;
 }
 
 .spider-leg-container .spider-leg-pin{

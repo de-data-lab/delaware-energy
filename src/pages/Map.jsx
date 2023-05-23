@@ -25,7 +25,7 @@ mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const { pointData, mapData, variable, fundingSource, building, year } =
+  const { pointData, mapData, variable, fundingSource, building, year, setYear } =
     useContext(MapContext);
 
   // Creates popup for point info
@@ -61,19 +61,23 @@ export const Map = ({ lng, lat, zoom }) => {
   const tooltipDiv = document.createElement("div");
   const tooltip = ReactDOM.createRoot(tooltipDiv);
 
+
   // Adds map layers
   const addMapLayers = () => {
     // ids for feature-states
     let hoverId = null;
     let clickId = null;
     let array = [];
+    
+    // Change year into INT
+    setYear(parseFloat(year))
 
-    let numberFormatter = mapData.features.map(
+    // map through data and return year
+    let filteredData = mapData.features.filter((feature) => feature.properties["Tax Allocation Year"] === year)
+    // map through data and return variable values for colorArray stops
+    let numberFormatter = filteredData.map(
       (tract) => tract.properties[variable]
     );
-
-    console.log(numberFormatter)
-
     // Color way for choropleth
     let stops = colorPalette(numberFormatter);
 
@@ -82,12 +86,11 @@ export const Map = ({ lng, lat, zoom }) => {
       ["linear"],
       ["to-number", ["get", variable]],
     ];
-
+    
     stops.forEach((arr) => {
       colorArray.push(arr[0]);
       colorArray.push(arr[1]);
     });
-
     // Legend Name
     let legendName = mapInfo[fundingSource].columns[variable];
     // Legend Units
@@ -111,6 +114,7 @@ export const Map = ({ lng, lat, zoom }) => {
       id: "fill",
       type: "fill",
       source: "delaware",
+      filter: ["==", "Tax Allocation Year", year],
       layout: {
         // Make the layer visible by default.
         visibility: "visible",
@@ -298,8 +302,9 @@ export const Map = ({ lng, lat, zoom }) => {
         <SumPopup
           variable={variable}
           fundingSource={fundingSource}
+          year={year}
           array={array}
-          mapData={mapData}
+          mapData={filteredData}
           clearSelection={clearSelection}
         />
       );
@@ -355,40 +360,6 @@ export const Map = ({ lng, lat, zoom }) => {
     // });
   };
 
-  // function mouseClick(e) {
-  //   var features = map.current.queryRenderedFeatures(e.point, {
-  //     layers: ["clusters"],
-  //   });
-
-  //   spiderifier.unspiderfy();
-  //   if (!features.length) {
-  //     return;
-  //   } else {
-  //     console.log(
-  //       map.current
-  //         .getSource("points")
-  //         .getClusterLeaves(
-  //           features[0].properties.cluster_id,
-  //           100,
-  //           0,
-  //           function (err, leafFeatures) {
-  //             if (err) {
-  //               return console.error(
-  //                 "error while getting leaves of a cluster",
-  //                 err
-  //               );
-  //             }
-  //             var markers = leafFeatures.map(
-  //               (leafFeature) => leafFeature.properties
-  //             );
-  //             // console.log(markers)
-  //             spiderifier.spiderfy(features[0].geometry.coordinates, markers);
-  //           }
-  //         )
-  //     );
-  //   }
-  // }
-
   const showProperties = () => {
     // Change the cursor to a pointer when the mouse is over the points layer.
     map.current.on("mouseenter", "properties", () => {
@@ -408,39 +379,42 @@ export const Map = ({ lng, lat, zoom }) => {
     });
 
     // cluster points
-    map.current.addLayer({
-      id: "clusters",
-      type: "circle",
-      source: "points",
-      filter: ["has", "point_count"],
-      paint: {
-        "circle-color": "#0a2552",
-        "circle-radius": ["step", ["get", "point_count"], 8, 2, 10, 5, 15],
-      },
-    });
+    // map.current.addLayer({
+    //   id: "clusters",
+    //   type: "circle",
+    //   source: "points",
+    //   filter: ["==", "Tax Allocation Year", year],
+    //   // filter: ["all", ["==", "Tax Allocation Year", year], ["has", "point_count"]],
+    //   paint: {
+    //     "circle-color": "#0a2552",
+    //     "circle-radius": ["step", ["get", "point_count"], 8, 2, 10, 5, 15],
+    //   },
+    // });
 
-    // cluster count
-    map.current.addLayer({
-      id: "cluster-count",
-      type: "symbol",
-      source: "points",
-      filter: ["has", "point_count"],
-      layout: {
-        "text-field": ["get", "point_count_abbreviated"],
-        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-        "text-size": 14,
-      },
-      paint: {
-        "text-color": "#ffffff",
-      },
-    });
+    // // cluster count
+    // map.current.addLayer({
+    //   id: "cluster-count",
+    //   type: "symbol",
+    //   source: "points",
+    //   filter: ["==", "Tax Allocation Year", year],
+    //   // filter: ["all", ["==", "Tax Allocation Year", year], ["has", "point_count"]],
+    //   layout: {
+    //     "text-field": ["get", "point_count_abbreviated"],
+    //     "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+    //     "text-size": 14,
+    //   },
+    //   paint: {
+    //     "text-color": "#ffffff",
+    //   },
+    // });
 
     // unclustered points
     map.current.addLayer({
       id: "properties",
       type: "circle",
       source: "points",
-      filter: ["!", ["has", "point_count"]],
+      filter: ["==", "Tax Allocation Year", year],
+      // filter: ["all", ["==", "Tax Allocation Year", year], ["!has", "point_count"]],
       paint: {
         "circle-color": [
           "case",
@@ -468,83 +442,83 @@ export const Map = ({ lng, lat, zoom }) => {
       // map.current.setPaintProperty("outline", "line-opacity", .2);
     }
 
-    const onClickSpider = (e, spiderLeg) => {
-      console.log("Clicked on ", spiderLeg);
+    // const onClickSpider = (e, spiderLeg) => {
+    //   console.log("Clicked on ", spiderLeg);
 
-      if (clickedPointId !== null) {
-        map.current.removeFeatureState({
-          source: "points",
-          id: clickedPointId,
-        });
-      }
+    //   if (clickedPointId !== null) {
+    //     map.current.removeFeatureState({
+    //       source: "points",
+    //       id: clickedPointId,
+    //     });
+    //   }
 
-      const feature = spiderLeg.feature
-      console.log(feature);
-      // create popup node
-      const popupNode = document.createElement("div");
-      ReactDOM.createRoot(popupNode).render(
-        <PointInfo
-          feature={feature}
-          fundingSource={fundingSource}
-        />
-      );
-      // add popup to map
-      popUpRef.current
-        .setLngLat(feature.geometry.coordinates)
-        .setDOMContent(popupNode)
-        .addTo(map.current);
+    //   const feature = spiderLeg.feature
+    //   console.log(feature);
+    //   // create popup node
+    //   const popupNode = document.createElement("div");
+    //   ReactDOM.createRoot(popupNode).render(
+    //     <PointInfo
+    //       feature={feature}
+    //       fundingSource={fundingSource}
+    //     />
+    //   );
+    //   // add popup to map
+    //   popUpRef.current
+    //     .setLngLat(feature.geometry.coordinates)
+    //     .setDOMContent(popupNode)
+    //     .addTo(map.current);
 
-      // spiderifier.unspiderfy();
-    }
+    //   // spiderifier.unspiderfy();
+    // }
 
-    const spiderifier = new MapboxglSpiderifier(map.current, {
-      animate: true,
-      animationSpeed: 200,
-      customPin: true,
-      onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
-    });
+    // const spiderifier = new MapboxglSpiderifier(map.current, {
+    //   animate: true,
+    //   animationSpeed: 200,
+    //   customPin: true,
+    //   onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
+    // });
 
     // inspect a cluster on click
-    map.current.on("click", "clusters", (e) => {
-      const SPIDERFY_FROM_ZOOM = 15;
-      const features = map.current.queryRenderedFeatures(e.point, {
-        layers: ["clusters"],
-      });
-      const clusterId = features[0].properties.cluster_id;
-      if (!features.length) {
-        return;
-      } else if (map.current.getZoom() < SPIDERFY_FROM_ZOOM) {
-        map.current
-          .getSource("points")
-          .getClusterExpansionZoom(clusterId, (err, zoom) => {
-            if (err) return;
+    // map.current.on("click", "clusters", (e) => {
+    //   const SPIDERFY_FROM_ZOOM = 15;
+    //   const features = map.current.queryRenderedFeatures(e.point, {
+    //     layers: ["clusters"],
+    //   });
+    //   const clusterId = features[0].properties.cluster_id;
+    //   if (!features.length) {
+    //     return;
+    //   } else if (map.current.getZoom() < SPIDERFY_FROM_ZOOM) {
+    //     map.current
+    //       .getSource("points")
+    //       .getClusterExpansionZoom(clusterId, (err, zoom) => {
+    //         if (err) return;
 
-            map.current.easeTo({
-              center: features[0].geometry.coordinates,
-              zoom: zoom,
-            });
-          });
-        }
-      // else {
-      //   map.current
-      //     .getSource("points")
-      //     .getClusterLeaves(
-      //       features[0].properties.cluster_id,
-      //       100,
-      //       0,
-      //       function (err, leafFeatures) {
-      //         if (err) {
-      //           return console.error(
-      //             "error while getting leaves of a cluster",
-      //             err
-      //           );
-      //         }
-      //         var markers = leafFeatures.map((leafFeature) => leafFeature.properties);
-      //         spiderifier.spiderfy(features[0].geometry.coordinates, markers);
-      //       }
-      //     );
-      // }
-    });
+    //         map.current.easeTo({
+    //           center: features[0].geometry.coordinates,
+    //           zoom: zoom,
+    //         });
+    //       });
+    //     }
+    //   else {
+    //     map.current
+    //       .getSource("points")
+    //       .getClusterLeaves(
+    //         features[0].properties.cluster_id,
+    //         100,
+    //         0,
+    //         function (err, leafFeatures) {
+    //           if (err) {
+    //             return console.error(
+    //               "error while getting leaves of a cluster",
+    //               err
+    //             );
+    //           }
+    //           var markers = leafFeatures.map((leafFeature) => leafFeature.properties);
+    //           spiderifier.spiderfy(features[0].geometry.coordinates, markers);
+    //         }
+    //       );
+    //   }
+    // });
 
     // Pop-up functionality for point info
     let clickedPointId = null;
@@ -559,7 +533,7 @@ export const Map = ({ lng, lat, zoom }) => {
         return self.findIndex(v => v.id  === value.id) === index;
       });
 
-      if (uniqueFeatures.length < 2) {
+      // if (uniqueFeatures.length < 2) {
         const feature = uniqueFeatures[0];
 
         if (clickedPointId !== null) {
@@ -583,37 +557,37 @@ export const Map = ({ lng, lat, zoom }) => {
           .setLngLat(e.lngLat)
           .setDOMContent(popupNode)
           .addTo(map.current);
-      } 
+      // } 
       // More than one feature per point
-      else {
+      // else {
 
-        if (clickedPointId !== null) {
-          map.current.removeFeatureState({
-            source: "points",
-            id: clickedPointId,
-          });
-        }
+      //   if (clickedPointId !== null) {
+      //     map.current.removeFeatureState({
+      //       source: "points",
+      //       id: clickedPointId,
+      //     });
+      //   }
 
-        // const clickedFeatures = features.map()
-        const clickedOnFeature = uniqueFeatures[0];
-        // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
-        spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, uniqueFeatures);
-        // create spiderMarker
+      //   // const clickedFeatures = features.map()
+      //   const clickedOnFeature = uniqueFeatures[0];
+      //   // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
+      //   spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, uniqueFeatures);
+      //   // create spiderMarker
         
-        // const spiderMarkerNode = document.createElement("div");
-        // ReactDOM.createRoot(spiderMarkerNode).render(
-        //   <PointInfo
-        //     feature={feature}
-        //     variable={variable}
-        //     fundingSource={fundingSource}
-        //   />
-        // );
-        // add popup to map
-        // popUpRef.current
-        //   .setLngLat(e.lngLat)
-        //   .setDOMContent(spiderMarkerNode)
-        //   .addTo(map.current);
-      }
+      //   // const spiderMarkerNode = document.createElement("div");
+      //   // ReactDOM.createRoot(spiderMarkerNode).render(
+      //   //   <PointInfo
+      //   //     feature={feature}
+      //   //     variable={variable}
+      //   //     fundingSource={fundingSource}
+      //   //   />
+      //   // );
+      //   // add popup to map
+      //   // popUpRef.current
+      //   //   .setLngLat(e.lngLat)
+      //   //   .setDOMContent(spiderMarkerNode)
+      //   //   .addTo(map.current);
+      // }
       
 
       clickedPointId = e.features[0].id;
@@ -664,9 +638,9 @@ export const Map = ({ lng, lat, zoom }) => {
         type: "geojson",
         data: pointData,
         generateId: true,
-        cluster: true,
-        clusterMaxZoom: 14,
-        clusterRadius: 50,
+        // cluster: true,
+        // clusterMaxZoom: 14,
+        // clusterRadius: 50,
       });
 
       addMapLayers();

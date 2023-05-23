@@ -5,36 +5,46 @@ import { csv } from "d3";
 import "./ExploreDistrict.css";
 import dshaData from "../data/DSHA_districted.json";
 
-
 function ExploreDistrict({
   chartData,
   districtFilterValue,
   collapseButton,
   filterColumn,
-  funding,
+  fundingSource,
   exploreDistrict,
+  year,
 }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     csv(chartData).then((result) => {
-      const filteredData = result.filter((i) =>
+      const filteredDistricts = result.filter((i) =>
         filterColumn
           ? i[filterColumn] === `${exploreDistrict.value}` ||
             i[filterColumn] === "District Average"
           : i
       );
-      setData(filteredData);
+
+      const filteredData = filteredDistricts.filter(
+        (feature) =>
+          parseFloat(feature["Tax Allocation Year"]) === parseFloat(year)
+      );
+
+      const sortedData = filteredData.sort((a, b) =>
+        a.variable > b.variable ? 1 : -1
+      );
+
+      setData(sortedData);
     });
+  }, [exploreDistrict, year]);
 
-    
-  }, [exploreDistrict]);
+  const properties = dshaData.features.filter(
+    (item) =>
+      (item.properties["Senate District"] === `${exploreDistrict.value}`) &
+      (`${item.properties["Tax Allocation Year"]}` === `${year}`)
+  );
 
-  const properties = dshaData.features.filter(item => item.properties["Senate District"] === `${exploreDistrict.value}`)
-  console.log(properties);
-
-// Formatting data
-
+  // Formatting data
   const formattedData = data.map((item) => {
     switch (item.variable) {
       case "ALLOCATION AMOUNT":
@@ -43,7 +53,7 @@ function ExploreDistrict({
         return {
           ...item,
           value: `$${parseFloat(item.value).toLocaleString(undefined, {
-            maximumFractionDigits: 2,
+            maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}`,
         };
@@ -62,7 +72,7 @@ function ExploreDistrict({
         return {
           ...item,
           value: `${parseFloat(item.value).toLocaleString(undefined, {
-            maximumFractionDigits: 1,
+            maximumFractionDigits: 0,
             minimumFractionDigits: 0,
           })}`,
         };
@@ -75,7 +85,6 @@ function ExploreDistrict({
   const average = formattedData.filter(
     (d) => d.district === "District Average"
   );
-  
 
   return (
     <>
@@ -89,7 +98,7 @@ function ExploreDistrict({
           <div className="explore-subheader">
             <div className="label-container">
               <h2 className="information-text">
-                <strong>{mapInfo[funding].columns["adj_popula"]}:</strong>
+                <strong>{mapInfo[fundingSource].columns["adj_popula"]}:</strong>
               </h2>
               {selectedDistrict.map((district, i) => (
                 <>
@@ -104,36 +113,45 @@ function ExploreDistrict({
             <span className="divider"></span>
             <div className="label-container">
               <h2 className="information-text">
-                <strong>{funding} properties:</strong>
+                <strong>{fundingSource} properties:</strong>
               </h2>
               <h3 className="information-text">{properties.length}</h3>
             </div>
           </div>
           <table className="explore-table">
             <tbody>
-
-            <tr>
-              <th className="table-header"></th>
-              <th className="table-header">District {exploreDistrict.value}</th>
-              <th className="table-header">State Average</th>
-            </tr>
-            {selectedDistrict.map((district, i) => (
-              <>
-                {district.variable === "adj_popula" ? (
-                  ""
-                ) : (
-                  <tr className="table-row-container">
-                    <td className="table-row-header">
-                      <strong>{mapInfo[funding].columns[district.variable]}</strong>
-                    </td>
-                    <td className="table-row">{district.value}</td>
-                    <td className="table-row">{average[i].value}</td>
-                  </tr>
-                )}
-              </>
-            ))}
+              <tr>
+                <th className="table-header">{year}</th>
+                <th className="table-header">
+                  District {exploreDistrict.value}
+                </th>
+                <th className="table-header"></th>
+                <th className="table-header">State Average</th>
+              </tr>
+              {selectedDistrict.map((district, i) => (
+                <>
+                  {district.variable === "adj_popula" ? (
+                    ""
+                  ) : (
+                    <tr className="table-row-container">
+                      <td className="table-row-header">
+                        <strong>
+                          {mapInfo[fundingSource].columns[district.variable]}
+                        </strong>
+                      </td>
+                      <td className="table-row">{district.value}</td>
+                      <td className="compare">
+                        {parseFloat(district.value.replace(/[^0-9\.]+/g, "")) >
+                        parseFloat(average[i].value.replace(/[^0-9\.]+/g, ""))
+                          ? ">"
+                          : "<"}
+                      </td>
+                      <td className="table-row">{average[i].value}</td>
+                    </tr>
+                  )}
+                </>
+              ))}
             </tbody>
-
           </table>
         </div>
       </div>

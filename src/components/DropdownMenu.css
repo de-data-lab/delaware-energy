@@ -7,7 +7,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     
     /* layout and size*/
     display: flex;
@@ -73,6 +73,8 @@
     display: flex;
     justify-content: space-between;
   }
+
+  
   
   /* Dropdowns font size and styles */
   

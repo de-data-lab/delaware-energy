@@ -20,21 +20,28 @@ import {
   axisLeft,
   scaleOrdinal,
   curveLinear,
-  schemeCategory10
+  schemeCategory10,
+  filter,
+  stack,
+  rollup,
+  stackOrderAscending,
+  stackOrderDescending,
 } from "d3";
 
 /**
  * Defines a new line chart
  * @param {ExplorerChartProps} props The props for the chart
  */
-function BarChart({
+function StackedBar({
   chartData,
   title,
   subtitle,
   xAxis,
   yAxis,
+  series,
   filterColumn,
   filterValue,
+  fundingSource,
   districtFilterValue,
   tooltipConfig,
   handleDistrictChange,
@@ -70,6 +77,9 @@ function BarChart({
         });
       });
 
+      // Filter based on year selected
+      // const filteredData = filteredDistricts.filter(item =>  item.properties["Tax Allocation Year"] === parseFloat(mapInfo[fundingSource].years[year]));
+
       setData(filteredDistricts);
     });
   }, [filterValue, districtFilterValue]);
@@ -78,9 +88,9 @@ function BarChart({
   const config = {
     mt: 100,
     mr: 60,
-    mb: 0,
+    mb: 30,
     ml: 120,
-    ch: 400,
+    ch: 500,
     cw: 700,
     height: function () {
       return this.ch + this.mb + this.mt;
@@ -91,13 +101,15 @@ function BarChart({
   };
 
   const scales = {
-    x: scaleBand([config.ml, config.width() - config.mr]).padding(.25).domain(
-      data
-        .map((d) => parseInt(d[xAxis]))
-        .sort(function (a, b) {
-          return a - b;
-        })
-    ),
+    x: scaleBand([config.ml, config.width() - config.mr])
+      .padding(0.25)
+      .domain(
+        data
+          .map((d) => parseInt(d[xAxis]))
+          .sort(function (a, b) {
+            return a - b;
+          })
+      ),
     y: scaleLinear([config.ch, config.mt]).domain([
       // min(
       //   data.filter((i) => !hiddenSeries.includes(i[series])),
@@ -110,7 +122,7 @@ function BarChart({
       ),
     ]),
     color: scaleOrdinal()
-      .domain(Array.from(new Set(data.map((d) => d[xAxis]))))
+      .domain(Array.from(new Set(data.map((d) => d[series]))))
       .range(colorScheme),
   };
 
@@ -161,9 +173,8 @@ function BarChart({
       .style("text-anchor", "end")
       .attr("dx", "-1.25em")
       .attr("dy", "-.05em")
-      .attr("transform", "rotate(-65)")
-      ;
-      
+      .attr("transform", "rotate(-65)");
+
     select(svg.current)
       .select(".y-axis")
       .transition()
@@ -171,11 +182,40 @@ function BarChart({
         axisLeft(scales.y)
           .tickSize(-(config.width() - config.mr - config.ml))
           .tickPadding(20)
+
           // Incorporate money formatter
           .tickFormat(yAxisFormat)
       )
       .call((g) => g.selectAll(".tick line").attr("x1", 0));
   };
+
+  const groupedData = Array.from(group(data, (d) => d[series])).sort((a, b) => a[0][0] > b[0][0] ? 1 : -1);
+  //   const wide = data.group()
+//     .key((d) => d["Tax Allocation Year"])
+//     .rollup((d) =>
+//       d.reduce(function (prev, curr) {
+//         prev["Tax Allocation Year"] = curr["Tax Allocation Year"];
+//         prev[curr["District"]] = curr["Value"];
+//         return prev;
+//       }, {})
+//     )
+//     .map((d)=> d.values)
+
+
+  // stacks/layers
+  const stackGenerator = stack(groupedData)
+  console.log(stackGenerator)
+//     .keys(Object.keys(mapInfo[fundingSource].years).map((item) => item))
+//     .order(stackOrderAscending);
+//   const layers = stackGenerator(groups);
+//   console.log(layers);
+  // const extent = [
+  //   0,
+  //   Math.round(max(layers, (layer) => max(layer, (sequence) => sequence[1]))),
+  // ];
+  
+// console.log(groupedData.map(d => d[1].map(d => d)));
+console.log(groupedData);
 
   useEffect(() => {
     drawAxes();
@@ -209,6 +249,56 @@ function BarChart({
             defaultValue={district}
             isMulti
           ></Select>
+          <g className="legend">
+            {groupedData
+              .map((i) => i[0])
+              .map((j, index) => (
+                <g
+                  opacity={hiddenSeries.includes(j) ? 0.2 : 1}
+                  onMouseOver={() => {
+                    setHovered(j);
+                  }}
+                  onMouseLeave={() => {
+                    setHovered(null);
+                  }}
+                  onClick={(e) => {
+                    if (!hiddenSeries.includes(j)) {
+                      setHiddenSeries([...hiddenSeries, j]);
+                    } else {
+                      setHiddenSeries(
+                        hiddenSeries.filter((series) => series !== j)
+                      );
+                    }
+                  }}
+                  className="legend-entry"
+                >
+                  <rect
+                    className="legend-rect"
+                    fill={j === reference ? "none" : scales.color(j)}
+                    stroke={j === reference ? "gray" : scales.color(j)}
+                    strokeDasharray={j === reference ? "2 2" : ""}
+                    rx="5"
+                    ry="5"
+                    height="20"
+                    width="20"
+                    transform={`translate(${
+                      (config.width() / 4) * index + config.ml
+                    }, ${config.ch + config.mb})`}
+                  ></rect>
+                  <text
+                    textAnchor="start"
+                    dominantBaseline="middle"
+                    className="legend-text"
+                    dx="30"
+                    transform={`translate(${
+                      (config.width() / 4) * index + config.ml
+                    }, ${config.ch + config.mb + 11})`}
+                  >
+                    {parseInt(j)}
+                  </text>
+                </g>
+              ))}
+          </g>
         </div>
         <svg
           ref={svg}
@@ -236,15 +326,14 @@ function BarChart({
           </g>
 
           <g className="bars">
-            {data.map((d, seriesIndex) =>
-              d[xAxis] !== reference ? (
+            {groupedData.map((series, seriesIndex) => series[1].map((d, i) =>
                 <rect
                   key={d[xAxis]}
                   x={scales.x(parseInt(d[xAxis]))}
                   y={scales.y(d[yAxis])}
-                  fill="var(--blue)"
+                  fill={d[xAxis] !== reference ? (scales.color(series)) : ("var(--grey)")}
                   width={scales.x.bandwidth()}
-                  height={config.ch - scales.y(d[yAxis])}
+                  height={(config.ch - scales.y(parseInt(d.value)))}
                   className={`bar ${
                     hiddenSeries.includes(d[0])
                       ? "hidden"
@@ -252,34 +341,10 @@ function BarChart({
                       ? "unfocus"
                       : ""
                   }`}
-                  rx="5"
-                  style={{
-                    animationDelay: `${0.2 * seriesIndex}s`,
-                  }}
-                  onMouseOver={(e) => {
-                    setHovered(d[0]);
-                    handleMouseOver(e, d);
-                  }}
-                ></rect>
-              ) : (
-                <rect
-                  key={d[xAxis]}
-                  x={scales.x(parseInt(d[xAxis]))}
-                  y={scales.y(d[yAxis])}
-                  fill="var(--red)"
-                  width={scales.x.bandwidth()}
-                  height={config.ch - scales.y(d[yAxis])}
-                  className={`bar ${
-                    hiddenSeries.includes(d[0])
-                      ? "hidden"
-                      : hovered && d[0] !== hovered
-                      ? "unfocus"
-                      : ""
-                  }`}
-                  rx="5"
-                  style={{
-                    animationDelay: `${0.2 * seriesIndex}s`,
-                  }}
+                  rx="10"
+                //   style={{
+                //     animationDelay: `${0.2 * i + seriesIndex}s`,
+                //   }}
                   onMouseOver={(e) => {
                     setHovered(d[0]);
                     handleMouseOver(e, d);
@@ -303,7 +368,7 @@ function BarChart({
   );
 }
 
-export default BarChart;
+export default StackedBar;
 
 // Bar chart
 /**
@@ -321,15 +386,15 @@ export default BarChart;
  */
 
 // Bar chart config
- /**
-   * @todo Abstract this out into a reusable type/object, figure out responsive sizing
-   * @typedef {object} ConfigObject
-   * @property { number } mt The top margin
-   * @property { number } mr The right margin
-   * @property { number } mb The bottom margin
-   * @property { number } ml The left margin
-   * @property { number } ch The height of the chart area
-   * @property { number } cw The width of the chart area
-   * @property { function(): number } height Returns the total height of the plot, calculated as `ch + mt + mb`
-   * @property { function(): number} width Returns the total width of the plot, calculated as `cw + ml + mr`
-   */
+/**
+ * @todo Abstract this out into a reusable type/object, figure out responsive sizing
+ * @typedef {object} ConfigObject
+ * @property { number } mt The top margin
+ * @property { number } mr The right margin
+ * @property { number } mb The bottom margin
+ * @property { number } ml The left margin
+ * @property { number } ch The height of the chart area
+ * @property { number } cw The width of the chart area
+ * @property { function(): number } height Returns the total height of the plot, calculated as `ch + mt + mb`
+ * @property { function(): number} width Returns the total width of the plot, calculated as `cw + ml + mr`
+ */

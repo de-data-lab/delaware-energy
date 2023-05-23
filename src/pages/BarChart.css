@@ -42,6 +42,15 @@
   
   
   /*  */
+
+  .legend {
+    background-color: var(--white);
+  }
+
+  .legend-entry:hover > .legend-text, .legend-entry:hover > .legend-rect {
+    opacity: .6;
+    cursor: pointer; 
+  }
   
   @keyframes bar-animate {
     0% {

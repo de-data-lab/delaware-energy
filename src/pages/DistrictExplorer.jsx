@@ -193,12 +193,12 @@ export const DistrictExplorer = ({fundingSource, variable, setVariable, year, se
                 if (d.district === "District Average") {
                   return "State Average";
                 }
-                return `District ${d.district}`;
+                return `District ${d.data.district}`;
               },
               customContent: (d) =>
                 `${
-                  mapInfo[fundingSource].columns[d.variable]
-                }: <strong>${tooltipFormatter(d.value)}</strong>`,
+                  d.key
+                }: <strong>${tooltipFormatter(d.data[d.key])}</strong>`,
             }}
             chartData={chartData}
             title={mapInfo[fundingSource].columns[variable]}

@@ -1,32 +1,16 @@
-import mapInfo from "../utils/mapInfo";
 import Select from "react-select";
-import "./BarChart.css";
 import ChartTooltip, { useTooltip } from "../components/ChartTooltip";
+import "./BarChart.css";
 
 // @ts-check
 
-import { useState, useEffect, useRef } from "react";
-import React from "react";
 import {
-  csv,
+  autoType, axisBottom, axisLeft, csv,
   group,
-  scaleBand,
-  min,
-  max,
-  line,
-  select,
-  axisBottom,
-  scaleLinear,
-  axisLeft,
-  scaleOrdinal,
-  curveLinear,
-  schemeCategory10,
-  filter,
-  stack,
-  rollup,
-  stackOrderAscending,
-  stackOrderDescending,
+  scaleBand, scaleLinear, scaleOrdinal,
+  schemeCategory10, select, stack
 } from "d3";
+import React, { useEffect, useRef, useState } from "react";
 
 /**
  * Defines a new line chart
@@ -51,6 +35,7 @@ function StackedBar({
   reference,
 }) {
   const [data, setData] = useState([]);
+  const [stackedData, setStackedData] = useState([]);
   const [hovered, setHovered] = useState(null);
   const [colorScheme, setColorScheme] = useState(schemeCategory10);
   const [hiddenSeries, setHiddenSeries] = useState([]);
@@ -62,7 +47,7 @@ function StackedBar({
   const [isSearchable, setIsSearchable] = useState(true);
 
   useEffect(() => {
-    csv(chartData).then((result) => {
+    csv(chartData, autoType).then((result) => {
       // Filter chart data on FilterColumn if it exists and equals filterValue
       const variableFilteredData = result.filter((i) =>
         filterColumn ? i[filterColumn] === `${filterValue}` : i
@@ -79,7 +64,6 @@ function StackedBar({
 
       // Filter based on year selected
       // const filteredData = filteredDistricts.filter(item =>  item.properties["Tax Allocation Year"] === parseFloat(mapInfo[fundingSource].years[year]));
-
       setData(filteredDistricts);
     });
   }, [filterValue, districtFilterValue]);
@@ -100,6 +84,7 @@ function StackedBar({
     },
   };
 
+
   const scales = {
     x: scaleBand([config.ml, config.width() - config.mr])
       .padding(0.25)
@@ -116,10 +101,7 @@ function StackedBar({
       //   (d) => parseInt(d[yAxis])
       // ),
       0,
-      max(
-        data.filter((i) => !i.series),
-        (d) => parseInt(d[yAxis])
-      ),
+      600, // needs to be the maximum number of units added across all years for any given district
     ]),
     color: scaleOrdinal()
       .domain(Array.from(new Set(data.map((d) => d[series]))))
@@ -189,33 +171,36 @@ function StackedBar({
       .call((g) => g.selectAll(".tick line").attr("x1", 0));
   };
 
-  const groupedData = Array.from(group(data, (d) => d[series])).sort((a, b) => a[0][0] > b[0][0] ? 1 : -1);
-  //   const wide = data.group()
-//     .key((d) => d["Tax Allocation Year"])
-//     .rollup((d) =>
-//       d.reduce(function (prev, curr) {
-//         prev["Tax Allocation Year"] = curr["Tax Allocation Year"];
-//         prev[curr["District"]] = curr["Value"];
-//         return prev;
-//       }, {})
-//     )
-//     .map((d)=> d.values)
-
-
-  // stacks/layers
-  const stackGenerator = stack(groupedData)
-  console.log(stackGenerator)
-//     .keys(Object.keys(mapInfo[fundingSource].years).map((item) => item))
-//     .order(stackOrderAscending);
-//   const layers = stackGenerator(groups);
-//   console.log(layers);
-  // const extent = [
-  //   0,
-  //   Math.round(max(layers, (layer) => max(layer, (sequence) => sequence[1]))),
-  // ];
   
-// console.log(groupedData.map(d => d[1].map(d => d)));
-console.log(groupedData);
+
+  useEffect(() => { 
+    let nested = Array.from(group(data, d => d.district));
+
+    let lihtcWide = nested.map(g => {
+      let obj = {};
+      obj["district"] = g[0]
+      for (let year of Array.from(new Set(data.map(d => d["Tax Allocation Year"])))) {
+        const match = g[1].find(d => { return d["Tax Allocation Year"]==year }); 
+        obj[year] = match ? match.value : null
+      }
+      return obj
+    })
+
+    let stacked =  stack()
+        .keys(Array.from(new Set(data.map(d => d["Tax Allocation Year"]))))(lihtcWide)
+    
+    
+    let stackedWithKey = stacked.map(d => {
+          d.forEach(v => {
+            v.key = d.key; 
+            v.data.name = v.data.district
+          })
+          return d
+        }).sort((a, b) => a.key > b.key ? 1 : -1)
+
+        setStackedData(stackedWithKey)
+  }, [data])
+
 
   useEffect(() => {
     drawAxes();
@@ -249,24 +234,24 @@ console.log(groupedData);
             defaultValue={district}
             isMulti
           ></Select>
-          <g className="legend">
-            {groupedData
-              .map((i) => i[0])
-              .map((j, index) => (
+       
+            <g className="legend">
+            {stackedData
+              .map((d, i) => (
                 <g
-                  opacity={hiddenSeries.includes(j) ? 0.2 : 1}
+                  opacity={hiddenSeries.includes(d.key) ? 0.2 : 1}
                   onMouseOver={() => {
-                    setHovered(j);
+                    setHovered(d.key);
                   }}
                   onMouseLeave={() => {
                     setHovered(null);
                   }}
                   onClick={(e) => {
-                    if (!hiddenSeries.includes(j)) {
-                      setHiddenSeries([...hiddenSeries, j]);
+                    if (!hiddenSeries.includes(d.key)) {
+                      setHiddenSeries([...hiddenSeries, d.key]);
                     } else {
                       setHiddenSeries(
-                        hiddenSeries.filter((series) => series !== j)
+                        hiddenSeries.filter((series) => series !== d.key)
                       );
                     }
                   }}
@@ -274,15 +259,15 @@ console.log(groupedData);
                 >
                   <rect
                     className="legend-rect"
-                    fill={j === reference ? "none" : scales.color(j)}
-                    stroke={j === reference ? "gray" : scales.color(j)}
-                    strokeDasharray={j === reference ? "2 2" : ""}
+                    fill={d.key === reference ? "none" : scales.color(d.key)}
+                    stroke={d.key === reference ? "gray" : scales.color(d.key)}
+                    strokeDasharray={d.key === reference ? "2 2" : ""}
                     rx="5"
                     ry="5"
                     height="20"
                     width="20"
                     transform={`translate(${
-                      (config.width() / 4) * index + config.ml
+                      (config.width() / 4) * i + config.ml
                     }, ${config.ch + config.mb})`}
                   ></rect>
                   <text
@@ -291,10 +276,10 @@ console.log(groupedData);
                     className="legend-text"
                     dx="30"
                     transform={`translate(${
-                      (config.width() / 4) * index + config.ml
+                      (config.width() / 4) * i + config.ml
                     }, ${config.ch + config.mb + 11})`}
                   >
-                    {parseInt(j)}
+                    {d.key}
                   </text>
                 </g>
               ))}
@@ -310,12 +295,10 @@ console.log(groupedData);
             transform={`translate(${config.width() / 2}, ${config.mt / 2.1})`}
           >
             <text className="title" textAnchor="middle">
-              {" "}
-              {title}{" "}
+              {title}
             </text>
             <text className="subtitle" dy={25} textAnchor="middle">
-              {" "}
-              {subtitle}{" "}
+              {subtitle}
             </text>
           </g>
 
@@ -325,7 +308,40 @@ console.log(groupedData);
             <g className="y-axis" transform={`translate(${config.ml},0)`}></g>
           </g>
 
+
           <g className="bars">
+             {
+              stackedData.map(year => year.map((d, i) => (
+                <>
+               
+                <rect
+                  key={d[xAxis]}
+                  x={scales.x(parseInt(d.data[xAxis]))}
+                  y={scales.y(d[1])}
+                  fill={d.data[xAxis] !== reference ? (scales.color(year)) : ("var(--grey)")}
+                  width={scales.x.bandwidth()}
+                  height={ (scales.y(d[0]) - scales.y(d[1]))}
+                  className={`bar ${
+                    hiddenSeries.includes(d.key)
+                      ? "hidden"
+                      : hovered && d.key !== hovered
+                      ? "unfocus"
+                      : ""
+                  }`}
+                  
+                  onMouseOver={(e) => {
+                    setHovered(d.key);
+                    handleMouseOver(e, d);
+                  }}
+
+                  onMouseOut={() => setHovered(null)}
+                ></rect>
+                </>
+              ))
+             )}
+          </g>
+
+          {/* <g className="bars">
             {groupedData.map((series, seriesIndex) => series[1].map((d, i) =>
                 <rect
                   key={d[xAxis]}
@@ -342,9 +358,6 @@ console.log(groupedData);
                       : ""
                   }`}
                   rx="10"
-                //   style={{
-                //     animationDelay: `${0.2 * i + seriesIndex}s`,
-                //   }}
                   onMouseOver={(e) => {
                     setHovered(d[0]);
                     handleMouseOver(e, d);
@@ -352,7 +365,7 @@ console.log(groupedData);
                 ></rect>
               )
             )}
-          </g>
+          </g> */}
         </svg>
       </div>
       <div></div>

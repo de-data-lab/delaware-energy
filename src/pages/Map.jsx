@@ -17,7 +17,7 @@ import LegendControl from "mapboxgl-legend";
 import { PointInfo } from "../components/PointInfo";
 import { SumPopup } from "../components/SumPopup";
 import { Tooltip } from "../components/Tooltip";
-import MapboxglSpiderifier from "mapboxgl-spiderifier";
+// import MapboxglSpiderifier from "mapboxgl-spiderifier";
 // import {onHover, offHover} from "../utils/onHover";
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
@@ -70,7 +70,7 @@ export const Map = ({ lng, lat, zoom }) => {
     let array = [];
     
     // Change year into INT
-    setYear(parseFloat(year))
+    setYear(parseInt(year))
 
     // map through data and return year
     let filteredData = mapData.features.filter((feature) => feature.properties["Tax Allocation Year"] === year)
@@ -86,7 +86,7 @@ export const Map = ({ lng, lat, zoom }) => {
       ["linear"],
       ["to-number", ["get", variable]],
     ];
-    
+
     stops.forEach((arr) => {
       colorArray.push(arr[0]);
       colorArray.push(arr[1]);
@@ -432,14 +432,16 @@ export const Map = ({ lng, lat, zoom }) => {
     });
 
     // Remove fill if exists and darken outline layer when properties on
-    const visibility = map.current.getLayoutProperty("fill", "visibility");
+    if (map.current.getLayer("fill")) {
+      const visibility = map.current.getLayoutProperty("fill", "visibility");
 
-    if (visibility === "visible") {
-      map.current.setLayoutProperty("fill", "visibility", "none");
-      map.current.setPaintProperty("outline", "line-opacity", 1);
-    } else {
-      map.current.setLayoutProperty("fill", "visibility", "visible");
-      // map.current.setPaintProperty("outline", "line-opacity", .2);
+      if (visibility === "visible") {
+        map.current.setLayoutProperty("fill", "visibility", "none");
+        map.current.setPaintProperty("outline", "line-opacity", 1);
+      } else {
+        map.current.setLayoutProperty("fill", "visibility", "visible");
+        // map.current.setPaintProperty("outline", "line-opacity", .2);
+      }
     }
 
     // const onClickSpider = (e, spiderLeg) => {
@@ -542,7 +544,6 @@ export const Map = ({ lng, lat, zoom }) => {
             id: clickedPointId,
           });
         }
-        console.log(feature.geometry)
         // create popup node
         const popupNode = document.createElement("div");
         ReactDOM.createRoot(popupNode).render(

@@ -72,7 +72,7 @@ function StackedBar({
   const config = {
     mt: 100,
     mr: 60,
-    mb: 30,
+    mb: 100,
     ml: 120,
     ch: 500,
     cw: 700,
@@ -210,6 +210,8 @@ function StackedBar({
     showTooltip(anchor, data);
   };
 
+  console.log(stackedData)
+
   return (
     <>
       <div
@@ -217,74 +219,8 @@ function StackedBar({
           "svg-container " + (collapseButton ? "container-margin" : "")
         }
       >
-        <div className="legend-container">
-          <label className="label-text">Select districts to compare:</label>
-          <Select
-            onChange={(e) => handleDistrictChange(e)}
-            options={districtOptions.filter((item) => {
-              return !district.some((f) => {
-                return f.value === item.value;
-              });
-            })}
-            id="react-select"
-            name="districts"
-            className="basic-multi-select"
-            classNamePrefix="select"
-            isSearchable={isSearchable}
-            defaultValue={district}
-            isMulti
-          ></Select>
-       
-            <g className="legend">
-            {stackedData
-              .map((d, i) => (
-                <g
-                  opacity={hiddenSeries.includes(d.key) ? 0.2 : 1}
-                  onMouseOver={() => {
-                    setHovered(d.key);
-                  }}
-                  onMouseLeave={() => {
-                    setHovered(null);
-                  }}
-                  onClick={(e) => {
-                    if (!hiddenSeries.includes(d.key)) {
-                      setHiddenSeries([...hiddenSeries, d.key]);
-                    } else {
-                      setHiddenSeries(
-                        hiddenSeries.filter((series) => series !== d.key)
-                      );
-                    }
-                  }}
-                  className="legend-entry"
-                >
-                  <rect
-                    className="legend-rect"
-                    fill={d.key === reference ? "none" : scales.color(d.key)}
-                    stroke={d.key === reference ? "gray" : scales.color(d.key)}
-                    strokeDasharray={d.key === reference ? "2 2" : ""}
-                    rx="5"
-                    ry="5"
-                    height="20"
-                    width="20"
-                    transform={`translate(${
-                      (config.width() / 4) * i + config.ml
-                    }, ${config.ch + config.mb})`}
-                  ></rect>
-                  <text
-                    textAnchor="start"
-                    dominantBaseline="middle"
-                    className="legend-text"
-                    dx="30"
-                    transform={`translate(${
-                      (config.width() / 4) * i + config.ml
-                    }, ${config.ch + config.mb + 11})`}
-                  >
-                    {d.key}
-                  </text>
-                </g>
-              ))}
-          </g>
-        </div>
+        {/* <div className="legend-container">
+        </div> */}
         <svg
           ref={svg}
           className="chart"
@@ -341,8 +277,55 @@ function StackedBar({
               ))
              )}
           </g>
-
-         
+          <g className="legend">
+            {stackedData
+              .map((j, index) => (
+                <g
+                  opacity={hiddenSeries.includes(j.key) ? 0.2 : 1}
+                  onMouseOver={() => {
+                    setHovered(j.key);
+                  }}
+                  onMouseLeave={() => {
+                    setHovered(null);
+                  }}
+                  onClick={(e) => {
+                    if (!hiddenSeries.includes(j.key)) {
+                      setHiddenSeries([...hiddenSeries, j.key]);
+                    } else {
+                      setHiddenSeries(
+                        hiddenSeries.filter((series) => series !== j.key)
+                      );
+                    }
+                  }}
+                  className="legend-entry"
+                >
+                  <rect
+                    className="legend-rect"
+                    fill={j.key === reference ? "none" : scales.color(j)}
+                    // stroke={j.key === reference ? "gray" : scales.color(j.key)}
+                    // strokeDasharray={j === reference ? "2 2" : ""}
+                    rx="5"
+                    ry="5"
+                    height="20"
+                    width="20"
+                    transform={`translate(${
+                      (config.height() / 7) * index + config.ml
+                    }, ${config.ch + config.mb + 32})`}
+                  ></rect>
+                  <text
+                    textAnchor="start"
+                    dominantBaseline="middle"
+                    className="legend-text"
+                    dx="30"
+                    transform={`translate(${
+                      (config.height() / 7) * index + config.ml
+                    }, ${config.ch + config.mb + 44})`}
+                  >
+                    {j.key}
+                  </text>
+                </g>
+              ))}
+          </g>
         </svg>
       </div>
       <div></div>

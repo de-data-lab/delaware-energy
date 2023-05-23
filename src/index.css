@@ -91,7 +91,7 @@ p {
   z-index: 4;
 }
 
-.spider-leg-container .spider-leg-pin{
+/* .spider-leg-container .spider-leg-pin{
   position: relative;
   width: 22px;
   height: 22px;
@@ -105,4 +105,4 @@ p {
 }
 .spider-leg-container:hover .spider-leg-line {
   background-color: #f404f4;
-}
+} */

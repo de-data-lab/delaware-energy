@@ -83,11 +83,6 @@
     font-weight: bold;
   }
   
-  .select-text {
-    font-size: var(--font-size-xs);
-    padding: var(--padding-xs);
-  }
-  
   .data-source-text, .link-list {
     font-size: var(--font-size-xxs);
     /* color: var(--navy); */

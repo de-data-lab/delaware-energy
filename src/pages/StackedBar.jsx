@@ -187,8 +187,7 @@ function StackedBar({
     })
 
     let stacked =  stack()
-        .keys(Array.from(new Set(data.map(d => d[series]))))(lihtcWide)
-    
+        .keys(Array.from(new Set(data.map(d => d[series]).sort((a, b) => a.key > b.key ? 1 : -1))))(lihtcWide)
     
     let stackedWithKey = stacked.map(d => {
           d.forEach(v => {
@@ -196,7 +195,7 @@ function StackedBar({
             v.data.name = v.data[xAxis]
           })
           return d
-        }).sort((a, b) => a.key > b.key ? 1 : -1)
+        })
 
         setStackedData(stackedWithKey)
   }, [data])
@@ -209,8 +208,6 @@ function StackedBar({
   const handleMouseOver = (anchor, data) => {
     showTooltip(anchor, data);
   };
-
-  console.log(stackedData)
 
   return (
     <>
@@ -255,7 +252,8 @@ function StackedBar({
                   x={scales.x(parseInt(d.data[xAxis]))}
                   y={scales.y(d[1])}
                   // rx="2"
-                  fill={d.data[xAxis] !== reference ? (scales.color(year)) : ("var(--grey)")}
+                  // fill={d.data[xAxis] !== reference ? (scales.color(year)) : ("var(--grey)")}
+                  fill={scales.color(year)}
                   width={scales.x.bandwidth()}
                   height={ (scales.y(d[0]) - scales.y(d[1]))}
                   className={`bar ${

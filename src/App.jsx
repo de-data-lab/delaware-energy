@@ -18,7 +18,7 @@ function App() {
   // Dropdown for variable
   const [variable, setVariable] = useState("# of Tax Credit Units");
   // year
-  const [year, setYear] = useState("2016");
+  const [year, setYear] = useState("All Time");
 
 
   return (
@@ -28,7 +28,7 @@ function App() {
           <div id="content-container">
           <Routes>
             <Route path="" element={<MapContainer MapContext={MapContext} fundingSource={fundingSource} setFundingSource={setFundingSource} variable={variable} setVariable={setVariable} year={year} setYear={setYear}/>} />
-            <Route path="explorer" element={<DistrictExplorer fundingSource={fundingSource} variable={variable} setVariable={setVariable} year={year} setYear={setYear}/>}/>
+            <Route path="explorer" element={<DistrictExplorer />}/>
             <Route path="info" element={<Info />} />
           </Routes>
           </div>

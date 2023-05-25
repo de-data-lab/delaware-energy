@@ -8,7 +8,7 @@ import { DropdownCollapse } from "./DropdownCollapse";
 
 
 export const DropdownMenu = ({}) => {
-    const { setVariable, fundingSource, setFundingSource, building, setBuilding, year, setYear } = useContext(MapContext);
+    const { setVariable, fundingSource, building, setBuilding, setYear } = useContext(MapContext);
 
     const [button, setButton] = useState(false);
     const { source } = mapInfo[fundingSource].meta; 
@@ -65,7 +65,7 @@ export const DropdownMenu = ({}) => {
             isRtl={isRtl}
             name="year"
             options={yearOptions}
-            defaultValue={yearOptions[0]}
+            defaultValue={yearOptions[7]}
             />
           </div>
             

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import dshaData from "../data/DSHA_districted.json";
-import senateData from "../data/aggregated_with_geo.json";
+import senateData from "../data/aggregated_with_geo_new.json";
 
 
 import { DropdownMenu } from '../components/DropdownMenu';
@@ -17,7 +17,7 @@ export const MapContainer = ({ MapContext, fundingSource, setFundingSource,varia
     // data files change if needed
     const [mapData, setMapData] = useState(senateData);
     const [pointData, setPointData] = useState(dshaData);
-  
+    
    
     // building toggle
     const [building, setBuilding] = useState(false);

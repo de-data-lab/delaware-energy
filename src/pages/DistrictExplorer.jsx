@@ -3,20 +3,21 @@ import Select, { components } from "react-select";
 import mapInfo from "../utils/mapInfo";
 import BarChart from "./BarChart";
 import "./DistrictExplorer.css";
-import senateData from "../data/aggregated_with_geo.json";
+import senateData from "../data/aggregated_with_geo_new.json";
 import { DropdownCollapse } from "../components/DropdownCollapse";
 import ExploreDistrict from "./ExploreDistrict";
 import StackedBar from "./StackedBar";
 
 export const DistrictExplorer = ({
-  fundingSource,
-  variable,
-  setVariable,
-  year,
-  setYear,
 }) => {
+  // Dropdowns
+  const [fundingSource, setFundingSource] = useState("LIHTC");
+  // Dropdown for variable
+  const [variable, setVariable] = useState("# of Tax Credit Units");
+  // year
+  const [year, setYear] = useState("All Time");
   // chart data
-  const chartData = "/long_tax_data_new.csv";
+  const chartData = "/long_tax_data.csv";
 
   // Dropdown for district
   const [district, setDistrict] = useState([
@@ -323,7 +324,7 @@ const ExploreDistrictButtons = ({
             isRtl={isRtl}
             name="year"
             options={yearOptions}
-            defaultValue={yearOptions[0]}
+            defaultValue={yearOptions[7]}
             /* makes sure react-select dropdowns are in front (z-index) */
             menuPortalTarget={document.body}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}

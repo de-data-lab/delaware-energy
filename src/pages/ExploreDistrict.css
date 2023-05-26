@@ -2,9 +2,9 @@
     background-color: var(--white);
     color: var(--navy);
     border-radius: var(--border-sm);
-    width: min(1000px, 100% - 1rem);
+    width: min(80rem, 100% - 1rem);
     margin-inline: auto;
-    margin-bottom: 2rem;
+    margin-bottom: var(--margin-xxs);
     box-shadow: var(--box-shadow);
 }
 
@@ -39,7 +39,7 @@
 .divider {
     width: 1px;
     height: 2em;
-    margin: 0px 1rem;
+    margin: 0px var(--margin-xxs);
     background: var(--white);
 }
 
@@ -54,8 +54,7 @@
 
 .table-header {
     background-color: var(--table-header);
-    font-size: var(--font-size-sm);
-    white-space: nowrap;
+    font-size: var(--font-size-md);
 }
 
 .table-row-header {
@@ -66,19 +65,43 @@
     font-size: var(--font-size-sm);
 }
 
+.compare {
+    font-size: var(--font-size-xl);
+}
+
 .table-header, .table-row, .table-row-header {
     padding: .6rem;
 }
 
-
 .table-row-container:nth-of-type(2n) {
     background-color: var(--table-row);
 }
+
+.table-row-container:last-child > .table-row:last-child {
+    border-radius: 0 0 var(--border-sm) 0;
+}
+.table-row-container:last-child > .table-row-header {
+    border-radius: 0 0 0 var(--border-sm);
+}
+
+
+.not-found {
+    padding: 3rem .5rem;
+    text-align: center;
+    font-size: var(--font-size-lg);
+}
+
 
 /* Desktop styles */
 @media only screen and (min-width: 1281px) {
     .table-row {
         font-size: var(--font-size-md);
     }
-    
-  }
+}
+
+/* Mobile styles */
+@media only screen and (min-width: 550px) {
+    .compare {
+        padding-right: 2rem;
+    }
+} 

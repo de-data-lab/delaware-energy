@@ -1,27 +1,29 @@
-import { useState } from "react";
-import Select from "react-select";
+import { useState, Children, Component } from "react";
+import Select, { components } from "react-select";
 import mapInfo from "../utils/mapInfo";
 import BarChart from "./BarChart";
 import "./DistrictExplorer.css";
-import senateData from "../data/aggregated_with_geo.json";
+import senateData from "../data/aggregated_with_geo_new.json";
 import { DropdownCollapse } from "../components/DropdownCollapse";
 import ExploreDistrict from "./ExploreDistrict";
-import { reference } from "@popperjs/core";
+import StackedBar from "./StackedBar";
 
-export const DistrictExplorer = () => {
+export const DistrictExplorer = ({
+}) => {
+  // Dropdowns
+  const [fundingSource, setFundingSource] = useState("LIHTC");
+  // Dropdown for variable
+  const [variable, setVariable] = useState("# of Tax Credit Units");
+  // year
+  const [year, setYear] = useState("2022");
   // chart data
   const chartData = "/long_tax_data.csv";
-  // Dropdown for fundingSource
-  const [funding, setFunding] = useState("LIHTC");
-  // Dropdown for variable
-  const [explorerVariable, setExplorerVariable] = useState([
-    "# of Tax Credit Units",
-  ]);
+
   // Dropdown for district
   const [district, setDistrict] = useState([
     { value: 1, label: "District 1 - Sarah Mcbride" },
     { value: 2, label: "District 2 - Darius J. Brown" },
-    { value: 3, label: "District 3 - S. Elizabeth Lockman" },
+    { value: 3, label: "District 3 - Elizabeth Lockman" },
   ]);
 
   const [exploreDistrict, setExploreDistrict] = useState({
@@ -45,7 +47,7 @@ export const DistrictExplorer = () => {
 
   // Handle change of select dropdowns
   const handleChange = (selectedOption) => {
-    setExplorerVariable(selectedOption.value);
+    setVariable(selectedOption.value);
   };
   const handleDistrictChange = (e) => {
     setDistrict(e);
@@ -53,17 +55,24 @@ export const DistrictExplorer = () => {
   const handleExploreDistrictChange = (e) => {
     setExploreDistrict(e);
   };
+  const handleYearChange = (e) => {
+    setYear(e.value);
+  };
 
   // List of districts and senators
-  const districts = senateData.features.map((feature) => ({
+  let districts = senateData.features.map((feature) => ({
     name: `District ${feature.properties.district}`,
     number: feature.properties.district,
     senator: feature.properties.name,
   }));
+  districts = [
+    ...new Map(districts.map((item) => [item.number, item])).values(),
+  ];
   districts.sort((a, b) => a.number - b.number);
 
+  // tooltip formatter
   const tooltipFormatter = (d) => {
-    switch (explorerVariable) {
+    switch (variable) {
       case "ALLOCATION AMOUNT":
       case "Average Allocation per Tax Credit Unit":
       case "Average Allocation per 100 Persons":
@@ -72,7 +81,7 @@ export const DistrictExplorer = () => {
           minimumFractionDigits: 0,
         })}`;
 
-      case "adj_popula":
+      case "Population":
       case "Average Population per Tax Credit Unit":
         return `${parseFloat(d).toLocaleString(undefined, {
           maximumFractionDigits: 0,
@@ -93,15 +102,24 @@ export const DistrictExplorer = () => {
     label: `${item.name} - ${item.senator}`,
   }));
 
-  const variableOptions = Object.keys(mapInfo[funding].columns).map((item) => ({
-    value: item,
-    label: mapInfo[funding].columns[item],
-  }));
+  const variableOptions = Object.keys(mapInfo[fundingSource].columns).map(
+    (item) => ({
+      value: item,
+      label: mapInfo[fundingSource].columns[item],
+    })
+  );
 
   const fundingOptions = Object.keys(mapInfo).map((item) => ({
     value: item,
     label: mapInfo[item].meta.displayName,
   }));
+
+  const allYearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
+    value:  mapInfo[fundingSource].years[item],
+    label:  mapInfo[fundingSource].years[item],
+  }));
+  const yearOptions = allYearOptions.filter(item => item.value !== "Sum over all years")
+
 
   return (
     <div className="main-container">
@@ -119,12 +137,17 @@ export const DistrictExplorer = () => {
             districtOptions={districtOptions}
             fundingOptions={fundingOptions}
             handleExploreDistrictChange={handleExploreDistrictChange}
+            yearOptions={yearOptions}
+            handleYearChange={handleYearChange}
           />
         ) : (
           <CompareDistrictButtons
             variableOptions={variableOptions}
             fundingOptions={fundingOptions}
+            districtOptions={districtOptions}
+            district={district}
             handleChange={handleChange}
+            handleDistrictChange={handleDistrictChange}
           />
         )}
       </div>
@@ -142,33 +165,66 @@ export const DistrictExplorer = () => {
             districtFilterValue={district}
             collapseButton={collapseButton}
             filterColumn={"district"}
-            funding={funding}
+            fundingSource={fundingSource}
+            year={year}
             exploreDistrict={exploreDistrict}
           />
         ) : (
           // Compare Districts chart
-          <BarChart
+          // <BarChart
+          //   tooltipConfig={{
+          //     placement: "top-end",
+          //     autoPlace: false,
+          //     customTitle: (d) => {
+          //       if (d.district === "District Average") {
+          //         return "State Average";
+          //       }
+          //       return `District ${d.district}`;
+          //     },
+          //     customContent: (d) =>
+          //       `${
+          //         mapInfo[fundingSource].columns[d.variable]
+          //       }: <strong>${tooltipFormatter(d.value)}</strong>`,
+          //   }}
+          //   chartData={chartData}
+          //   title={mapInfo[fundingSource].columns[variable]}
+          //   subtitle={mapInfo[fundingSource].meta.title}
+          //   xAxis={"district"}
+          //   yAxis={"value"}
+          //   filterColumn={"variable"}
+          //   filterValue={variable}
+          //   districtFilterValue={district}
+          //   referenceColumn={"district"}
+          //   reference={"District Average"}
+          //   handleDistrictChange={handleDistrictChange}
+          //   district={district}
+          //   districtOptions={districtOptions}
+          //   collapseButton={collapseButton}
+          // />
+          <StackedBar
             tooltipConfig={{
               placement: "top-end",
               autoPlace: false,
               customTitle: (d) => {
-                if (d.district === "District Average") {
+                if (d.data.district === "District Average") {
                   return "State Average";
                 }
-                return `District ${d.district}`;
+                return `District ${d.data.district}`;
               },
               customContent: (d) =>
                 `${
-                  mapInfo[funding].columns[d.variable]
-                }: <strong>${tooltipFormatter(d.value)}</strong>`,
+                  d.key
+                }: <strong>${tooltipFormatter(d.data[d.key])}</strong>`,
             }}
             chartData={chartData}
-            title={mapInfo[funding].columns[explorerVariable]}
-            subtitle={mapInfo[funding].meta.title}
+            title={mapInfo[fundingSource].columns[variable]}
+            subtitle={mapInfo[fundingSource].meta.title}
             xAxis={"district"}
             yAxis={"value"}
+            series={"Tax Allocation Year"}
             filterColumn={"variable"}
-            filterValue={explorerVariable}
+            filterValue={variable}
+            fundingSource={fundingSource}
             districtFilterValue={district}
             referenceColumn={"district"}
             reference={"District Average"}
@@ -215,18 +271,20 @@ const ButtonContainer = ({ explorerButton, switchViews }) => {
 const ExploreDistrictButtons = ({
   districtOptions,
   handleExploreDistrictChange,
+  handleYearChange,
   fundingOptions,
+  yearOptions,
 }) => {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
   return (
     <>
       <div className="options-container">
-        <div className="select-explorer">
-          <label className="label-text">Select a funding source:</label>
+        {/* <div className="select-explorer">
+          <label className="label-text" htmlFor="funding">Select a funding source:</label>
           <Select
-            id="react-select"
-            className="basic-single"
+            id="funding"
+            className="basic-single react-select"
             classNamePrefix="select"
             isSearchable={isSearchable}
             isRtl={isRtl}
@@ -234,20 +292,43 @@ const ExploreDistrictButtons = ({
             options={fundingOptions}
             defaultValue={fundingOptions[0]}
           />
-        </div>
+        </div> */}
         <div className="select-explorer">
-          <label className="label-text">Select district to explore:</label>
+          <label className="label-text" htmlFor="district">
+            Select district to explore:
+          </label>
           <Select
-            // className="select-text select"
-            id="react-select"
+            id="district"
             onChange={(e) => handleExploreDistrictChange(e)}
-            className="basic-single"
+            className="basic-single react-select"
             classNamePrefix="select"
             isSearchable={isSearchable}
             isRtl={isRtl}
             name="districts"
             options={districtOptions}
             defaultValue={districtOptions[0]}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+          />
+        </div>
+        <div className="select-explorer">
+          <label className="label-text" htmlFor="year">
+            Select a year:
+          </label>
+          <Select
+            id="year"
+            onChange={(e) => handleYearChange(e)}
+            className="basic-single react-select"
+            classNamePrefix="select"
+            isSearchable={isSearchable}
+            isRtl={isRtl}
+            name="year"
+            options={yearOptions}
+            defaultValue={yearOptions[6]}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
         </div>
       </div>
@@ -255,21 +336,44 @@ const ExploreDistrictButtons = ({
   );
 };
 
+const ValueContainer = ({ children, getValue, ...props }) => {
+  var values = getValue();
+  var valueLabel = "";
+
+  // if more than one value selected, add "& x more" to end of value
+  if (values.length > 0) valueLabel += props.selectProps.getOptionLabel(values[0]);
+  if (values.length > 1) valueLabel += ` & ${values.length - 1} more...`;
+
+  // Keep standard placeholder and input from react-select
+  var childsToRender = Children.toArray(children).filter((child) => ['Input', 'DummyInput', 'Placeholder'].indexOf(child.type.name) >= 0);
+
+  return (
+    <components.ValueContainer {...props}>
+      {!props.selectProps.inputValue && valueLabel }
+      { childsToRender }
+    </components.ValueContainer>
+  );
+};
+
 const CompareDistrictButtons = ({
   variableOptions,
   fundingOptions,
   handleChange,
+  handleDistrictChange,
+  districtOptions,
+  district,
 }) => {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
+
   return (
     <>
       <div className="options-container">
-        <div className="select-explorer">
-          <label className="label-text">Select a funding source:</label>
+        {/* <div className="select-explorer">
+          <label className="label-text" htmlFor="funding">Select a funding source:</label>
           <Select
-            id="react-select"
-            className="basic-single"
+            id="funding"
+            className="basic-single react-select"
             classNamePrefix="select"
             isSearchable={isSearchable}
             isRtl={isRtl}
@@ -277,11 +381,36 @@ const CompareDistrictButtons = ({
             options={fundingOptions}
             defaultValue={fundingOptions[0]}
           />
+        </div> */}
+        <div className="select-explorer">
+          <label className="label-text">Select districts to compare:</label>
+          <Select
+            onChange={(e) => handleDistrictChange(e)}
+            options={districtOptions}
+            id="districts"
+            name="districts"
+            className="basic-multi-select react-select"
+            classNamePrefix="select"
+            isSearchable={isSearchable}
+            defaultValue={district}
+            isMulti
+            // controlShouldRenderValue={false}
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            components={{
+              ValueContainer
+            }}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
+          />
         </div>
         <div className="select-explorer">
-          <label className="label-text">Select a variable:</label>
+          <label className="label-text" htmlFor="variable">
+            Select a variable:
+          </label>
           <Select
-            id="react-select"
+            id="variable"
             onChange={handleChange}
             className="basic-single"
             classNamePrefix="select"
@@ -290,6 +419,9 @@ const CompareDistrictButtons = ({
             name="variable"
             options={variableOptions}
             defaultValue={variableOptions[0]}
+            /* makes sure react-select dropdowns are in front (z-index) */
+            menuPortalTarget={document.body}
+            styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
           />
         </div>
       </div>

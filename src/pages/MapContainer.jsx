@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import dshaData from "../data/DSHA_districted.json";
-import senateData from "../data/aggregated_with_geo.json";
+import senateData from "../data/aggregated_with_geo2020.json";
 
 
 import { DropdownMenu } from '../components/DropdownMenu';
 import { Map } from './Map';
+import { Slider } from "../components/Slider";
 
 
-export const MapContainer = ({ MapContext }) => { 
+export const MapContainer = ({ MapContext, fundingSource, setFundingSource,variable, setVariable, year, setYear }) => { 
     const [lng, setLng] = useState(-75.469);
     const [lat, setLat] = useState(39.063);
     const [zoom, setZoom] = useState(7.5);
@@ -16,17 +17,14 @@ export const MapContainer = ({ MapContext }) => {
     // data files change if needed
     const [mapData, setMapData] = useState(senateData);
     const [pointData, setPointData] = useState(dshaData);
-  
-    // Dropdowns
-    const [fundingSource, setFundingSource] = useState("LIHTC");
-    // Dropdown for variable
-    const [variable, setVariable] = useState("# of Tax Credit Units");
+    
     // building toggle
     const [building, setBuilding] = useState(false);
 
     return (
-        <MapContext.Provider value={{  pointData, mapData, fundingSource, setFundingSource, variable, setVariable, building, setBuilding, }}>
+        <MapContext.Provider value={{ pointData, mapData, fundingSource, setFundingSource, variable, setVariable, building, setBuilding, year, setYear }}>
             <DropdownMenu />
+            {/* <Slider /> */}
             <Map lng={lng} lat={lat} zoom={zoom} />
         </MapContext.Provider>
     )

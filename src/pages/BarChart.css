@@ -11,7 +11,6 @@
     background: linear-gradient(43deg, rgba(240,240,240,1) 0%, rgba(255,255,255,1) 10%, rgba(255,255,255,1) 55%, rgba(255,255,255,1) 90%, rgba(240,240,240,1) 100%);
   }
   
-
   .axes path {
     stroke: none;
   }
@@ -41,7 +40,23 @@
   }
   
   
-  /*  */
+  /*  LEGEND */
+
+  .legend {
+    /* background-color: var(--white); */
+    /* display: flex; */
+    /* flex-direction: column; */
+  }
+
+  .legend-rect {
+    display: flex;
+    justify-content: center;
+  }
+
+  .legend-entry:hover > .legend-text, .legend-entry:hover > .legend-rect {
+    opacity: .6;
+    cursor: pointer; 
+  }
   
   @keyframes bar-animate {
     0% {
@@ -92,6 +107,7 @@
   .chart-container {
     padding: 0 6rem;
     flex: 1;
+    margin-bottom: var(--margin-sm);
   }
 
   .legend-container {

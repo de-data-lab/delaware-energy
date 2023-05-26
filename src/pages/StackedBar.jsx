@@ -1,40 +1,31 @@
-import mapInfo from "../utils/mapInfo";
 import Select from "react-select";
-import "./BarChart.css";
 import ChartTooltip, { useTooltip } from "../components/ChartTooltip";
+import "./BarChart.css";
 
 // @ts-check
 
-import { useState, useEffect, useRef } from "react";
-import React from "react";
 import {
-  csv,
+  autoType, axisBottom, axisLeft, csv,
   group,
-  scaleBand,
-  min,
-  max,
-  line,
-  select,
-  axisBottom,
-  scaleLinear,
-  axisLeft,
-  scaleOrdinal,
-  curveLinear,
-  schemeCategory10
+  scaleBand, scaleLinear, scaleOrdinal,
+  schemeCategory10, select, stack
 } from "d3";
+import React, { useEffect, useRef, useState } from "react";
 
 /**
  * Defines a new line chart
  * @param {ExplorerChartProps} props The props for the chart
  */
-function BarChart({
+function StackedBar({
   chartData,
   title,
   subtitle,
   xAxis,
   yAxis,
+  series,
   filterColumn,
   filterValue,
+  fundingSource,
   districtFilterValue,
   tooltipConfig,
   handleDistrictChange,
@@ -44,6 +35,7 @@ function BarChart({
   reference,
 }) {
   const [data, setData] = useState([]);
+  const [stackedData, setStackedData] = useState([]);
   const [hovered, setHovered] = useState(null);
   const [colorScheme, setColorScheme] = useState(schemeCategory10);
   const [hiddenSeries, setHiddenSeries] = useState([]);
@@ -52,10 +44,8 @@ function BarChart({
 
   const { tooltipData, showTooltip, tooltipRef } = useTooltip();
 
-  const [isSearchable, setIsSearchable] = useState(true);
-
   useEffect(() => {
-    csv(chartData).then((result) => {
+    csv(chartData, autoType).then((result) => {
       // Filter chart data on FilterColumn if it exists and equals filterValue
       const variableFilteredData = result.filter((i) =>
         filterColumn ? i[filterColumn] === `${filterValue}` : i
@@ -69,7 +59,7 @@ function BarChart({
           );
         });
       });
-
+      
       setData(filteredDistricts);
     });
   }, [filterValue, districtFilterValue]);
@@ -78,9 +68,9 @@ function BarChart({
   const config = {
     mt: 100,
     mr: 60,
-    mb: 0,
+    mb: 100,
     ml: 120,
-    ch: 400,
+    ch: 500,
     cw: 700,
     height: function () {
       return this.ch + this.mb + this.mt;
@@ -90,27 +80,27 @@ function BarChart({
     },
   };
 
+
   const scales = {
-    x: scaleBand([config.ml, config.width() - config.mr]).padding(.25).domain(
-      data
-        .map((d) => parseInt(d[xAxis]))
-        .sort(function (a, b) {
-          return a - b;
-        })
-    ),
+    x: scaleBand([config.ml, config.width() - config.mr])
+      .padding(0.25)
+      .domain(
+        data
+          .map((d) => parseInt(d[xAxis]))
+          .sort(function (a, b) {
+            return a - b;
+          })
+      ),
     y: scaleLinear([config.ch, config.mt]).domain([
       // min(
       //   data.filter((i) => !hiddenSeries.includes(i[series])),
       //   (d) => parseInt(d[yAxis])
       // ),
       0,
-      max(
-        data.filter((i) => !i.series),
-        (d) => parseInt(d[yAxis])
-      ),
+      600, // needs to be the maximum number of units added across all years for any given district
     ]),
     color: scaleOrdinal()
-      .domain(Array.from(new Set(data.map((d) => d[xAxis]))))
+      .domain(Array.from(new Set(data.map((d) => d[series]))))
       .range(colorScheme),
   };
 
@@ -161,9 +151,8 @@ function BarChart({
       .style("text-anchor", "end")
       .attr("dx", "-1.25em")
       .attr("dy", "-.05em")
-      .attr("transform", "rotate(-65)")
-      ;
-      
+      .attr("transform", "rotate(-65)");
+
     select(svg.current)
       .select(".y-axis")
       .transition()
@@ -171,11 +160,42 @@ function BarChart({
         axisLeft(scales.y)
           .tickSize(-(config.width() - config.mr - config.ml))
           .tickPadding(20)
+
           // Incorporate money formatter
           .tickFormat(yAxisFormat)
       )
       .call((g) => g.selectAll(".tick line").attr("x1", 0));
   };
+
+  
+
+  useEffect(() => { 
+    let nested = Array.from(group(data, d => d[xAxis]));
+
+    let lihtcWide = nested.map(g => {
+      let obj = {};
+      obj["district"] = g[0]
+      for (let year of Array.from(new Set(data.map(d => d[series])))) {
+        const match = g[1].find(d => { return d[series]==year }); 
+        obj[year] = match ? match.value : null
+      }
+      return obj
+    })
+
+    let stacked =  stack()
+        .keys(Array.from(new Set(data.map(d => d[series]).sort((a, b) => a.key > b.key ? 1 : -1))))(lihtcWide)
+    
+    let stackedWithKey = stacked.map(d => {
+          d.forEach(v => {
+            v.key = d.key; 
+            v.data.name = v.data[xAxis]
+          })
+          return d
+        })
+
+        setStackedData(stackedWithKey)
+  }, [data])
+
 
   useEffect(() => {
     drawAxes();
@@ -192,24 +212,8 @@ function BarChart({
           "svg-container " + (collapseButton ? "container-margin" : "")
         }
       >
-        <div className="legend-container">
-          <label className="label-text">Select districts to compare:</label>
-          <Select
-            onChange={(e) => handleDistrictChange(e)}
-            options={districtOptions.filter((item) => {
-              return !district.some((f) => {
-                return f.value === item.value;
-              });
-            })}
-            id="react-select"
-            name="districts"
-            className="basic-multi-select"
-            classNamePrefix="select"
-            isSearchable={isSearchable}
-            defaultValue={district}
-            isMulti
-          ></Select>
-        </div>
+        {/* <div className="legend-container">
+        </div> */}
         <svg
           ref={svg}
           className="chart"
@@ -220,12 +224,10 @@ function BarChart({
             transform={`translate(${config.width() / 2}, ${config.mt / 2.1})`}
           >
             <text className="title" textAnchor="middle">
-              {" "}
-              {title}{" "}
+              {title}
             </text>
             <text className="subtitle" dy={25} textAnchor="middle">
-              {" "}
-              {subtitle}{" "}
+              {subtitle}
             </text>
           </g>
 
@@ -235,62 +237,91 @@ function BarChart({
             <g className="y-axis" transform={`translate(${config.ml},0)`}></g>
           </g>
 
+
           <g className="bars">
-            {data.map((d, seriesIndex) =>
-              d[xAxis] !== reference ? (
+             {
+              stackedData.map(year => year.map((d, i) => (
+                <>
+               
                 <rect
                   key={d[xAxis]}
-                  x={scales.x(parseInt(d[xAxis]))}
-                  y={scales.y(d[yAxis])}
-                  fill="var(--blue)"
+                  x={scales.x(parseInt(d.data[xAxis]))}
+                  y={scales.y(d[1])}
+                  // rx="2"
+                  // fill={d.data[xAxis] !== reference ? (scales.color(year)) : ("var(--grey)")}
+                  fill={scales.color(year)}
                   width={scales.x.bandwidth()}
-                  height={config.ch - scales.y(d[yAxis])}
+                  height={ (scales.y(d[0]) - scales.y(d[1]))}
                   className={`bar ${
-                    hiddenSeries.includes(d[0])
+                    hiddenSeries.includes(d.key)
                       ? "hidden"
-                      : hovered && d[0] !== hovered
+                      : hovered && d.key !== hovered
                       ? "unfocus"
                       : ""
                   }`}
-                  rx="5"
-                  style={{
-                    animationDelay: `${0.2 * seriesIndex}s`,
-                  }}
+                  
                   onMouseOver={(e) => {
-                    setHovered(d[0]);
+                    setHovered(d.key);
                     handleMouseOver(e, d);
                   }}
+
+                  onMouseOut={() => setHovered(null)}
                 ></rect>
-              ) : (
-                <rect
-                  key={d[xAxis]}
-                  x={scales.x(parseInt(d[xAxis]))}
-                  y={scales.y(d[yAxis])}
-                  fill="var(--red)"
-                  width={scales.x.bandwidth()}
-                  height={config.ch - scales.y(d[yAxis])}
-                  className={`bar ${
-                    hiddenSeries.includes(d[0])
-                      ? "hidden"
-                      : hovered && d[0] !== hovered
-                      ? "unfocus"
-                      : ""
-                  }`}
-                  rx="5"
-                  style={{
-                    animationDelay: `${0.2 * seriesIndex}s`,
+                </>
+              ))
+             )}
+          </g>
+          <g className="legend">
+            {stackedData
+              .map((j, index) => (
+                <g
+                  opacity={hiddenSeries.includes(j.key) ? 0.2 : 1}
+                  onMouseOver={() => {
+                    setHovered(j.key);
                   }}
-                  onMouseOver={(e) => {
-                    setHovered(d[0]);
-                    handleMouseOver(e, d);
+                  onMouseLeave={() => {
+                    setHovered(null);
                   }}
-                ></rect>
-              )
-            )}
+                  onClick={(e) => {
+                    if (!hiddenSeries.includes(j.key)) {
+                      setHiddenSeries([...hiddenSeries, j.key]);
+                    } else {
+                      setHiddenSeries(
+                        hiddenSeries.filter((series) => series !== j.key)
+                      );
+                    }
+                  }}
+                  className="legend-entry"
+                >
+                  <rect
+                    className="legend-rect"
+                    fill={j.key === reference ? "none" : scales.color(j)}
+                    // stroke={j.key === reference ? "gray" : scales.color(j.key)}
+                    // strokeDasharray={j === reference ? "2 2" : ""}
+                    rx="5"
+                    ry="5"
+                    height="20"
+                    width="20"
+                    transform={`translate(${
+                      (config.height() / 7) * index + config.ml
+                    }, ${config.ch + config.mb + 32})`}
+                  ></rect>
+                  <text
+                    textAnchor="start"
+                    dominantBaseline="middle"
+                    className="legend-text"
+                    dx="30"
+                    transform={`translate(${
+                      (config.height() / 7) * index + config.ml
+                    }, ${config.ch + config.mb + 44})`}
+                  >
+                    {j.key}
+                  </text>
+                </g>
+              ))}
           </g>
         </svg>
       </div>
-      <div></div>
       <ChartTooltip
         data={tooltipData}
         xAxis={xAxis}
@@ -303,7 +334,7 @@ function BarChart({
   );
 }
 
-export default BarChart;
+export default StackedBar;
 
 // Bar chart
 /**
@@ -321,15 +352,15 @@ export default BarChart;
  */
 
 // Bar chart config
- /**
-   * @todo Abstract this out into a reusable type/object, figure out responsive sizing
-   * @typedef {object} ConfigObject
-   * @property { number } mt The top margin
-   * @property { number } mr The right margin
-   * @property { number } mb The bottom margin
-   * @property { number } ml The left margin
-   * @property { number } ch The height of the chart area
-   * @property { number } cw The width of the chart area
-   * @property { function(): number } height Returns the total height of the plot, calculated as `ch + mt + mb`
-   * @property { function(): number} width Returns the total width of the plot, calculated as `cw + ml + mr`
-   */
+/**
+ * @todo Abstract this out into a reusable type/object, figure out responsive sizing
+ * @typedef {object} ConfigObject
+ * @property { number } mt The top margin
+ * @property { number } mr The right margin
+ * @property { number } mb The bottom margin
+ * @property { number } ml The left margin
+ * @property { number } ch The height of the chart area
+ * @property { number } cw The width of the chart area
+ * @property { function(): number } height Returns the total height of the plot, calculated as `ch + mt + mb`
+ * @property { function(): number} width Returns the total width of the plot, calculated as `cw + ml + mr`
+ */

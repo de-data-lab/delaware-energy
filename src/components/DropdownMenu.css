@@ -7,7 +7,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     
     /* layout and size*/
     display: flex;
@@ -73,17 +73,14 @@
     display: flex;
     justify-content: space-between;
   }
+
+  
   
   /* Dropdowns font size and styles */
   
   .label-text {
     font-size: var(--font-size-sm);
     font-weight: bold;
-  }
-  
-  .select-text {
-    font-size: var(--font-size-xs);
-    padding: var(--padding-xs);
   }
   
   .data-source-text, .link-list {

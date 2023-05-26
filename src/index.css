@@ -4,7 +4,8 @@
   --white: #fdfdfd;
   --grey: rgb(96, 96, 96, .9);
   --blue: #1878dd;
-  --red: #d91e18;
+  --red: #DC3220;
+  --magenta: #D41159;
   --black: rgb(0, 0, 0, .1);
   --light-navy: #354b62;
   --dark-navy: #1b2734;
@@ -86,11 +87,11 @@ p {
 }
 
 /* makes sure react-select dropdowns are in front of custom collapse button */
-#react-select {
-  z-index: 3;
+.react-select {
+  z-index: 4;
 }
 
-.spider-leg-container .spider-leg-pin{
+/* .spider-leg-container .spider-leg-pin{
   position: relative;
   width: 22px;
   height: 22px;
@@ -104,4 +105,4 @@ p {
 }
 .spider-leg-container:hover .spider-leg-line {
   background-color: #f404f4;
-}
+} */

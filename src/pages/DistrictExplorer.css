@@ -41,7 +41,7 @@
 .select-explorer {
     display: flex;
     flex-direction: column;
-    width: 20rem;
+    width: 25rem;
     margin: var(--margin-xxxs);
     color: var(--navy);
 }
@@ -80,15 +80,18 @@
     }
   } */
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 831px) {
     .interaction-container {
-        height: 20rem;
+        height: 22rem;
     }
 
     .collapse-button-open {
         left: calc(50% - 29px);
         /* (Dropdown menu width + button height) / 2 */
-        top: calc(20rem - 29px);
+        top: calc(22rem - 29px);
+    }
+    .select-explorer {
+        width: 22rem;
     }
 
   }

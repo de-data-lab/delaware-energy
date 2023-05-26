@@ -1,13 +1,22 @@
 .info-container {
     background-color: var(--white);
-    padding: var(--padding-xl);
+    padding: var(--padding-xl) var(--padding-xxl);
     color: var(--navy);
     margin: var(--margin-lg) 0; 
     border-radius: var(--border-sm);
+    box-shadow: var(--box-shadow);
 }
 
 .information-text {
     font-size: var(--font-size-sm);
+}
+
+.circle-list {
+    list-style-type: circle;
+}
+
+.small-information-text {
+    font-size: var(--font-size-xs);
 }
 
 .information-header {
@@ -22,7 +31,6 @@
     padding: 0 0 var(--padding-sm);
 }
 
-
 .information-subheader:not(:first-child) {
     padding: var(--padding-sm) 0;
 }
@@ -33,8 +41,9 @@
 
 .information-text-container {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
+    /* align-items: center; */
     gap: 1rem;
     padding: 0 0 var(--padding-sm);
 }

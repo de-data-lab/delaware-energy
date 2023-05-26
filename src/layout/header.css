@@ -7,7 +7,7 @@
 /* HEADER LOGO */
 
 .header-logo {
-  padding: var(--padding-sm) var(--padding-xs);
+  padding: var(--padding-xs);
 }
 
 .logo-link {

@@ -44,21 +44,30 @@ export const PointInfo = ({feature, fundingSource}) => {
                     <h3 className="dropdown-header">{projectName}</h3>
                     {/* <img src={photo} className="photo"></img> */}
                     <div className="content-container">
-                        <div className="date-container">
-
+                        <div className="info-text-container">
+                            <label className="info-text label-padding"><strong>Address:</strong></label>
+                            <h3 className="info-text">{address}</h3>       
                         </div>
-                        <label className="info-text label-padding"><strong>Address:</strong></label>
-                        <h3 className="info-text">{address}</h3>        
-                        <label className="info-text label-padding"><strong>District:</strong></label>
-                        <h3 className="info-text">{districtName}</h3>        
-                        <label className="info-text label-padding"><strong>Tax Allocation Year:</strong></label>
-                        <h3 className="info-text">{allocationYear}</h3>        
-                        <label className="info-text label-padding"><strong>Type of Property:</strong></label>
-                        <h3 className="info-text">{propertyType}</h3>        
-                        <label className="info-text label-padding"><strong>{allocationAmountName}:</strong></label>
-                        <h3 className="info-text">{allocationAmount}</h3> 
-                        <label className="info-text label-padding"><strong>{taxCreditsName}:</strong></label>
-                        <h3 className="info-text">{taxCredits}</h3> 
+                        <div className="info-text-container">
+                            <label className="info-text label-padding"><strong>District:</strong></label>
+                            <h3 className="info-text">{districtName}</h3>    
+                        </div>
+                        <div className="info-text-container">
+                            <label className="info-text label-padding"><strong>Tax Allocation Year:</strong></label>
+                            <h3 className="info-text">{allocationYear}</h3>
+                        </div>
+                        <div className="info-text-container">
+                            <label className="info-text label-padding"><strong>Type of Property:</strong></label>
+                            <h3 className="info-text">{propertyType}</h3>      
+                        </div>
+                        <div className="info-text-container">
+                            <label className="info-text label-padding"><strong>{allocationAmountName}:</strong></label>
+                            <h3 className="info-text">{allocationAmount}</h3> 
+                        </div>
+                        <div className="info-text-container">
+                            <label className="info-text label-padding"><strong>{taxCreditsName}:</strong></label>
+                            <h3 className="info-text">{taxCredits}</h3> 
+                        </div>
                     </div>
                 </div>
             </div>

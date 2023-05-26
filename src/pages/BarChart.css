@@ -9,6 +9,7 @@
     border: 1px solid #eaeaea;
     background: rgb(240,240,240);
     background: linear-gradient(43deg, rgba(240,240,240,1) 0%, rgba(255,255,255,1) 10%, rgba(255,255,255,1) 55%, rgba(255,255,255,1) 90%, rgba(240,240,240,1) 100%);
+    box-shadow: var(--box-shadow);
   }
   
   .axes path {
@@ -144,13 +145,13 @@
 /* SM Desktop */
 @media only screen and (min-width: 1280px) {
   .chart-container {
-    /* padding: 0 15rem; */
+    padding: 0 15rem;
   }
 }
 /* MD/LG Desktop */
 @media only screen and (min-width: 1920px) {
   .chart-container {
-    /* padding: 0 25rem; */
+    padding: 0 25rem;
   }
   .title {
     /* font-size: var(--font-size-md); */
@@ -164,6 +165,6 @@
 /* XL Desktop */
 @media only screen and (min-width: 2100px) {
   .chart-container {
-    /* padding: 0 30rem; */
+    padding: 0 30rem;
   }
 }

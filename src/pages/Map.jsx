@@ -17,15 +17,18 @@ import LegendControl from "mapboxgl-legend";
 import { PointInfo } from "../components/PointInfo";
 import { SumPopup } from "../components/SumPopup";
 import { Tooltip } from "../components/Tooltip";
-import MapboxglSpiderifier from "mapboxgl-spiderifier";
+// import MapboxglSpiderifier from "mapboxgl-spiderifier";
 // import {onHover, offHover} from "../utils/onHover";
+
+import senateData from "../data/aggregated_with_geo2020.json";
+import mapDataPre2022 from "../data/aggregated_with_geo2010.json";
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const { pointData, mapData, variable, fundingSource, building, year, setYear } =
+  const { pointData, mapData, variable, fundingSource, building, year } =
     useContext(MapContext);
 
   // Creates popup for point info
@@ -61,6 +64,15 @@ export const Map = ({ lng, lat, zoom }) => {
   const tooltipDiv = document.createElement("div");
   const tooltip = ReactDOM.createRoot(tooltipDiv);
 
+  if (map.current) {
+    if (year === "2022" || year === "Sum over All Time") {  
+        // setMapData(senateData)
+        map.current.getSource("delaware").setData(senateData)
+    } else {
+        map.current.getSource("delaware").setData(mapDataPre2022)
+        // setMapData(mapDataPre2022)
+    }
+  }
 
   // Adds map layers
   const addMapLayers = () => {
@@ -68,15 +80,29 @@ export const Map = ({ lng, lat, zoom }) => {
     let hoverId = null;
     let clickId = null;
     let array = [];
-    
-    // Change year into INT
-    setYear(parseFloat(year))
+
+    // console.log(year);
+    // // Change year into INT
+    // // setYear(parseInt(year));
 
     // map through data and return year
-    let filteredData = mapData.features.filter((feature) => feature.properties["Tax Allocation Year"] === year)
+    let filteredData = []
+    
+    if (year === "2022" || year === "Sum over All Time") {  
+      filteredData = senateData.features.filter(
+        (feature) => feature.properties["year"] === year
+      );
+    } else {
+      filteredData = mapDataPre2022.features.filter(
+        (feature) => feature.properties["year"] === year
+      );
+    }
+    
     // map through data and return variable values for colorArray stops
-    let numberFormatter = filteredData.map(
-      (tract) => tract.properties[variable]
+    let numberFormatter = filteredData.map((tract) =>
+      tract.properties[variable] === null
+        ? 0
+        : parseInt(tract.properties[variable])
     );
     // Color way for choropleth
     let stops = colorPalette(numberFormatter);
@@ -86,11 +112,12 @@ export const Map = ({ lng, lat, zoom }) => {
       ["linear"],
       ["to-number", ["get", variable]],
     ];
-    
+
     stops.forEach((arr) => {
       colorArray.push(arr[0]);
       colorArray.push(arr[1]);
     });
+
     // Legend Name
     let legendName = mapInfo[fundingSource].columns[variable];
     // Legend Units
@@ -101,64 +128,65 @@ export const Map = ({ lng, lat, zoom }) => {
       case "Average Allocation per Tax Credit Unit":
         legendName = `${mapInfo[fundingSource].columns[variable]} (in thousands)`;
         break;
-      case "adj_popula":
+      case "Population":
         legendName = `${mapInfo[fundingSource].columns[variable]} (in thousands)`;
         break;
 
       default:
         break;
     }
-
-    // Fill
+    
+      
+    // FILL LAYER
     map.current.addLayer({
-      id: "fill",
-      type: "fill",
-      source: "delaware",
-      filter: ["==", "Tax Allocation Year", year],
-      layout: {
-        // Make the layer visible by default.
-        visibility: "visible",
-      },
-      paint: {
-        "fill-color": colorArray,
-        "fill-opacity": [
-          "case",
-          ["boolean", ["feature-state", "hover"], false],
-          0,
-          ["boolean", ["feature-state", "click"], false],
-          1,
-          0.7,
-        ],
-      },
-      metadata: {
-        name: legendName,
-        // temp fix for legend formatting
-        labels: {
-          0: "0",
-          1000: "1,000",
-          1500: "1,500",
-          2000: "2,000",
-          5000: "$5K",
-          10000: "$10K",
-          15000: "$15K",
-          20000: "$20K",
-          25000: "$25K",
-          30000: "$30K",
-          44000: "44K",
-          45000: "45K",
-          46000: "46K",
-          47000: "47K",
-          48000: "48K",
-          49000: "49K",
-          2000000: "$2M",
-          4000000: "$4M",
-          6000000: "$6M",
-          8000000: "$8M",
-        },
-      },
+    id: "fill",
+    type: "fill",
+    source: "delaware",
+    filter: ["==", "year", year],
+    layout: {
+    // Make the layer visible by default.
+    visibility: "visible",
+    },
+    paint: {
+    "fill-color": colorArray,
+    "fill-opacity": [
+      "case",
+      ["boolean", ["feature-state", "hover"], false],
+      0,
+      ["boolean", ["feature-state", "click"], false],
+      1,
+      0.7,
+    ],
+    },
+    metadata: {
+    name: legendName,
+    // temp fix for legend formatting
+    labels: {
+      0: "0",
+      1000: "1,000",
+      1500: "1,500",
+      2000: "2,000",
+      5000: "$5K",
+      10000: "$10K",
+      15000: "$15K",
+      20000: "$20K",
+      25000: "$25K",
+      30000: "$30K",
+      44000: "44K",
+      45000: "45K",
+      46000: "46K",
+      47000: "47K",
+      48000: "48K",
+      49000: "49K",
+      2000000: "$2M",
+      4000000: "$4M",
+      6000000: "$6M",
+      8000000: "$8M",
+    },
+    },
     });
 
-    // Outline
+    // OUTLINE LAYER
     map.current.addLayer({
       id: "outline",
       type: "line",
@@ -184,6 +212,7 @@ export const Map = ({ lng, lat, zoom }) => {
         ],
       },
     });
+
 
     // Hover on
     map.current.on("mousemove", "fill", (e) => onHover(e));
@@ -383,8 +412,8 @@ export const Map = ({ lng, lat, zoom }) => {
     //   id: "clusters",
     //   type: "circle",
     //   source: "points",
-    //   filter: ["==", "Tax Allocation Year", year],
-    //   // filter: ["all", ["==", "Tax Allocation Year", year], ["has", "point_count"]],
+    //   filter: ["==", "year", year],
+    //   // filter: ["all", ["==", "year", year], ["has", "point_count"]],
     //   paint: {
     //     "circle-color": "#0a2552",
     //     "circle-radius": ["step", ["get", "point_count"], 8, 2, 10, 5, 15],
@@ -396,8 +425,8 @@ export const Map = ({ lng, lat, zoom }) => {
     //   id: "cluster-count",
     //   type: "symbol",
     //   source: "points",
-    //   filter: ["==", "Tax Allocation Year", year],
-    //   // filter: ["all", ["==", "Tax Allocation Year", year], ["has", "point_count"]],
+    //   filter: ["==", "year", year],
+    //   // filter: ["all", ["==", "year", year], ["has", "point_count"]],
     //   layout: {
     //     "text-field": ["get", "point_count_abbreviated"],
     //     "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
@@ -414,7 +443,7 @@ export const Map = ({ lng, lat, zoom }) => {
       type: "circle",
       source: "points",
       filter: ["==", "Tax Allocation Year", year],
-      // filter: ["all", ["==", "Tax Allocation Year", year], ["!has", "point_count"]],
+      // filter: ["all", ["==", "year", year], ["==", "point_count"]],
       paint: {
         "circle-color": [
           "case",
@@ -431,15 +460,22 @@ export const Map = ({ lng, lat, zoom }) => {
       },
     });
 
-    // Remove fill if exists and darken outline layer when properties on
-    const visibility = map.current.getLayoutProperty("fill", "visibility");
+    // if year selected is ALL YEARS then remove filter from layer
+    if (year === 'Sum over All Time') {
+      map.current.setFilter('properties', null);
+    }
 
-    if (visibility === "visible") {
-      map.current.setLayoutProperty("fill", "visibility", "none");
-      map.current.setPaintProperty("outline", "line-opacity", 1);
-    } else {
-      map.current.setLayoutProperty("fill", "visibility", "visible");
-      // map.current.setPaintProperty("outline", "line-opacity", .2);
+    // Remove fill layer if it exists and darken outline layer when properties on
+    if (map.current.getLayer("fill")) {
+      const visibility = map.current.getLayoutProperty("fill", "visibility");
+
+      if (visibility === "visible") {
+        map.current.setLayoutProperty("fill", "visibility", "none");
+        map.current.setPaintProperty("outline", "line-opacity", 1);
+      } else {
+        map.current.setLayoutProperty("fill", "visibility", "visible");
+        // map.current.setPaintProperty("outline", "line-opacity", .2);
+      }
     }
 
     // const onClickSpider = (e, spiderLeg) => {
@@ -530,34 +566,33 @@ export const Map = ({ lng, lat, zoom }) => {
       });
 
       const uniqueFeatures = features.filter((value, index, self) => {
-        return self.findIndex(v => v.id  === value.id) === index;
+        return self.findIndex((v) => v.id === value.id) === index;
       });
 
       // if (uniqueFeatures.length < 2) {
-        const feature = uniqueFeatures[0];
+      const feature = uniqueFeatures[0];
 
-        if (clickedPointId !== null) {
-          map.current.removeFeatureState({
-            source: "points",
-            id: clickedPointId,
-          });
-        }
-        console.log(feature.geometry)
-        // create popup node
-        const popupNode = document.createElement("div");
-        ReactDOM.createRoot(popupNode).render(
-          <PointInfo
-            feature={feature}
-            variable={variable}
-            fundingSource={fundingSource}
-          />
-        );
-        // add popup to map
-        popUpRef.current
-          .setLngLat(e.lngLat)
-          .setDOMContent(popupNode)
-          .addTo(map.current);
-      // } 
+      if (clickedPointId !== null) {
+        map.current.removeFeatureState({
+          source: "points",
+          id: clickedPointId,
+        });
+      }
+      // create popup node
+      const popupNode = document.createElement("div");
+      ReactDOM.createRoot(popupNode).render(
+        <PointInfo
+          feature={feature}
+          variable={variable}
+          fundingSource={fundingSource}
+        />
+      );
+      // add popup to map
+      popUpRef.current
+        .setLngLat(e.lngLat)
+        .setDOMContent(popupNode)
+        .addTo(map.current);
+      // }
       // More than one feature per point
       // else {
 
@@ -573,7 +608,7 @@ export const Map = ({ lng, lat, zoom }) => {
       //   // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
       //   spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, uniqueFeatures);
       //   // create spiderMarker
-        
+
       //   // const spiderMarkerNode = document.createElement("div");
       //   // ReactDOM.createRoot(spiderMarkerNode).render(
       //   //   <PointInfo
@@ -588,7 +623,6 @@ export const Map = ({ lng, lat, zoom }) => {
       //   //   .setDOMContent(spiderMarkerNode)
       //   //   .addTo(map.current);
       // }
-      
 
       clickedPointId = e.features[0].id;
 
@@ -634,6 +668,12 @@ export const Map = ({ lng, lat, zoom }) => {
         generateId: true,
       });
 
+      // map.current.addSource("delawareBefore2022", {
+      //   type: "geojson",
+      //   data: mapDataPre2022,
+      //   generateId: true,
+      // });
+
       map.current.addSource("points", {
         type: "geojson",
         data: pointData,
@@ -659,12 +699,14 @@ export const Map = ({ lng, lat, zoom }) => {
     if (map.current.getLayer("properties")) {
       map.current.removeLayer("properties");
     }
-    if (map.current.getLayer("cluster-count")) {
-      map.current.removeLayer("cluster-count");
-    }
-    if (map.current.getLayer("clusters")) {
-      map.current.removeLayer("clusters");
-    }
+    // if (map.current.getLayer("cluster-count")) {
+    //   map.current.removeLayer("cluster-count");
+    // }
+    // if (map.current.getLayer("clusters")) {
+    //   map.current.removeLayer("clusters");
+    // }
+
+    
 
     // remove sumPopup when changing variables
     sumRef.current.remove();

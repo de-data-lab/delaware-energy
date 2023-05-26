@@ -28,14 +28,16 @@
   --border-sm: 10px;
   --border-lg: 35px;
   /* Box Shadow */
-  --box-shadow: 3px 6px 9px var(--black);
+  --box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
   /* Padding */
+  --padding-xxl: 2rem;
   --padding-xl: 1.75rem;
   --padding-lg: 1.5rem;
   --padding-md: 1.25rem;
   --padding-sm: 1rem;
   --padding-xs: 0.625rem;
   --padding-xxs: 0.325rem;
+  --padding-xxxs: 0.25rem;
   /* Margin */
   --margin-xxxs: .5rem;
   --margin-xxs: 1rem;
@@ -68,7 +70,8 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+ul {
   margin: 0;
 }
 

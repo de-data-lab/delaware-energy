@@ -124,7 +124,7 @@ function BarChart({
           minimumFractionDigits: 0,
         })}`;
 
-      case "adj_popula":
+      case "Population":
       case "Average Population per Tax Credit Unit":
         return `${parseFloat(d).toLocaleString(undefined, {
           maximumFractionDigits: 0,

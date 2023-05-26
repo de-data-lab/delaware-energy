@@ -44,8 +44,6 @@ function StackedBar({
 
   const { tooltipData, showTooltip, tooltipRef } = useTooltip();
 
-  const [isSearchable, setIsSearchable] = useState(true);
-
   useEffect(() => {
     csv(chartData, autoType).then((result) => {
       // Filter chart data on FilterColumn if it exists and equals filterValue
@@ -61,9 +59,7 @@ function StackedBar({
           );
         });
       });
-
-      // Filter based on year selected
-      // const filteredData = filteredDistricts.filter(item =>  item.properties["Tax Allocation Year"] === parseFloat(mapInfo[fundingSource].years[year]));
+      
       setData(filteredDistricts);
     });
   }, [filterValue, districtFilterValue]);
@@ -118,7 +114,7 @@ function StackedBar({
           minimumFractionDigits: 0,
         })}`;
 
-      case "adj_popula":
+      case "Population":
       case "Average Population per Tax Credit Unit":
         return `${parseFloat(d).toLocaleString(undefined, {
           maximumFractionDigits: 0,
@@ -326,7 +322,6 @@ function StackedBar({
           </g>
         </svg>
       </div>
-      <div></div>
       <ChartTooltip
         data={tooltipData}
         xAxis={xAxis}

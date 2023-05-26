@@ -28,7 +28,7 @@ mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const { pointData, mapData, variable, fundingSource, building, year } =
+  const { pointData, mapData, variable, setVariable, fundingSource, building, year, setYear } =
     useContext(MapContext);
 
   // Creates popup for point info
@@ -64,6 +64,7 @@ export const Map = ({ lng, lat, zoom }) => {
   const tooltipDiv = document.createElement("div");
   const tooltip = ReactDOM.createRoot(tooltipDiv);
 
+  // changes data based on whichever year is selected
   if (map.current) {
     if (year === "2022" || year === "Sum over All Time") {  
         // setMapData(senateData)
@@ -81,10 +82,6 @@ export const Map = ({ lng, lat, zoom }) => {
     let clickId = null;
     let array = [];
 
-    // console.log(year);
-    // // Change year into INT
-    // // setYear(parseInt(year));
-
     // map through data and return year
     let filteredData = []
     
@@ -98,7 +95,7 @@ export const Map = ({ lng, lat, zoom }) => {
       );
     }
     
-    // map through data and return variable values for colorArray stops
+    // map through filtered data and return variable values for colorArray stops
     let numberFormatter = filteredData.map((tract) =>
       tract.properties[variable] === null
         ? 0
@@ -155,7 +152,7 @@ export const Map = ({ lng, lat, zoom }) => {
       0,
       ["boolean", ["feature-state", "click"], false],
       1,
-      0.7,
+      0.75,
     ],
     },
     metadata: {
@@ -167,17 +164,42 @@ export const Map = ({ lng, lat, zoom }) => {
       1500: "1,500",
       2000: "2,000",
       5000: "$5K",
+      // Avg allocation
+      2000: "$2K",
+      4000: "$4K",
+      6000: "$6K",
+      8000: "$8K",
       10000: "$10K",
+      12000: "$12K",
+      14000: "$14K",
       15000: "$15K",
+      16000: "$16K",
       20000: "$20K",
       25000: "$25K",
       30000: "$30K",
+      40000: "$40K",
+      60000: "$60K",
+      80000: "$80K",
+      // Popul
       44000: "44K",
       45000: "45K",
       46000: "46K",
       47000: "47K",
       48000: "48K",
       49000: "49K",
+      100000: "$100K",
+      200000: "$200K",
+      300000: "$300K",
+      400000: "$400K",
+      500000: "$500K",
+      600000: "$600K",
+      700000: "$700K",
+      800000: "$800K",
+      1000000: "$1M",
+      1200000: "$1.2M",
+      1400000: "$1.4M",
+      1500000: "$1.5M",
+      1600000: "$1.6M",
       2000000: "$2M",
       4000000: "$4M",
       6000000: "$6M",
@@ -191,6 +213,7 @@ export const Map = ({ lng, lat, zoom }) => {
       id: "outline",
       type: "line",
       source: "delaware",
+      filter: ["==", "year", year],
       paint: {
         "line-color": "#2c3d4f",
         // "line-color": "#ffffff",
@@ -208,7 +231,7 @@ export const Map = ({ lng, lat, zoom }) => {
           1,
           ["boolean", ["feature-state", "click"], false],
           1,
-          0.2,
+          0.5,
         ],
       },
     });
@@ -389,6 +412,7 @@ export const Map = ({ lng, lat, zoom }) => {
     // });
   };
 
+  // Adds point layer to map
   const showProperties = () => {
     // Change the cursor to a pointer when the mouse is over the points layer.
     map.current.on("mouseenter", "properties", () => {
@@ -705,8 +729,6 @@ export const Map = ({ lng, lat, zoom }) => {
     // if (map.current.getLayer("clusters")) {
     //   map.current.removeLayer("clusters");
     // }
-
-    
 
     // remove sumPopup when changing variables
     sumRef.current.remove();

@@ -1,22 +1,61 @@
 district,name,Funding Source,Tax Allocation Year,variable,value
+1,Sarah Mcbride,LIHTC,2016,Population,44553.0
+1,Sarah Mcbride,LIHTC,2017,Population,43914.0
+1,Sarah Mcbride,LIHTC,2022,Population,46493.0
+10,Stephanie L. Hansen,LIHTC,2020,Population,45317.0
+11,Bryan Townsend,LIHTC,2017,Population,43107.0
+13,Marie Pinkney,LIHTC,2017,Population,43881.0
+14,Kyra Hoffner,LIHTC,2021,Population,54828.0
+16,Eric Buckson,LIHTC,2022,Population,46287.0
+17,Trey Paradee,LIHTC,2017,Population,46421.0
+17,Trey Paradee,LIHTC,2022,Population,49084.0
+18,Dave Wilson,LIHTC,2020,Population,49179.0
+18,Dave Wilson,LIHTC,2021,Population,49574.0
+19,Brian G. Pettyjohn,LIHTC,2017,Population,48825.0
+19,Brian G. Pettyjohn,LIHTC,2018,Population,49788.0
+19,Brian G. Pettyjohn,LIHTC,2019,Population,50306.0
+19,Brian G. Pettyjohn,LIHTC,2022,Population,49785.0
+2,Darius J. Brown,LIHTC,2017,Population,43181.0
+2,Darius J. Brown,LIHTC,2019,Population,41571.0
+2,Darius J. Brown,LIHTC,2020,Population,41343.0
+2,Darius J. Brown,LIHTC,2021,Population,40867.0
+2,Darius J. Brown,LIHTC,2022,Population,40867.0
+20,Gerald W. Hocker,LIHTC,2016,Population,44866.0
+20,Gerald W. Hocker,LIHTC,2017,Population,46522.0
+20,Gerald W. Hocker,LIHTC,2020,Population,50078.0
+20,Gerald W. Hocker,LIHTC,2021,Population,53352.0
+21,Bryant L. Richardson,LIHTC,2018,Population,42674.0
+3,Elizabeth Lockman,LIHTC,2016,Population,40473.0
+3,Elizabeth Lockman,LIHTC,2018,Population,39110.0
+3,Elizabeth Lockman,LIHTC,2019,Population,38661.0
+3,Elizabeth Lockman,LIHTC,2020,Population,39367.0
+3,Elizabeth Lockman,LIHTC,2021,Population,39946.0
+3,Elizabeth Lockman,LIHTC,2022,Population,39946.0
+6,Russ Huxtable,LIHTC,2016,Population,45873.0
+4,Laura Sturgeon,LIHTC,0,Population,0.0
+7,Spiros Mantzavinos,LIHTC,0,Population,0.0
+12,Nicole Poore,LIHTC,0,Population,0.0
+9,Jack Walsh,LIHTC,0,Population,0.0
+5,Kyle Evans Gay,LIHTC,0,Population,0.0
+15,Dave Lawson,LIHTC,0,Population,0.0
+8,David P. Sokola,LIHTC,0,Population,0.0
 1,Sarah Mcbride,LIHTC,2016,# of Tax Credit Units,72.0
-1,Sarah Mcbride,LIHTC,2017,# of Tax Credit Units,128.0
-1,Sarah Mcbride,LIHTC,2018,# of Tax Credit Units,50.0
-1,Sarah Mcbride,LIHTC,2019,# of Tax Credit Units,51.0
+1,Sarah Mcbride,LIHTC,2017,# of Tax Credit Units,110.0
 1,Sarah Mcbride,LIHTC,2022,# of Tax Credit Units,60.0
 10,Stephanie L. Hansen,LIHTC,2020,# of Tax Credit Units,106.0
 11,Bryan Townsend,LIHTC,2017,# of Tax Credit Units,60.0
 13,Marie Pinkney,LIHTC,2017,# of Tax Credit Units,120.0
 14,Kyra Hoffner,LIHTC,2021,# of Tax Credit Units,54.0
-15,Dave Lawson,LIHTC,2020,# of Tax Credit Units,32.0
-15,Dave Lawson,LIHTC,2021,# of Tax Credit Units,126.0
 16,Eric Buckson,LIHTC,2022,# of Tax Credit Units,36.0
 17,Trey Paradee,LIHTC,2017,# of Tax Credit Units,100.0
 17,Trey Paradee,LIHTC,2022,# of Tax Credit Units,110.0
-18,Dave Wilson,LIHTC,2017,# of Tax Credit Units,34.0
-18,Dave Wilson,LIHTC,2018,# of Tax Credit Units,34.0
-18,Dave Wilson,LIHTC,2019,# of Tax Credit Units,34.0
+18,Dave Wilson,LIHTC,2020,# of Tax Credit Units,32.0
+18,Dave Wilson,LIHTC,2021,# of Tax Credit Units,126.0
+19,Brian G. Pettyjohn,LIHTC,2017,# of Tax Credit Units,34.0
+19,Brian G. Pettyjohn,LIHTC,2018,# of Tax Credit Units,34.0
+19,Brian G. Pettyjohn,LIHTC,2019,# of Tax Credit Units,34.0
 19,Brian G. Pettyjohn,LIHTC,2022,# of Tax Credit Units,24.0
+2,Darius J. Brown,LIHTC,2017,# of Tax Credit Units,53.0
 2,Darius J. Brown,LIHTC,2019,# of Tax Credit Units,59.0
 2,Darius J. Brown,LIHTC,2020,# of Tax Credit Units,50.0
 2,Darius J. Brown,LIHTC,2021,# of Tax Credit Units,50.0
@@ -27,9 +66,8 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 20,Gerald W. Hocker,LIHTC,2021,# of Tax Credit Units,42.0
 21,Bryant L. Richardson,LIHTC,2018,# of Tax Credit Units,34.0
 3,Elizabeth Lockman,LIHTC,2016,# of Tax Credit Units,51.0
-3,Elizabeth Lockman,LIHTC,2017,# of Tax Credit Units,35.0
-3,Elizabeth Lockman,LIHTC,2018,# of Tax Credit Units,77.0
-3,Elizabeth Lockman,LIHTC,2019,# of Tax Credit Units,128.0
+3,Elizabeth Lockman,LIHTC,2018,# of Tax Credit Units,127.0
+3,Elizabeth Lockman,LIHTC,2019,# of Tax Credit Units,179.0
 3,Elizabeth Lockman,LIHTC,2020,# of Tax Credit Units,52.0
 3,Elizabeth Lockman,LIHTC,2021,# of Tax Credit Units,129.0
 3,Elizabeth Lockman,LIHTC,2022,# of Tax Credit Units,53.0
@@ -39,25 +77,25 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 12,Nicole Poore,LIHTC,0,# of Tax Credit Units,0.0
 9,Jack Walsh,LIHTC,0,# of Tax Credit Units,0.0
 5,Kyle Evans Gay,LIHTC,0,# of Tax Credit Units,0.0
+15,Dave Lawson,LIHTC,0,# of Tax Credit Units,0.0
 8,David P. Sokola,LIHTC,0,# of Tax Credit Units,0.0
 1,Sarah Mcbride,LIHTC,2016,ALLOCATION AMOUNT,503861.0
-1,Sarah Mcbride,LIHTC,2017,ALLOCATION AMOUNT,1841225.0
-1,Sarah Mcbride,LIHTC,2018,ALLOCATION AMOUNT,881051.0
-1,Sarah Mcbride,LIHTC,2019,ALLOCATION AMOUNT,8135.0
+1,Sarah Mcbride,LIHTC,2017,ALLOCATION AMOUNT,1628357.0
 1,Sarah Mcbride,LIHTC,2022,ALLOCATION AMOUNT,0.0
 10,Stephanie L. Hansen,LIHTC,2020,ALLOCATION AMOUNT,656670.0
 11,Bryan Townsend,LIHTC,2017,ALLOCATION AMOUNT,774946.0
 13,Marie Pinkney,LIHTC,2017,ALLOCATION AMOUNT,497801.0
 14,Kyra Hoffner,LIHTC,2021,ALLOCATION AMOUNT,0.0
-15,Dave Lawson,LIHTC,2020,ALLOCATION AMOUNT,608080.0
-15,Dave Lawson,LIHTC,2021,ALLOCATION AMOUNT,2405385.0
 16,Eric Buckson,LIHTC,2022,ALLOCATION AMOUNT,999013.0
 17,Trey Paradee,LIHTC,2017,ALLOCATION AMOUNT,620003.0
 17,Trey Paradee,LIHTC,2022,ALLOCATION AMOUNT,0.0
-18,Dave Wilson,LIHTC,2017,ALLOCATION AMOUNT,228372.0
-18,Dave Wilson,LIHTC,2018,ALLOCATION AMOUNT,282559.0
-18,Dave Wilson,LIHTC,2019,ALLOCATION AMOUNT,510932.0
+18,Dave Wilson,LIHTC,2020,ALLOCATION AMOUNT,608080.0
+18,Dave Wilson,LIHTC,2021,ALLOCATION AMOUNT,2405385.0
+19,Brian G. Pettyjohn,LIHTC,2017,ALLOCATION AMOUNT,228372.0
+19,Brian G. Pettyjohn,LIHTC,2018,ALLOCATION AMOUNT,282559.0
+19,Brian G. Pettyjohn,LIHTC,2019,ALLOCATION AMOUNT,510932.0
 19,Brian G. Pettyjohn,LIHTC,2022,ALLOCATION AMOUNT,808468.0
+2,Darius J. Brown,LIHTC,2017,ALLOCATION AMOUNT,778622.0
 2,Darius J. Brown,LIHTC,2019,ALLOCATION AMOUNT,1056240.0
 2,Darius J. Brown,LIHTC,2020,ALLOCATION AMOUNT,621046.0
 2,Darius J. Brown,LIHTC,2021,ALLOCATION AMOUNT,1000000.0
@@ -68,9 +106,8 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 20,Gerald W. Hocker,LIHTC,2021,ALLOCATION AMOUNT,1000000.0
 21,Bryant L. Richardson,LIHTC,2018,ALLOCATION AMOUNT,643394.0
 3,Elizabeth Lockman,LIHTC,2016,ALLOCATION AMOUNT,913337.0
-3,Elizabeth Lockman,LIHTC,2017,ALLOCATION AMOUNT,565754.0
-3,Elizabeth Lockman,LIHTC,2018,ALLOCATION AMOUNT,1122778.0
-3,Elizabeth Lockman,LIHTC,2019,ALLOCATION AMOUNT,2112482.0
+3,Elizabeth Lockman,LIHTC,2018,ALLOCATION AMOUNT,2003829.0
+3,Elizabeth Lockman,LIHTC,2019,ALLOCATION AMOUNT,2120617.0
 3,Elizabeth Lockman,LIHTC,2020,ALLOCATION AMOUNT,1000000.0
 3,Elizabeth Lockman,LIHTC,2021,ALLOCATION AMOUNT,1000000.0
 3,Elizabeth Lockman,LIHTC,2022,ALLOCATION AMOUNT,1000000.0
@@ -80,107 +117,105 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 12,Nicole Poore,LIHTC,0,ALLOCATION AMOUNT,0.0
 9,Jack Walsh,LIHTC,0,ALLOCATION AMOUNT,0.0
 5,Kyle Evans Gay,LIHTC,0,ALLOCATION AMOUNT,0.0
+15,Dave Lawson,LIHTC,0,ALLOCATION AMOUNT,0.0
 8,David P. Sokola,LIHTC,0,ALLOCATION AMOUNT,0.0
-1,Sarah Mcbride,LIHTC,2016,Average Allocation per 100 Persons,1123.2856251114679
-1,Sarah Mcbride,LIHTC,2017,Average Allocation per 100 Persons,4104.7462992687715
-1,Sarah Mcbride,LIHTC,2018,Average Allocation per 100 Persons,1964.1764758337793
-1,Sarah Mcbride,LIHTC,2019,Average Allocation per 100 Persons,18.13581237738541
+1,Sarah Mcbride,LIHTC,2016,Average Allocation per 100 Persons,1130.924965771104
+1,Sarah Mcbride,LIHTC,2017,Average Allocation per 100 Persons,3708.058933369768
 1,Sarah Mcbride,LIHTC,2022,Average Allocation per 100 Persons,0.0
-10,Stephanie L. Hansen,LIHTC,2020,Average Allocation per 100 Persons,1388.8665637359616
-11,Bryan Townsend,LIHTC,2017,Average Allocation per 100 Persons,1607.671721677074
-13,Marie Pinkney,LIHTC,2017,Average Allocation per 100 Persons,1030.7719385430903
+10,Stephanie L. Hansen,LIHTC,2020,Average Allocation per 100 Persons,1449.0588520864135
+11,Bryan Townsend,LIHTC,2017,Average Allocation per 100 Persons,1797.726587329204
+13,Marie Pinkney,LIHTC,2017,Average Allocation per 100 Persons,1134.4340375105398
 14,Kyra Hoffner,LIHTC,2021,Average Allocation per 100 Persons,0.0
-15,Dave Lawson,LIHTC,2020,Average Allocation per 100 Persons,1290.9307065217392
-15,Dave Lawson,LIHTC,2021,Average Allocation per 100 Persons,5106.540845788043
-16,Eric Buckson,LIHTC,2022,Average Allocation per 100 Persons,2083.099795654531
-17,Trey Paradee,LIHTC,2017,Average Allocation per 100 Persons,1264.2286203662168
+16,Eric Buckson,LIHTC,2022,Average Allocation per 100 Persons,2158.3014669345603
+17,Trey Paradee,LIHTC,2017,Average Allocation per 100 Persons,1335.6088839102993
 17,Trey Paradee,LIHTC,2022,Average Allocation per 100 Persons,0.0
-18,Dave Wilson,LIHTC,2017,Average Allocation per 100 Persons,469.9785972999671
-18,Dave Wilson,LIHTC,2018,Average Allocation per 100 Persons,581.4928383272967
-18,Dave Wilson,LIHTC,2019,Average Allocation per 100 Persons,1051.47349357919
-19,Brian G. Pettyjohn,LIHTC,2022,Average Allocation per 100 Persons,1659.2127406312852
-2,Darius J. Brown,LIHTC,2019,Average Allocation per 100 Persons,2356.7842559742953
-2,Darius J. Brown,LIHTC,2020,Average Allocation per 100 Persons,1385.7375549456679
-2,Darius J. Brown,LIHTC,2021,Average Allocation per 100 Persons,2231.296159939309
-2,Darius J. Brown,LIHTC,2022,Average Allocation per 100 Persons,2231.296159939309
-20,Gerald W. Hocker,LIHTC,2016,Average Allocation per 100 Persons,1610.100004065206
-20,Gerald W. Hocker,LIHTC,2017,Average Allocation per 100 Persons,2123.2102931013455
-20,Gerald W. Hocker,LIHTC,2020,Average Allocation per 100 Persons,2032.6029513394853
-20,Gerald W. Hocker,LIHTC,2021,Average Allocation per 100 Persons,2032.6029513394853
-21,Bryant L. Richardson,LIHTC,2018,Average Allocation per 100 Persons,1306.8348465460158
-3,Elizabeth Lockman,LIHTC,2016,Average Allocation per 100 Persons,2038.1982102608733
-3,Elizabeth Lockman,LIHTC,2017,Average Allocation per 100 Persons,1262.5337528731784
-3,Elizabeth Lockman,LIHTC,2018,Average Allocation per 100 Persons,2505.5856820869876
-3,Elizabeth Lockman,LIHTC,2019,Average Allocation per 100 Persons,4714.204101671465
-3,Elizabeth Lockman,LIHTC,2020,Average Allocation per 100 Persons,2231.59492088996
-3,Elizabeth Lockman,LIHTC,2021,Average Allocation per 100 Persons,2231.59492088996
-3,Elizabeth Lockman,LIHTC,2022,Average Allocation per 100 Persons,2231.59492088996
-6,Russ Huxtable,LIHTC,2016,Average Allocation per 100 Persons,1067.8677440633246
+18,Dave Wilson,LIHTC,2020,Average Allocation per 100 Persons,1236.4627178267147
+18,Dave Wilson,LIHTC,2021,Average Allocation per 100 Persons,4852.109977004075
+19,Brian G. Pettyjohn,LIHTC,2017,Average Allocation per 100 Persons,467.7357910906298
+19,Brian G. Pettyjohn,LIHTC,2018,Average Allocation per 100 Persons,567.5243030449104
+19,Brian G. Pettyjohn,LIHTC,2019,Average Allocation per 100 Persons,1015.6482328151711
+19,Brian G. Pettyjohn,LIHTC,2022,Average Allocation per 100 Persons,1623.9188510595561
+2,Darius J. Brown,LIHTC,2017,Average Allocation per 100 Persons,1803.1587966929899
+2,Darius J. Brown,LIHTC,2019,Average Allocation per 100 Persons,2540.8096990690624
+2,Darius J. Brown,LIHTC,2020,Average Allocation per 100 Persons,1502.1793290278886
+2,Darius J. Brown,LIHTC,2021,Average Allocation per 100 Persons,2446.9620965571244
+2,Darius J. Brown,LIHTC,2022,Average Allocation per 100 Persons,2446.9620965571244
+20,Gerald W. Hocker,LIHTC,2016,Average Allocation per 100 Persons,1765.561895421923
+20,Gerald W. Hocker,LIHTC,2017,Average Allocation per 100 Persons,2245.3398392158547
+20,Gerald W. Hocker,LIHTC,2020,Average Allocation per 100 Persons,1996.8848596189944
+20,Gerald W. Hocker,LIHTC,2021,Average Allocation per 100 Persons,1874.3439796071375
+21,Bryant L. Richardson,LIHTC,2018,Average Allocation per 100 Persons,1507.6955523269437
+3,Elizabeth Lockman,LIHTC,2016,Average Allocation per 100 Persons,2256.6575247695996
+3,Elizabeth Lockman,LIHTC,2018,Average Allocation per 100 Persons,5123.5719764766045
+3,Elizabeth Lockman,LIHTC,2019,Average Allocation per 100 Persons,5485.158169731771
+3,Elizabeth Lockman,LIHTC,2020,Average Allocation per 100 Persons,2540.1986435339245
+3,Elizabeth Lockman,LIHTC,2021,Average Allocation per 100 Persons,2503.3795624092527
+3,Elizabeth Lockman,LIHTC,2022,Average Allocation per 100 Persons,2503.3795624092527
+6,Russ Huxtable,LIHTC,2016,Average Allocation per 100 Persons,1129.3004599655571
 4,Laura Sturgeon,LIHTC,0,Average Allocation per 100 Persons,0.0
 7,Spiros Mantzavinos,LIHTC,0,Average Allocation per 100 Persons,0.0
 12,Nicole Poore,LIHTC,0,Average Allocation per 100 Persons,0.0
 9,Jack Walsh,LIHTC,0,Average Allocation per 100 Persons,0.0
 5,Kyle Evans Gay,LIHTC,0,Average Allocation per 100 Persons,0.0
+15,Dave Lawson,LIHTC,0,Average Allocation per 100 Persons,0.0
 8,David P. Sokola,LIHTC,0,Average Allocation per 100 Persons,0.0
-1,Sarah Mcbride,LIHTC,2016,Average Population per Tax Credit Unit,623.0
-1,Sarah Mcbride,LIHTC,2017,Average Population per Tax Credit Unit,350.4375
-1,Sarah Mcbride,LIHTC,2018,Average Population per Tax Credit Unit,897.12
-1,Sarah Mcbride,LIHTC,2019,Average Population per Tax Credit Unit,879.5294117647059
-1,Sarah Mcbride,LIHTC,2022,Average Population per Tax Credit Unit,747.6
-10,Stephanie L. Hansen,LIHTC,2020,Average Population per Tax Credit Unit,446.04716981132077
-11,Bryan Townsend,LIHTC,2017,Average Population per Tax Credit Unit,803.3833333333333
-13,Marie Pinkney,LIHTC,2017,Average Population per Tax Credit Unit,402.45
-14,Kyra Hoffner,LIHTC,2021,Average Population per Tax Credit Unit,912.0925925925926
-15,Dave Lawson,LIHTC,2020,Average Population per Tax Credit Unit,1472.0
-15,Dave Lawson,LIHTC,2021,Average Population per Tax Credit Unit,373.8412698412698
-16,Eric Buckson,LIHTC,2022,Average Population per Tax Credit Unit,1332.1666666666667
-17,Trey Paradee,LIHTC,2017,Average Population per Tax Credit Unit,490.42
-17,Trey Paradee,LIHTC,2022,Average Population per Tax Credit Unit,445.8363636363636
-18,Dave Wilson,LIHTC,2017,Average Population per Tax Credit Unit,1429.1764705882354
-18,Dave Wilson,LIHTC,2018,Average Population per Tax Credit Unit,1429.1764705882354
-18,Dave Wilson,LIHTC,2019,Average Population per Tax Credit Unit,1429.1764705882354
-19,Brian G. Pettyjohn,LIHTC,2022,Average Population per Tax Credit Unit,2030.25
-2,Darius J. Brown,LIHTC,2019,Average Population per Tax Credit Unit,759.6101694915254
-2,Darius J. Brown,LIHTC,2020,Average Population per Tax Credit Unit,896.34
-2,Darius J. Brown,LIHTC,2021,Average Population per Tax Credit Unit,896.34
-2,Darius J. Brown,LIHTC,2022,Average Population per Tax Credit Unit,878.7647058823529
-20,Gerald W. Hocker,LIHTC,2016,Average Population per Tax Credit Unit,1294.6842105263158
-20,Gerald W. Hocker,LIHTC,2017,Average Population per Tax Credit Unit,878.5357142857143
-20,Gerald W. Hocker,LIHTC,2020,Average Population per Tax Credit Unit,1171.3809523809523
-20,Gerald W. Hocker,LIHTC,2021,Average Population per Tax Credit Unit,1171.3809523809523
-21,Bryant L. Richardson,LIHTC,2018,Average Population per Tax Credit Unit,1448.0294117647059
-3,Elizabeth Lockman,LIHTC,2016,Average Population per Tax Credit Unit,878.6470588235294
-3,Elizabeth Lockman,LIHTC,2017,Average Population per Tax Credit Unit,1280.3142857142857
-3,Elizabeth Lockman,LIHTC,2018,Average Population per Tax Credit Unit,581.961038961039
-3,Elizabeth Lockman,LIHTC,2019,Average Population per Tax Credit Unit,350.0859375
-3,Elizabeth Lockman,LIHTC,2020,Average Population per Tax Credit Unit,861.75
-3,Elizabeth Lockman,LIHTC,2021,Average Population per Tax Credit Unit,347.3720930232558
-3,Elizabeth Lockman,LIHTC,2022,Average Population per Tax Credit Unit,845.4905660377359
-6,Russ Huxtable,LIHTC,2016,Average Population per Tax Credit Unit,1516.0
+1,Sarah Mcbride,LIHTC,2016,Average Population per Tax Credit Unit,618.7916666666666
+1,Sarah Mcbride,LIHTC,2017,Average Population per Tax Credit Unit,399.2181818181818
+1,Sarah Mcbride,LIHTC,2022,Average Population per Tax Credit Unit,774.8833333333333
+10,Stephanie L. Hansen,LIHTC,2020,Average Population per Tax Credit Unit,427.5188679245283
+11,Bryan Townsend,LIHTC,2017,Average Population per Tax Credit Unit,718.45
+13,Marie Pinkney,LIHTC,2017,Average Population per Tax Credit Unit,365.675
+14,Kyra Hoffner,LIHTC,2021,Average Population per Tax Credit Unit,1015.3333333333334
+16,Eric Buckson,LIHTC,2022,Average Population per Tax Credit Unit,1285.75
+17,Trey Paradee,LIHTC,2017,Average Population per Tax Credit Unit,464.21
+17,Trey Paradee,LIHTC,2022,Average Population per Tax Credit Unit,446.2181818181818
+18,Dave Wilson,LIHTC,2020,Average Population per Tax Credit Unit,1536.84375
+18,Dave Wilson,LIHTC,2021,Average Population per Tax Credit Unit,393.44444444444446
+19,Brian G. Pettyjohn,LIHTC,2017,Average Population per Tax Credit Unit,1436.0294117647059
+19,Brian G. Pettyjohn,LIHTC,2018,Average Population per Tax Credit Unit,1464.3529411764705
+19,Brian G. Pettyjohn,LIHTC,2019,Average Population per Tax Credit Unit,1479.5882352941176
+19,Brian G. Pettyjohn,LIHTC,2022,Average Population per Tax Credit Unit,2074.375
+2,Darius J. Brown,LIHTC,2017,Average Population per Tax Credit Unit,814.7358490566038
+2,Darius J. Brown,LIHTC,2019,Average Population per Tax Credit Unit,704.5932203389831
+2,Darius J. Brown,LIHTC,2020,Average Population per Tax Credit Unit,826.86
+2,Darius J. Brown,LIHTC,2021,Average Population per Tax Credit Unit,817.34
+2,Darius J. Brown,LIHTC,2022,Average Population per Tax Credit Unit,801.3137254901961
+20,Gerald W. Hocker,LIHTC,2016,Average Population per Tax Credit Unit,1180.6842105263158
+20,Gerald W. Hocker,LIHTC,2017,Average Population per Tax Credit Unit,830.75
+20,Gerald W. Hocker,LIHTC,2020,Average Population per Tax Credit Unit,1192.3333333333333
+20,Gerald W. Hocker,LIHTC,2021,Average Population per Tax Credit Unit,1270.2857142857142
+21,Bryant L. Richardson,LIHTC,2018,Average Population per Tax Credit Unit,1255.1176470588234
+3,Elizabeth Lockman,LIHTC,2016,Average Population per Tax Credit Unit,793.5882352941177
+3,Elizabeth Lockman,LIHTC,2018,Average Population per Tax Credit Unit,307.9527559055118
+3,Elizabeth Lockman,LIHTC,2019,Average Population per Tax Credit Unit,215.9832402234637
+3,Elizabeth Lockman,LIHTC,2020,Average Population per Tax Credit Unit,757.0576923076923
+3,Elizabeth Lockman,LIHTC,2021,Average Population per Tax Credit Unit,309.6589147286822
+3,Elizabeth Lockman,LIHTC,2022,Average Population per Tax Credit Unit,753.6981132075472
+6,Russ Huxtable,LIHTC,2016,Average Population per Tax Credit Unit,1433.53125
 4,Laura Sturgeon,LIHTC,0,Average Population per Tax Credit Unit,0.0
 7,Spiros Mantzavinos,LIHTC,0,Average Population per Tax Credit Unit,0.0
 12,Nicole Poore,LIHTC,0,Average Population per Tax Credit Unit,0.0
 9,Jack Walsh,LIHTC,0,Average Population per Tax Credit Unit,0.0
 5,Kyle Evans Gay,LIHTC,0,Average Population per Tax Credit Unit,0.0
+15,Dave Lawson,LIHTC,0,Average Population per Tax Credit Unit,0.0
 8,David P. Sokola,LIHTC,0,Average Population per Tax Credit Unit,0.0
 1,Sarah Mcbride,LIHTC,2016,Average Allocation per Tax Credit Unit,6998.069444444444
-1,Sarah Mcbride,LIHTC,2017,Average Allocation per Tax Credit Unit,14384.5703125
-1,Sarah Mcbride,LIHTC,2018,Average Allocation per Tax Credit Unit,17621.02
-1,Sarah Mcbride,LIHTC,2019,Average Allocation per Tax Credit Unit,159.50980392156862
+1,Sarah Mcbride,LIHTC,2017,Average Allocation per Tax Credit Unit,14803.245454545455
 1,Sarah Mcbride,LIHTC,2022,Average Allocation per Tax Credit Unit,0.0
 10,Stephanie L. Hansen,LIHTC,2020,Average Allocation per Tax Credit Unit,6195.0
 11,Bryan Townsend,LIHTC,2017,Average Allocation per Tax Credit Unit,12915.766666666666
 13,Marie Pinkney,LIHTC,2017,Average Allocation per Tax Credit Unit,4148.341666666666
 14,Kyra Hoffner,LIHTC,2021,Average Allocation per Tax Credit Unit,0.0
-15,Dave Lawson,LIHTC,2020,Average Allocation per Tax Credit Unit,19002.5
-15,Dave Lawson,LIHTC,2021,Average Allocation per Tax Credit Unit,19090.35714285714
 16,Eric Buckson,LIHTC,2022,Average Allocation per Tax Credit Unit,27750.36111111111
 17,Trey Paradee,LIHTC,2017,Average Allocation per Tax Credit Unit,6200.03
 17,Trey Paradee,LIHTC,2022,Average Allocation per Tax Credit Unit,0.0
-18,Dave Wilson,LIHTC,2017,Average Allocation per Tax Credit Unit,6716.823529411765
-18,Dave Wilson,LIHTC,2018,Average Allocation per Tax Credit Unit,8310.558823529413
-18,Dave Wilson,LIHTC,2019,Average Allocation per Tax Credit Unit,15027.411764705883
+18,Dave Wilson,LIHTC,2020,Average Allocation per Tax Credit Unit,19002.5
+18,Dave Wilson,LIHTC,2021,Average Allocation per Tax Credit Unit,19090.35714285714
+19,Brian G. Pettyjohn,LIHTC,2017,Average Allocation per Tax Credit Unit,6716.823529411765
+19,Brian G. Pettyjohn,LIHTC,2018,Average Allocation per Tax Credit Unit,8310.558823529413
+19,Brian G. Pettyjohn,LIHTC,2019,Average Allocation per Tax Credit Unit,15027.411764705883
 19,Brian G. Pettyjohn,LIHTC,2022,Average Allocation per Tax Credit Unit,33686.166666666664
+2,Darius J. Brown,LIHTC,2017,Average Allocation per Tax Credit Unit,14690.981132075472
 2,Darius J. Brown,LIHTC,2019,Average Allocation per Tax Credit Unit,17902.372881355932
 2,Darius J. Brown,LIHTC,2020,Average Allocation per Tax Credit Unit,12420.92
 2,Darius J. Brown,LIHTC,2021,Average Allocation per Tax Credit Unit,20000.0
@@ -191,9 +226,8 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 20,Gerald W. Hocker,LIHTC,2021,Average Allocation per Tax Credit Unit,23809.52380952381
 21,Bryant L. Richardson,LIHTC,2018,Average Allocation per Tax Credit Unit,18923.352941176472
 3,Elizabeth Lockman,LIHTC,2016,Average Allocation per Tax Credit Unit,17908.56862745098
-3,Elizabeth Lockman,LIHTC,2017,Average Allocation per Tax Credit Unit,16164.4
-3,Elizabeth Lockman,LIHTC,2018,Average Allocation per Tax Credit Unit,14581.532467532468
-3,Elizabeth Lockman,LIHTC,2019,Average Allocation per Tax Credit Unit,16503.765625
+3,Elizabeth Lockman,LIHTC,2018,Average Allocation per Tax Credit Unit,15778.181102362205
+3,Elizabeth Lockman,LIHTC,2019,Average Allocation per Tax Credit Unit,11847.022346368714
 3,Elizabeth Lockman,LIHTC,2020,Average Allocation per Tax Credit Unit,19230.76923076923
 3,Elizabeth Lockman,LIHTC,2021,Average Allocation per Tax Credit Unit,7751.937984496124
 3,Elizabeth Lockman,LIHTC,2022,Average Allocation per Tax Credit Unit,18867.924528301886
@@ -203,39 +237,47 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 12,Nicole Poore,LIHTC,0,Average Allocation per Tax Credit Unit,0.0
 9,Jack Walsh,LIHTC,0,Average Allocation per Tax Credit Unit,0.0
 5,Kyle Evans Gay,LIHTC,0,Average Allocation per Tax Credit Unit,0.0
+15,Dave Lawson,LIHTC,0,Average Allocation per Tax Credit Unit,0.0
 8,David P. Sokola,LIHTC,0,Average Allocation per Tax Credit Unit,0.0
 District Average,0,LIHTC,2016,# of Tax Credit Units,48.25
 District Average,0,LIHTC,2017,# of Tax Credit Units,76.14285714285714
-District Average,0,LIHTC,2018,# of Tax Credit Units,48.75
-District Average,0,LIHTC,2019,# of Tax Credit Units,68.0
+District Average,0,LIHTC,2018,# of Tax Credit Units,65.0
+District Average,0,LIHTC,2019,# of Tax Credit Units,90.66666666666667
 District Average,0,LIHTC,2020,# of Tax Credit Units,56.4
 District Average,0,LIHTC,2021,# of Tax Credit Units,80.2
 District Average,0,LIHTC,2022,# of Tax Credit Units,55.666666666666664
 District Average,0,LIHTC,2016,ALLOCATION AMOUNT,681844.75
 District Average,0,LIHTC,2017,ALLOCATION AMOUNT,796096.8571428572
-District Average,0,LIHTC,2018,ALLOCATION AMOUNT,732445.5
-District Average,0,LIHTC,2019,ALLOCATION AMOUNT,921947.25
+District Average,0,LIHTC,2018,ALLOCATION AMOUNT,976594.0
+District Average,0,LIHTC,2019,ALLOCATION AMOUNT,1229263.0
 District Average,0,LIHTC,2020,ALLOCATION AMOUNT,777159.2
 District Average,0,LIHTC,2021,ALLOCATION AMOUNT,1351346.25
 District Average,0,LIHTC,2022,ALLOCATION AMOUNT,951870.25
-District Average,0,LIHTC,2016,Average Allocation per 100 Persons,1459.8628958752179
-District Average,0,LIHTC,2017,Average Allocation per 100 Persons,1694.734460447092
-District Average,0,LIHTC,2018,Average Allocation per 100 Persons,1589.5224606985198
-District Average,0,LIHTC,2019,Average Allocation per 100 Persons,2035.1494159005838
-District Average,0,LIHTC,2020,Average Allocation per 100 Persons,1665.9465394865626
-District Average,0,LIHTC,2021,Average Allocation per 100 Persons,2900.5087194891994
-District Average,0,LIHTC,2022,Average Allocation per 100 Persons,2051.300904278771
+District Average,0,LIHTC,2016,Average Allocation per 100 Persons,1570.611211482046
+District Average,0,LIHTC,2017,Average Allocation per 100 Persons,1784.5804098741835
+District Average,0,LIHTC,2018,Average Allocation per 100 Persons,2399.5972772828195
+District Average,0,LIHTC,2019,Average Allocation per 100 Persons,3013.8720338720013
+District Average,0,LIHTC,2020,Average Allocation per 100 Persons,1744.956880418787
+District Average,0,LIHTC,2021,Average Allocation per 100 Persons,2919.1989038943975
+District Average,0,LIHTC,2022,Average Allocation per 100 Persons,2183.140494240123
 District Average,0,LIHTC,2016,Average Allocation per Tax Credit Unit,15485.305899552804
-District Average,0,LIHTC,2017,Average Allocation per Tax Credit Unit,11311.870412790116
-District Average,0,LIHTC,2018,Average Allocation per Tax Credit Unit,14859.116058059588
-District Average,0,LIHTC,2019,Average Allocation per Tax Credit Unit,12398.265018745846
+District Average,0,LIHTC,2017,Average Allocation per Tax Credit Unit,11161.192737664534
+District Average,0,LIHTC,2018,Average Allocation per Tax Credit Unit,14337.364289022697
+District Average,0,LIHTC,2019,Average Allocation per Tax Credit Unit,14925.602330810178
 District Average,0,LIHTC,2020,Average Allocation per Tax Credit Unit,16131.742608058606
 District Average,0,LIHTC,2021,Average Allocation per Tax Credit Unit,17662.954734219267
 District Average,0,LIHTC,2022,Average Allocation per Tax Credit Unit,24978.07386083364
-District Average,0,LIHTC,2016,Average Population per Tax Credit Unit,1078.0828173374612
-District Average,0,LIHTC,2017,Average Population per Tax Credit Unit,804.9596148459384
-District Average,0,LIHTC,2018,Average Population per Tax Credit Unit,1089.071730328495
-District Average,0,LIHTC,2019,Average Population per Tax Credit Unit,854.6004973361166
-District Average,0,LIHTC,2020,Average Population per Tax Credit Unit,969.5036244384546
-District Average,0,LIHTC,2021,Average Population per Tax Credit Unit,740.2053815676142
-District Average,0,LIHTC,2022,Average Population per Tax Credit Unit,1046.6847170371864
+District Average,0,LIHTC,2016,Average Population per Tax Credit Unit,1006.648840621775
+District Average,0,LIHTC,2017,Average Population per Tax Credit Unit,718.4383489484989
+District Average,0,LIHTC,2018,Average Population per Tax Credit Unit,1009.141114713602
+District Average,0,LIHTC,2019,Average Population per Tax Credit Unit,800.0548986188547
+District Average,0,LIHTC,2020,Average Population per Tax Credit Unit,948.1227287131107
+District Average,0,LIHTC,2021,Average Population per Tax Credit Unit,761.2124813584348
+District Average,0,LIHTC,2022,Average Population per Tax Credit Unit,1022.7063923082096
+District Average,0,LIHTC,2016,Population,43941.25
+District Average,0,LIHTC,2017,Population,45121.57142857143
+District Average,0,LIHTC,2018,Population,43857.333333333336
+District Average,0,LIHTC,2019,Population,43512.666666666664
+District Average,0,LIHTC,2020,Population,45056.8
+District Average,0,LIHTC,2021,Population,47713.4
+District Average,0,LIHTC,2022,Population,45410.333333333336

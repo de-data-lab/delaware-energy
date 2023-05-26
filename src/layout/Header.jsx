@@ -9,7 +9,7 @@ const HeaderLogo = () => {
     <div className="header-logo">
       <Link to="/" className="logo-link">
         <img src={logo} className="logo" alt="Delaware State Housing Authority logo"></img>
-        <h1 className="header-title">DSHA Test App</h1>
+        <h1 className="header-title">LIHTC District Comparer</h1>
       </Link>
     </div>
   );

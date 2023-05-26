@@ -7,7 +7,7 @@
 /* HEADER LOGO */
 
 .header-logo {
-  padding: var(--padding-xs) var(--padding-sm);
+  padding: var(--padding-sm) var(--padding-xs);
 }
 
 .logo-link {
@@ -91,7 +91,7 @@
     padding: var(--padding-sm);
   }
   .header-tab-bar {
-    padding: var(--padding-sm);
+    padding: var(--padding-sm) var(--padding-xs);
   }
   .nav-link:not(:first-child) {
     border-top: 1px solid var(--dark-navy);

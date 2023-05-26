@@ -6,7 +6,7 @@ import "./BarChart.css";
 
 import {
   autoType, axisBottom, axisLeft, csv,
-  group,
+  group, sum,
   scaleBand, scaleLinear, scaleOrdinal,
   schemeCategory10, select, stack
 } from "d3";
@@ -36,6 +36,7 @@ function StackedBar({
 }) {
   const [data, setData] = useState([]);
   const [stackedData, setStackedData] = useState([]);
+  const [yMax, setYMax] = useState(0);
   const [hovered, setHovered] = useState(null);
   const [colorScheme, setColorScheme] = useState(schemeCategory10);
   const [hiddenSeries, setHiddenSeries] = useState([]);
@@ -91,14 +92,7 @@ function StackedBar({
             return a - b;
           })
       ),
-    y: scaleLinear([config.ch, config.mt]).domain([
-      // min(
-      //   data.filter((i) => !hiddenSeries.includes(i[series])),
-      //   (d) => parseInt(d[yAxis])
-      // ),
-      0,
-      600, // needs to be the maximum number of units added across all years for any given district
-    ]),
+      y: scaleLinear([config.ch, config.mt]).domain([0,yMax]),
     color: scaleOrdinal()
       .domain(Array.from(new Set(data.map((d) => d[series]))))
       .range(colorScheme),
@@ -170,20 +164,23 @@ function StackedBar({
   
 
   useEffect(() => { 
-    let nested = Array.from(group(data, d => d[xAxis]));
+    let nested = Array.from(group(data.filter(i=>{ return !hiddenSeries.includes(i[series])}), d => d[xAxis]));
+
+    
 
     let lihtcWide = nested.map(g => {
       let obj = {};
       obj["district"] = g[0]
-      for (let year of Array.from(new Set(data.map(d => d[series])))) {
+      for (let year of Array.from(new Set(data.filter(i=>{ return !hiddenSeries.includes(i[series])}).map(d => d[series])))) {
         const match = g[1].find(d => { return d[series]==year }); 
         obj[year] = match ? match.value : null
       }
       return obj
     })
 
-    let stacked =  stack()
-        .keys(Array.from(new Set(data.map(d => d[series]).sort((a, b) => a.key > b.key ? 1 : -1))))(lihtcWide)
+
+    let stacked =  stack().keys(Array.from(new Set(data.map(d => d[series]))))(lihtcWide)
+    
     
     let stackedWithKey = stacked.map(d => {
           d.forEach(v => {
@@ -191,15 +188,19 @@ function StackedBar({
             v.data.name = v.data[xAxis]
           })
           return d
-        })
+        }).sort((a, b) => a.key > b.key ? 1 : -1)
 
+        // compute total for each stack, get max stack value, and then recompute y domain
+        const stackTotalArray = nested.map(i => i[1]).map(j => sum(j, d => d[yAxis]));
+        const stackMax = Math.max(...stackTotalArray);
+        setYMax(stackMax + stackMax/5)
         setStackedData(stackedWithKey)
-  }, [data])
+  }, [data, hiddenSeries])
 
 
   useEffect(() => {
     drawAxes();
-  }, [data, hiddenSeries]);
+  }, [yMax, data, hiddenSeries]);
 
   const handleMouseOver = (anchor, data) => {
     showTooltip(anchor, data);
@@ -240,7 +241,11 @@ function StackedBar({
 
           <g className="bars">
              {
-              stackedData.map(year => year.map((d, i) => (
+              stackedData
+              .filter(i => { 
+                return !hiddenSeries.includes(i.key)
+              })
+              .map(year => year.map((d, i) => (
                 <>
                
                 <rect

@@ -84,16 +84,13 @@
     border-radius: 0 0 0 var(--border-sm);
 }
 
-/* Data note */
 
-.data-note {
-    text-align: right;
-    font-style: italic;
-    font-size: var(--font-size-sm);
-    color: var(--navy);
-    padding-bottom: 1rem;
-    width: min(85rem, 100% - 1rem);
+.not-found {
+    padding: 3rem .5rem;
+    text-align: center;
+    font-size: var(--font-size-lg);
 }
+
 
 /* Desktop styles */
 @media only screen and (min-width: 1281px) {

@@ -119,10 +119,10 @@ export interface TooltipConfig {
 
     const defaultStyles: React.CSSProperties = {
         maxWidth: "250px",
-        padding: ".5rem 1rem",
+        padding: "var(--padding-xs) var(--padding-sm)",
         backgroundColor: "rgba(255,255,255,0.9)",
         zIndex: 900,
-        boxShadow: "1px 1px 10px rgba(0,0,0,0.2)",
+        boxShadow: "var(--box-shadow)",
         borderRadius: "var(--border-sm)",
         color: "var(--navy)",
         fontFamily: "var(--primary-font)"

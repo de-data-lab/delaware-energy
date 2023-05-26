@@ -40,6 +40,10 @@
 /* .info-card:hover {
    cursor: grabbing; 
   } */
+.info-text-container {
+  padding: 0 0 var(--padding-xxxs) 0;
+}
+
 
 .info-text {
   font-size: var(--font-size-xs);

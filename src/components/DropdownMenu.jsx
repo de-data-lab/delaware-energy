@@ -28,7 +28,7 @@ export const DropdownMenu = ({}) => {
   }));
 
   const yearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
-    value: (item !== "All Time") ? (mapInfo[fundingSource].years[item]) : ("All Time"),
+    value: (item !== "Sum over All Time") ? (mapInfo[fundingSource].years[item]) : ("Sum over All Time"),
     label: mapInfo[fundingSource].years[item],
   }));
 

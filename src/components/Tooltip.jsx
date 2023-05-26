@@ -27,7 +27,7 @@ export const Tooltip = ({ feature, variable, fundingSource }) => {
 
     const senatorName = feature?.properties?.["name"];
     const districtName = feature?.properties?.["district"];
-    const population = feature?.properties?.["adj_popula"];
+    const population = feature?.properties?.["Population"];
 
     return (
       <>

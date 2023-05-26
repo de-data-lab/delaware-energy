@@ -18,7 +18,7 @@ function App() {
   // Dropdown for variable
   const [variable, setVariable] = useState("# of Tax Credit Units");
   // year
-  const [year, setYear] = useState("All Time");
+  const [year, setYear] = useState("Sum over All Time");
 
 
   return (

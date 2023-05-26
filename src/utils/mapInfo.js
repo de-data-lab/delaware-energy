@@ -13,10 +13,10 @@ export const mapInfo = {
       ["Average Allocation per Tax Credit Unit"]: "Average allocation amount per tax credit unit",
       ["Average Allocation per 100 Persons"]: "Average allocation amount per 100 persons",
       ["Average Population per Tax Credit Unit"]: "Average population per tax credit unit",
-      ["adj_popula"]: "Population",
+      ["Population"]: "Population",
     },
     years: {
-      "All Time": "All Years",
+      "Sum over All Time": "Sum over all years",
       "2022": "2022",
       "2021": "2021",
       "2020": "2020",

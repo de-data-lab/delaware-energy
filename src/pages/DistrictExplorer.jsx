@@ -15,7 +15,7 @@ export const DistrictExplorer = ({
   // Dropdown for variable
   const [variable, setVariable] = useState("# of Tax Credit Units");
   // year
-  const [year, setYear] = useState("All Time");
+  const [year, setYear] = useState("2022");
   // chart data
   const chartData = "/long_tax_data.csv";
 
@@ -81,7 +81,7 @@ export const DistrictExplorer = ({
           minimumFractionDigits: 0,
         })}`;
 
-      case "adj_popula":
+      case "Population":
       case "Average Population per Tax Credit Unit":
         return `${parseFloat(d).toLocaleString(undefined, {
           maximumFractionDigits: 0,
@@ -114,11 +114,12 @@ export const DistrictExplorer = ({
     label: mapInfo[item].meta.displayName,
   }));
 
-  const yearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
-    value:
-      item !== "All Time" ? mapInfo[fundingSource].years[item] : "All Time",
-    label: mapInfo[fundingSource].years[item],
+  const allYearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
+    value:  mapInfo[fundingSource].years[item],
+    label:  mapInfo[fundingSource].years[item],
   }));
+  const yearOptions = allYearOptions.filter(item => item.value !== "Sum over all years")
+
 
   return (
     <div className="main-container">
@@ -205,7 +206,7 @@ export const DistrictExplorer = ({
               placement: "top-end",
               autoPlace: false,
               customTitle: (d) => {
-                if (d.district === "District Average") {
+                if (d.data.district === "District Average") {
                   return "State Average";
                 }
                 return `District ${d.data.district}`;
@@ -324,7 +325,7 @@ const ExploreDistrictButtons = ({
             isRtl={isRtl}
             name="year"
             options={yearOptions}
-            defaultValue={yearOptions[7]}
+            defaultValue={yearOptions[6]}
             /* makes sure react-select dropdowns are in front (z-index) */
             menuPortalTarget={document.body}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}

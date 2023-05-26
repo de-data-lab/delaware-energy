@@ -151,7 +151,7 @@ export const PopupText = ({ fundingSource, variable, year, array, mapData }) => 
         // avg pop per tax credit unit = 10632
 
       
-        case "adj_popula":
+        case "Population":
         
         wholeNumberFormatter(0, 0)
 

@@ -37,9 +37,36 @@
     width: 100%;
   }
   
+  .table-headers {
+    background-color: var(--navy);
+  }
+
   .table-head {
-    padding-bottom: 0.25rem;
     font-size: var(--font-size-sm);
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .table-headers > .table-head:nth-of-type(odd) {
+    border-radius: var(--border-sm) 0 0 0 ;
+  }
+  .table-headers > .table-head:nth-of-type(even) {
+    border-radius: 0 var(--border-sm) 0 0;
+  }
+
+  .sumPopup-row:nth-of-type(odd) {
+    background-color: var(--table-row);
+  }
+  .sumPopup-row:nth-of-type(odd) {
+    background-color: var(--table-row);
+  }
+
+  .sumPopup-row > td {
+    padding: var(--padding-xxxs) var(--padding-sm);
+  } 
+
+  .sumPopup-message, .table-head {
+    padding: var(--padding-xs) var(--padding-sm);
   }
   
   td > h2 {
@@ -49,20 +76,24 @@
     text-align: right;
   }
   
-  /* td */
   .district-number {
     width: 40%;
   }
   
+  .total-label, .total, .sumPopup-message {
+    font-size: var(--font-size-sm);
+  }
+
+  .total-label, .total {
+    font-weight: bold;
+  }
+
   .total {
     text-align: right;
-  }
-  
-  .total {
-    font-size: var(--font-size-sm);
     border-top: 2px solid var(--navy);
-    padding-top: 0.25rem;
   }
+
+  /* Clear button */
   
   .button {
     display: flex;
@@ -82,8 +113,8 @@
   }
   
   .button-text {
-    font-size: var(--font-size-sm);
-    padding: 0 0.5rem;
+    font-size: var(--font-size-xs);
+    padding: 0 var(--padding-xs);
   }
 
 
@@ -109,5 +140,4 @@
     .sumPopup-button-container {
       width: var(--map-menu-maxwidth);
     }
-  
   }

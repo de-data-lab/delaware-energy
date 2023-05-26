@@ -172,17 +172,17 @@ export const PopupText = ({ fundingSource, variable, year, array, mapData }) => 
   }, [array]);
 
   return (
-    <div className="content-container">
+    <>
       <table className="sumPopup-table">
         <thead>
-          <tr className="label-text">
+          <tr className="table-headers">
             <th className="table-head">District</th>
             <th className="table-head">{variableName}</th>
           </tr>
         </thead>
         <tbody>
           {featureProps.map((item, i) => (
-          <tr>
+          <tr className="sumPopup-row">
             <td className="district-number">
                 <h2 key={i} className="info-text">
                   District {item.districtName}
@@ -195,18 +195,17 @@ export const PopupText = ({ fundingSource, variable, year, array, mapData }) => 
             </td>
           </tr>
           ))}
-          <tr>
-            <td></td>
+          <tr className="sumPopup-row">
+            <td className="total-label">Total</td>
             <td className="total">
-              <strong>{sumValue.sumValue}</strong>
+              {sumValue.sumValue}
             </td>
           </tr>
         </tbody>
       </table>
-      <br></br>
-      <h3 className="info-text">
-        <strong>{sumValue.sumPercent}</strong> of {variableName} in {year}
+      <h3 className="sumPopup-message">
+        <strong>{sumValue.sumPercent}</strong> of <strong>{variableName}</strong> in <strong>{mapInfo[fundingSource].years[year]}</strong>
       </h3>
-    </div>
+    </>
   );
 };

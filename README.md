@@ -22,17 +22,20 @@ This app was developed for the Delaware State Housing Authority and state of Del
 
 ## Screenshots
 ![Map view](public/images/screenshot-1.png)
-![District explorer - compare districts](public/images/screenshot-2.png)
-![District explorer - explore your district](public/images/screenshot-3.png)
-![Info Page](public/images/screenshot-4.png)
+![Map view - with hover and click](public/images/screenshot-2.png)
+![District explorer - compare districts](public/images/screenshot-3.png)
+![District explorer - explore your district](public/images/screenshot-4.png)
+![Info Page](public/images/screenshot-5.png)
 
 ## Badges
 ![React-Badge](https://img.shields.io/badge/Code-React-blue)
 ![Javascript-Badge](https://img.shields.io/badge/Code-JavaScript-blue)
+![Javascript-Badge](https://img.shields.io/badge/Code-Python-blue)
 ![Typescript-Badge](https://img.shields.io/badge/Code-TypeScript-blue)
 ![HTML-Badge](https://img.shields.io/badge/Code-HTML-blue)
 ![CSS-Badge](https://img.shields.io/badge/Code-CSS-blue)
 ![MapboxGL-Badge](https://img.shields.io/badge/Library-MapboxGL-blueviolet)
+![D3-Badge](https://img.shields.io/badge/Library-D3-blueviolet)
 ![ReactSelect-Badge](https://img.shields.io/badge/Library-ReactSelect-blueviolet)
 ![Bootstrap-Badge](https://img.shields.io/badge/Library-Bootstrap-blueviolet)
 ![FloatingUI-Badge](https://img.shields.io/badge/Library-FloatingUI-blueviolet)

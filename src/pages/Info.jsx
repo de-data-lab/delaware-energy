@@ -41,6 +41,14 @@ export const Info = () => {
               <strong>Sum over all years - </strong>sum of a variable over all
               years collected.
             </li>
+            <ul className="circle-list">
+              <li className="information-text">
+              <strong>Average allocation amount per 100 persons - </strong>this variable now represents the total amount allocated to a district over all years relative to its population while accounting for how the population changes each year.
+              </li>
+              <li className="information-text">
+              <strong>Average allocation amount per tax credit unit - </strong>this variable now represents the total amount allocated to a district over all years relative to the number of tax credit units that were present in the year of allocation.
+              </li>
+            </ul>
           </div>
           <h2 className="information-subheader">Variables</h2>
           <div className="information-text-container">

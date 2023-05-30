@@ -24,9 +24,15 @@ function ExploreDistrict({
               : i
           );
 
-          const filteredData = filteredDistricts.filter(
+          const filteredYears = filteredDistricts.filter(
             (feature) =>
               parseFloat(feature["Tax Allocation Year"]) === parseFloat(year)
+          );
+
+          // filter out avg pop per tax credit unit
+          const filteredData = filteredYears.filter(
+            (feature) =>
+              feature.variable !== "Average Population per Tax Credit Unit"
           );
 
           const sortedData = filteredData.sort((a, b) =>
@@ -107,7 +113,7 @@ function ExploreDistrict({
                   {selectedDistrict.map((district, i) => (
                     <>
                       {district.variable === "Population" ? (
-                        <h2 className="information-text">{district.value}</h2>
+                        <h2 key={i} className="information-text">{district.value}</h2>
                       ) : (
                         ""
                       )}
@@ -141,7 +147,7 @@ function ExploreDistrict({
                       ) : (
                         <>
                           {year === "Sum over All Time" ? (
-                            <tr className="table-row-container">
+                            <tr key={i} className="table-row-container">
                               <td className="table-row-header">
                                 <strong>
                                   {`${district["Tax Allocation Year"]}: `}
@@ -166,7 +172,7 @@ function ExploreDistrict({
                               <td className="table-row">{average[i].value}</td>
                             </tr>
                           ) : (
-                            <tr className="table-row-container">
+                            <tr key={i} className="table-row-container">
                               <td className="table-row-header">
                                 <strong>
                                   {

@@ -102,12 +102,18 @@ export const DistrictExplorer = ({
     label: `${item.name} - ${item.senator}`,
   }));
 
-  const variableOptions = Object.keys(mapInfo[fundingSource].columns).map(
-    (item) => ({
+  const variableOptions = Object.keys(mapInfo[fundingSource].columns)
+  // filters out avg pop per tax credit and population
+    .filter((feature) => {
+      return (
+        feature !== "Average Population per Tax Credit Unit" &&
+        feature !== "Population"
+      );
+    })
+    .map((item) => ({
       value: item,
       label: mapInfo[fundingSource].columns[item],
-    })
-  );
+    }));
 
   const fundingOptions = Object.keys(mapInfo).map((item) => ({
     value: item,

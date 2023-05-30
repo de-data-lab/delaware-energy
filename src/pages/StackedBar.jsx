@@ -252,7 +252,7 @@ function StackedBar({
                   y={scales.y(d[1])}
                   // rx="2"
                   // fill={d.data[xAxis] !== reference ? (scales.color(year)) : ("var(--grey)")}
-                  fill={scales.color(year)}
+                  fill={scales.color(d.key)}
                   width={scales.x.bandwidth()}
                   height={ (scales.y(d[0]) - scales.y(d[1]))}
                   className={`bar ${
@@ -301,7 +301,7 @@ function StackedBar({
                 >
                   <rect
                     className="legend-rect"
-                    fill={j.key === reference ? "none" : scales.color(j)}
+                    fill={j.key === reference ? "none" : scales.color(j.key)}
                     // stroke={j.key === reference ? "gray" : scales.color(j.key)}
                     // strokeDasharray={j === reference ? "2 2" : ""}
                     rx="5"

@@ -1,4 +1,3 @@
-import Select from "react-select";
 import ChartTooltip, { useTooltip } from "../components/ChartTooltip";
 import "./BarChart.css";
 
@@ -71,8 +70,8 @@ function StackedBar({
     mr: 60,
     mb: 100,
     ml: 120,
-    ch: 500,
-    cw: 700,
+    ch: 450,
+    cw: 800,
     height: function () {
       return this.ch + this.mb + this.mt;
     },
@@ -179,7 +178,7 @@ function StackedBar({
     })
 
 
-    let stacked =  stack().keys(Array.from(new Set(data.map(d => d[series]))))(lihtcWide)
+    let stacked =  stack().keys(Array.from(new Set(data.map(d => d[series]).sort((a, b) => a.key > b.key ? 1 : -1))))(lihtcWide)
     
     
     let stackedWithKey = stacked.map(d => {
@@ -188,7 +187,7 @@ function StackedBar({
             v.data.name = v.data[xAxis]
           })
           return d
-        }).sort((a, b) => a.key > b.key ? 1 : -1)
+        })
 
         // compute total for each stack, get max stack value, and then recompute y domain
         const stackTotalArray = nested.map(i => i[1]).map(j => sum(j, d => d[yAxis]));
@@ -205,6 +204,7 @@ function StackedBar({
   const handleMouseOver = (anchor, data) => {
     showTooltip(anchor, data);
   };
+
 
   return (
     <>
@@ -245,11 +245,9 @@ function StackedBar({
               .filter(i => { 
                 return !hiddenSeries.includes(i.key)
               })
-              .map(year => year.map((d, i) => (
-                <>
-               
+              .map(year => year.map((d, index) => (
                 <rect
-                  key={d[xAxis]}
+                  key={index}
                   x={scales.x(parseInt(d.data[xAxis]))}
                   y={scales.y(d[1])}
                   // rx="2"
@@ -272,14 +270,17 @@ function StackedBar({
 
                   onMouseOut={() => setHovered(null)}
                 ></rect>
-                </>
               ))
              )}
           </g>
           <g className="legend">
             {stackedData
+              .filter(d => { 
+                return d.key !== 0
+              })
               .map((j, index) => (
                 <g
+                  key={index}
                   opacity={hiddenSeries.includes(j.key) ? 0.2 : 1}
                   onMouseOver={() => {
                     setHovered(j.key);

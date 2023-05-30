@@ -27,7 +27,7 @@ export const Info = () => {
           <h2 className="information-subheader">District Boundaries</h2>
           <div className="information-text-container">
             <li className="information-text">
-              There are two senate district boundary layers used in this map to account for the senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current 2022 district boundaries are used. Senator names are the current senators regardless of the year selected. 
+              There are two senate district boundary layers used in this map to account for the senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator names are used regardless of the year selected. 
             </li>
             <ul className="circle-list">
               <li className="information-text">

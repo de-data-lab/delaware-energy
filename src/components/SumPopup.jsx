@@ -182,9 +182,9 @@ export const PopupText = ({ fundingSource, variable, year, array, mapData }) => 
         </thead>
         <tbody>
           {featureProps.map((item, i) => (
-          <tr className="sumPopup-row">
+          <tr key={i} className="sumPopup-row">
             <td className="district-number">
-                <h2 key={i} className="info-text">
+                <h2 className="info-text">
                   District {item.districtName}
                 </h2>
             </td>

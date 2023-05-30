@@ -27,10 +27,10 @@ export const Info = () => {
           <h2 className="information-subheader">District Boundaries</h2>
           <div className="information-text-container">
             <li className="information-text">
-              There are two senate district boundary layers used in this map to account for the Senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current 2022 district boundaries are used. Senator names are the current senators regardless of the year selected. 
+              There are two senate district boundary layers used in this map to account for the senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current 2022 district boundaries are used. Senator names are the current senators regardless of the year selected. 
             </li>
             <ul className="circle-list">
-              <li className="small-information-text">
+              <li className="information-text">
                 Property data was assigned to a district based on the district boundaries in the year of the funding allocation. Some properties may have changed districts since the 2022 redistricting.
               </li>
             </ul>
@@ -49,7 +49,7 @@ export const Info = () => {
               units allocated to a district in a certain year. (When looking at individual property info, total tax credits are equal to the total tax credits allocated to that property in a given year.)
             </li>
             <ul className="circle-list">
-              <li className="small-information-text">
+              <li className="information-text">
                 Some properties' tax credit units received multiple allocations over the course of two different years, so there are cases where those units are
                 counted twice.
               </li>

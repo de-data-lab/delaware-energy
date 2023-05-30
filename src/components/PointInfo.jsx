@@ -1,7 +1,5 @@
 import mapInfo from "../utils/mapInfo";
 import "./PointInfo.css"
-import photo from "/images/harrington.png"
-
 
 export const PointInfo = ({feature, fundingSource}) => {
 

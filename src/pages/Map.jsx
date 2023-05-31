@@ -5,7 +5,6 @@ import { useUpdateEffect } from "react-use";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "mapboxgl-legend/dist/style.css";
-// import icon from "/icons/home-icon.svg"
 import "./Map.css";
 import colorPalette from "../utils/colorPalette";
 import HomeControl from "../utils/HomeControl.js";
@@ -17,8 +16,6 @@ import LegendControl from "mapboxgl-legend";
 import { PointInfo } from "../components/PointInfo";
 import { SumPopup } from "../components/SumPopup";
 import { Tooltip } from "../components/Tooltip";
-// import MapboxglSpiderifier from "mapboxgl-spiderifier";
-// import {onHover, offHover} from "../utils/onHover";
 
 import senateData from "../data/aggregated_with_geo2020.json";
 import mapDataPre2022 from "../data/aggregated_with_geo2010.json";
@@ -28,7 +25,7 @@ mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const { pointData, mapData, variable, setVariable, fundingSource, building, year, setYear } =
+  const { pointData, mapData, variable, fundingSource, building, year } =
     useContext(MapContext);
 
   // Creates popup for point info
@@ -67,11 +64,9 @@ export const Map = ({ lng, lat, zoom }) => {
   // changes data based on whichever year is selected
   if (map.current) {
     if (year === "2022" || year === "Sum over All Time") {  
-        // setMapData(senateData)
         map.current.getSource("delaware").setData(senateData)
     } else {
         map.current.getSource("delaware").setData(mapDataPre2022)
-        // setMapData(mapDataPre2022)
     }
   }
 
@@ -209,7 +204,6 @@ export const Map = ({ lng, lat, zoom }) => {
       filter: ["==", "year", year],
       paint: {
         "line-color": "#2c3d4f",
-        // "line-color": "#ffffff",
         "line-width": [
           "case",
           ["boolean", ["feature-state", "hover"], false],
@@ -367,7 +361,7 @@ export const Map = ({ lng, lat, zoom }) => {
       return array;
     });
 
-    // right click
+    // right click to deselect district
     // map.current.on("contextmenu", "fill", (e) => {
     //   clickId = e.features[0].id;
     //   // Look for index of right-clicked feature
@@ -424,43 +418,12 @@ export const Map = ({ lng, lat, zoom }) => {
       map.current.getCanvas().style.cursor = "";
     });
 
-    // cluster points
-    // map.current.addLayer({
-    //   id: "clusters",
-    //   type: "circle",
-    //   source: "points",
-    //   filter: ["==", "year", year],
-    //   // filter: ["all", ["==", "year", year], ["has", "point_count"]],
-    //   paint: {
-    //     "circle-color": "#0a2552",
-    //     "circle-radius": ["step", ["get", "point_count"], 8, 2, 10, 5, 15],
-    //   },
-    // });
-
-    // // cluster count
-    // map.current.addLayer({
-    //   id: "cluster-count",
-    //   type: "symbol",
-    //   source: "points",
-    //   filter: ["==", "year", year],
-    //   // filter: ["all", ["==", "year", year], ["has", "point_count"]],
-    //   layout: {
-    //     "text-field": ["get", "point_count_abbreviated"],
-    //     "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-    //     "text-size": 14,
-    //   },
-    //   paint: {
-    //     "text-color": "#ffffff",
-    //   },
-    // });
-
     // unclustered points
     map.current.addLayer({
       id: "properties",
       type: "circle",
       source: "points",
       filter: ["==", "Tax Allocation Year", year],
-      // filter: ["all", ["==", "year", year], ["==", "point_count"]],
       paint: {
         "circle-color": [
           "case",
@@ -491,87 +454,8 @@ export const Map = ({ lng, lat, zoom }) => {
         map.current.setPaintProperty("outline", "line-opacity", 1);
       } else {
         map.current.setLayoutProperty("fill", "visibility", "visible");
-        // map.current.setPaintProperty("outline", "line-opacity", .2);
       }
     }
-
-    // const onClickSpider = (e, spiderLeg) => {
-    //   console.log("Clicked on ", spiderLeg);
-
-    //   if (clickedPointId !== null) {
-    //     map.current.removeFeatureState({
-    //       source: "points",
-    //       id: clickedPointId,
-    //     });
-    //   }
-
-    //   const feature = spiderLeg.feature
-    //   console.log(feature);
-    //   // create popup node
-    //   const popupNode = document.createElement("div");
-    //   ReactDOM.createRoot(popupNode).render(
-    //     <PointInfo
-    //       feature={feature}
-    //       fundingSource={fundingSource}
-    //     />
-    //   );
-    //   // add popup to map
-    //   popUpRef.current
-    //     .setLngLat(feature.geometry.coordinates)
-    //     .setDOMContent(popupNode)
-    //     .addTo(map.current);
-
-    //   // spiderifier.unspiderfy();
-    // }
-
-    // const spiderifier = new MapboxglSpiderifier(map.current, {
-    //   animate: true,
-    //   animationSpeed: 200,
-    //   customPin: true,
-    //   onClick: (e, spiderLeg) => onClickSpider(e, spiderLeg),
-    // });
-
-    // inspect a cluster on click
-    // map.current.on("click", "clusters", (e) => {
-    //   const SPIDERFY_FROM_ZOOM = 15;
-    //   const features = map.current.queryRenderedFeatures(e.point, {
-    //     layers: ["clusters"],
-    //   });
-    //   const clusterId = features[0].properties.cluster_id;
-    //   if (!features.length) {
-    //     return;
-    //   } else if (map.current.getZoom() < SPIDERFY_FROM_ZOOM) {
-    //     map.current
-    //       .getSource("points")
-    //       .getClusterExpansionZoom(clusterId, (err, zoom) => {
-    //         if (err) return;
-
-    //         map.current.easeTo({
-    //           center: features[0].geometry.coordinates,
-    //           zoom: zoom,
-    //         });
-    //       });
-    //     }
-    //   else {
-    //     map.current
-    //       .getSource("points")
-    //       .getClusterLeaves(
-    //         features[0].properties.cluster_id,
-    //         100,
-    //         0,
-    //         function (err, leafFeatures) {
-    //           if (err) {
-    //             return console.error(
-    //               "error while getting leaves of a cluster",
-    //               err
-    //             );
-    //           }
-    //           var markers = leafFeatures.map((leafFeature) => leafFeature.properties);
-    //           spiderifier.spiderfy(features[0].geometry.coordinates, markers);
-    //         }
-    //       );
-    //   }
-    // });
 
     // Pop-up functionality for point info
     let clickedPointId = null;
@@ -586,7 +470,6 @@ export const Map = ({ lng, lat, zoom }) => {
         return self.findIndex((v) => v.id === value.id) === index;
       });
 
-      // if (uniqueFeatures.length < 2) {
       const feature = uniqueFeatures[0];
 
       if (clickedPointId !== null) {
@@ -609,37 +492,6 @@ export const Map = ({ lng, lat, zoom }) => {
         .setLngLat(e.lngLat)
         .setDOMContent(popupNode)
         .addTo(map.current);
-      // }
-      // More than one feature per point
-      // else {
-
-      //   if (clickedPointId !== null) {
-      //     map.current.removeFeatureState({
-      //       source: "points",
-      //       id: clickedPointId,
-      //     });
-      //   }
-
-      //   // const clickedFeatures = features.map()
-      //   const clickedOnFeature = uniqueFeatures[0];
-      //   // const clickedFeatures2 = _.map(_.range(clickedOnFeature.properties.count), randomMarker);
-      //   spiderifier.spiderfy(clickedOnFeature.geometry.coordinates, uniqueFeatures);
-      //   // create spiderMarker
-
-      //   // const spiderMarkerNode = document.createElement("div");
-      //   // ReactDOM.createRoot(spiderMarkerNode).render(
-      //   //   <PointInfo
-      //   //     feature={feature}
-      //   //     variable={variable}
-      //   //     fundingSource={fundingSource}
-      //   //   />
-      //   // );
-      //   // add popup to map
-      //   // popUpRef.current
-      //   //   .setLngLat(e.lngLat)
-      //   //   .setDOMContent(spiderMarkerNode)
-      //   //   .addTo(map.current);
-      // }
 
       clickedPointId = e.features[0].id;
 
@@ -685,19 +537,10 @@ export const Map = ({ lng, lat, zoom }) => {
         generateId: true,
       });
 
-      // map.current.addSource("delawareBefore2022", {
-      //   type: "geojson",
-      //   data: mapDataPre2022,
-      //   generateId: true,
-      // });
-
       map.current.addSource("points", {
         type: "geojson",
         data: pointData,
         generateId: true,
-        // cluster: true,
-        // clusterMaxZoom: 14,
-        // clusterRadius: 50,
       });
 
       addMapLayers();
@@ -716,12 +559,6 @@ export const Map = ({ lng, lat, zoom }) => {
     if (map.current.getLayer("properties")) {
       map.current.removeLayer("properties");
     }
-    // if (map.current.getLayer("cluster-count")) {
-    //   map.current.removeLayer("cluster-count");
-    // }
-    // if (map.current.getLayer("clusters")) {
-    //   map.current.removeLayer("clusters");
-    // }
 
     // remove sumPopup when changing variables
     sumRef.current.remove();

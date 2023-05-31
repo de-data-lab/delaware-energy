@@ -1,7 +1,6 @@
 import { useState, Children, Component } from "react";
 import Select, { components } from "react-select";
 import mapInfo from "../utils/mapInfo";
-import BarChart from "./BarChart";
 import "./DistrictExplorer.css";
 import senateData from "../data/aggregated_with_geo_new.json";
 import { DropdownCollapse } from "../components/DropdownCollapse";
@@ -126,6 +125,13 @@ export const DistrictExplorer = ({
   }));
   const yearOptions = allYearOptions.filter(item => item.value !== "Sum over all years")
 
+  // Default values for Explore your District dropdowns
+  const defaultDistrict = districtOptions.find(option => option.value === exploreDistrict.value)
+  const defaultYear = yearOptions.find(option => option.value === year)
+
+  // Default values for compare districts dropdowns
+  const defaultVariable = variableOptions.find(option => option.value === variable)
+
 
   return (
     <div className="main-container">
@@ -145,6 +151,8 @@ export const DistrictExplorer = ({
             handleExploreDistrictChange={handleExploreDistrictChange}
             yearOptions={yearOptions}
             handleYearChange={handleYearChange}
+            defaultYear={defaultYear}
+            defaultDistrict={defaultDistrict}
           />
         ) : (
           <CompareDistrictButtons
@@ -154,6 +162,7 @@ export const DistrictExplorer = ({
             district={district}
             handleChange={handleChange}
             handleDistrictChange={handleDistrictChange}
+            defaultVariable={defaultVariable}
           />
         )}
       </div>
@@ -280,6 +289,8 @@ const ExploreDistrictButtons = ({
   handleYearChange,
   fundingOptions,
   yearOptions,
+  defaultDistrict,
+  defaultYear
 }) => {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
@@ -312,7 +323,7 @@ const ExploreDistrictButtons = ({
             isRtl={isRtl}
             name="districts"
             options={districtOptions}
-            defaultValue={districtOptions[0]}
+            defaultValue={defaultDistrict}
             /* makes sure react-select dropdowns are in front (z-index) */
             menuPortalTarget={document.body}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
@@ -331,7 +342,7 @@ const ExploreDistrictButtons = ({
             isRtl={isRtl}
             name="year"
             options={yearOptions}
-            defaultValue={yearOptions[6]}
+            defaultValue={defaultYear}
             /* makes sure react-select dropdowns are in front (z-index) */
             menuPortalTarget={document.body}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
@@ -368,6 +379,7 @@ const CompareDistrictButtons = ({
   handleDistrictChange,
   districtOptions,
   district,
+  defaultVariable
 }) => {
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
@@ -424,7 +436,7 @@ const CompareDistrictButtons = ({
             isRtl={isRtl}
             name="variable"
             options={variableOptions}
-            defaultValue={variableOptions[0]}
+            defaultValue={defaultVariable}
             /* makes sure react-select dropdowns are in front (z-index) */
             menuPortalTarget={document.body}
             styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}

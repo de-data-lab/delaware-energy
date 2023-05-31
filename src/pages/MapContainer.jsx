@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import dshaData from "../data/DSHA_districted.json";
 import senateData from "../data/aggregated_with_geo2020.json";
 
-
 import { DropdownMenu } from '../components/DropdownMenu';
 import { Map } from './Map';
-import { Slider } from "../components/Slider";
-
 
 export const MapContainer = ({ MapContext, fundingSource, setFundingSource,variable, setVariable, year, setYear }) => { 
     const [lng, setLng] = useState(-75.469);
@@ -24,7 +21,6 @@ export const MapContainer = ({ MapContext, fundingSource, setFundingSource,varia
     return (
         <MapContext.Provider value={{ pointData, mapData, fundingSource, setFundingSource, variable, setVariable, building, setBuilding, year, setYear }}>
             <DropdownMenu />
-            {/* <Slider /> */}
             <Map lng={lng} lat={lat} zoom={zoom} />
         </MapContext.Provider>
     )

@@ -9,7 +9,7 @@ export const Info = () => {
         <h3 className="information-text">
           This interactive tool was made to visualize variables relating to the
           Low-Income Housing Tax Credits program within the state of Delaware
-          senate districts. Made possible through the collaboration of Tech
+          Senate districts. Made possible through the collaboration of Tech
           Impact’s Data Innovation Lab with the Delaware State Housing
           Authority.
         </h3>
@@ -27,7 +27,7 @@ export const Info = () => {
           <h2 className="information-subheader">District Boundaries</h2>
           <div className="information-text-container">
             <li className="information-text">
-              There are two senate district boundary layers used in this map to account for the senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator names are used regardless of the year selected. 
+              There are two Senate district boundary layers used in this map to account for the Senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator names are used regardless of the year selected. 
             </li>
             <ul className="circle-list">
               <li className="information-text">
@@ -81,7 +81,7 @@ export const Info = () => {
           <h2 className="information-subheader">Delaware Senate Data</h2>
           <div className="information-text-container">
             <li className="information-text">
-              Delaware senate district boundaries (2011 and 2022) used in this app can be found
+              Delaware Senate district boundaries (2011 and 2022) used in this app can be found
               on the{" "}
               <Link
                 className="information-link"
@@ -97,7 +97,7 @@ export const Info = () => {
               Delaware district populations for each year were estimated using the yearly population data from{" "}
               <Link
                 className="information-link"
-                to="https://www2.census.gov/geo/tiger/GENZ2022/"
+                to="https://www.census.gov/data/developers/data-sets/acs-5year.html"
                 target="_blank"
                 rel="noreferrer noopener"
               >
@@ -106,7 +106,7 @@ export const Info = () => {
               .
             </li>
             <li className="information-text">
-              Delaware senate district data (2022 senator names) can be found on
+              Delaware Senate district data (2022 senator names) can be found on
               the{" "}
               <Link
                 className="information-link"

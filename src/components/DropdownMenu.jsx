@@ -54,7 +54,7 @@ export const DropdownMenu = ({}) => {
   // React select features
   const [isSearchable, setIsSearchable] = useState(true);
   const [isRtl, setIsRtl] = useState(false);
-
+  
   return (
     <>
       <DropdownCollapse
@@ -88,7 +88,6 @@ export const DropdownMenu = ({}) => {
               defaultValue={yearOptions[7]}
             />
           </div>
-          {/* yearOptions.find(item => item.value === year) */}
 
           {/* FUNDING SOURCE */}
           {/* <div className="select">

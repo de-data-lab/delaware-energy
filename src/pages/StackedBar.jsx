@@ -1,5 +1,5 @@
 import ChartTooltip, { useTooltip } from "../components/ChartTooltip";
-import "./BarChart.css";
+import "./StackedBar.css";
 
 // @ts-check
 

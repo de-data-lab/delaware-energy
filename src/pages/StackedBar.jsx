@@ -210,7 +210,7 @@ function StackedBar({
     <>
       <div
         className={
-          "svg-container " + (collapseButton ? "container-margin" : "")
+          "svg-container"
         }
       >
         {/* <div className="legend-container">

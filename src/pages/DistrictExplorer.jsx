@@ -172,7 +172,7 @@ export const DistrictExplorer = ({
         openClass={"collapse-button-open"}
         closeClass={"collapse-button-close"}
       />
-      <div className="chart-container">
+      <div className={"chart-container " + (collapseButton ? "container-margin" : "")}>
         {explorerButton === "explore" ? (
           // Explore District
           <ExploreDistrict

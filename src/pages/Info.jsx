@@ -4,7 +4,7 @@ import "./Info.css";
 export const Info = () => {
   return (
     <div className="container">
-      <div className="info-container container-margin">
+      <div className="info-container">
         <h2 className="information-header">Welcome!</h2>
         <h3 className="information-text">
           This interactive tool was made to visualize variables relating to the
@@ -94,14 +94,14 @@ export const Info = () => {
               .
             </li>
             <li className="information-text">
-              Delaware district populations for each year were estimated using the yearly population data from{" "}
+              Delaware district populations for each year were estimated using the 5-year "period" estimates from the {" "}
               <Link
                 className="information-link"
                 to="https://www.census.gov/data/developers/data-sets/acs-5year.html"
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                U.S. Census Bureau website
+                American Community Survey
               </Link>
               .
             </li>

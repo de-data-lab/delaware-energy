@@ -14,23 +14,28 @@ This app was developed for the Delaware State Housing Authority and state of Del
 
 ### Delaware Senate Data
 - Delaware senate district boundaries (2011 and 2022) used in this app can be found on the [U.S. Census Bureau website](https://www2.census.gov/geo/tiger/GENZ2022).
-- Delaware district populations for each year were estimated using the yearly population data from [U.S. Census Bureau website](https://www2.census.gov/geo/tiger/GENZ2022).
+- Delaware district populations for each year were estimated using the 5-year "period" estimates from the [American Community Survey](https://www.census.gov/data/developers/data-sets/acs-5year.html).
 - Delaware senate district data (2022 senator names) can be found on the [Delaware General Assembly website](https://legis.delaware.gov/Redistricting/2022FinalSenateDistricts).
 
 ### Delaware Subsidized Housing Data
 - Delaware LIHTC funding source data (2016-2022) was provided by the [Delaware State Housing Authority](http://www.destatehousing.com).
 
 ## Screenshots
-![Map view](public/images/screenshot-1.png)
+<img src="public/images/screenshot-1.png" alt="Map view" width="640" height="320">
+<img src="public/images/screenshot-2.png" alt="Map view - with hover and click" width="640" height="320">
+<img src="public/images/screenshot-3.png" alt="District explorer - compare districts" width="640" height="320">
+<img src="public/images/screenshot-4.png" alt="District explorer - explore your district" width="640" height="320">
+<img src="public/images/screenshot-5.png" alt="Info Page" width="640" height="320">
+<!-- ![Map view](public/images/screenshot-1.png)
 ![Map view - with hover and click](public/images/screenshot-2.png)
 ![District explorer - compare districts](public/images/screenshot-3.png)
 ![District explorer - explore your district](public/images/screenshot-4.png)
-![Info Page](public/images/screenshot-5.png)
+![Info Page](public/images/screenshot-5.png) -->
 
 ## Badges
 ![React-Badge](https://img.shields.io/badge/Code-React-blue)
 ![Javascript-Badge](https://img.shields.io/badge/Code-JavaScript-blue)
-![Javascript-Badge](https://img.shields.io/badge/Code-Python-blue)
+![Python-Badge](https://img.shields.io/badge/Code-Python-blue)
 ![Typescript-Badge](https://img.shields.io/badge/Code-TypeScript-blue)
 ![HTML-Badge](https://img.shields.io/badge/Code-HTML-blue)
 ![CSS-Badge](https://img.shields.io/badge/Code-CSS-blue)

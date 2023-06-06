@@ -92,6 +92,13 @@
     fill: var(--navy);
   }
 
+  .axis-label {
+    fill: var(--navy);
+    font-size: var(--axis-fs);
+    font-weight: 600;
+    font-family: var(--main-font);
+  }
+
   /* Responsive layout */
 
   .svg-container {
@@ -100,11 +107,8 @@
     gap: 1rem;
     margin: 1rem 0;
   }
-
-  .x-axis {
-    font-size: var(--font-size-sm);
-  }
-
+  
+  
   .chart-container {
     padding: 0 6rem;
     flex: 1;

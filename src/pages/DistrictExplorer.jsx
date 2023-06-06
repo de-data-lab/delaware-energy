@@ -185,37 +185,6 @@ export const DistrictExplorer = ({
             exploreDistrict={exploreDistrict}
           />
         ) : (
-          // Compare Districts chart
-          // <BarChart
-          //   tooltipConfig={{
-          //     placement: "top-end",
-          //     autoPlace: false,
-          //     customTitle: (d) => {
-          //       if (d.district === "District Average") {
-          //         return "State Average";
-          //       }
-          //       return `District ${d.district}`;
-          //     },
-          //     customContent: (d) =>
-          //       `${
-          //         mapInfo[fundingSource].columns[d.variable]
-          //       }: <strong>${tooltipFormatter(d.value)}</strong>`,
-          //   }}
-          //   chartData={chartData}
-          //   title={mapInfo[fundingSource].columns[variable]}
-          //   subtitle={mapInfo[fundingSource].meta.title}
-          //   xAxis={"district"}
-          //   yAxis={"value"}
-          //   filterColumn={"variable"}
-          //   filterValue={variable}
-          //   districtFilterValue={district}
-          //   referenceColumn={"district"}
-          //   reference={"District Average"}
-          //   handleDistrictChange={handleDistrictChange}
-          //   district={district}
-          //   districtOptions={districtOptions}
-          //   collapseButton={collapseButton}
-          // />
           <StackedBar
             tooltipConfig={{
               placement: "top-end",

@@ -67,9 +67,9 @@ function StackedBar({
   /** @type ConfigObject */
   const config = {
     mt: 100,
-    mr: 60,
+    mr: 70,
     mb: 100,
-    ml: 120,
+    ml: 140,
     ch: 450,
     cw: 800,
     height: function () {
@@ -153,11 +153,10 @@ function StackedBar({
         axisLeft(scales.y)
           .tickSize(-(config.width() - config.mr - config.ml))
           .tickPadding(20)
-
           // Incorporate money formatter
-          .tickFormat(yAxisFormat)
+          // .tickFormat(yAxisFormat)
       )
-      .call((g) => g.selectAll(".tick line").attr("x1", 0));
+      .call((g) => g.selectAll(".tick line").attr("x1", 0))
   };
 
   
@@ -236,6 +235,7 @@ function StackedBar({
             <g className="x-axis" transform={`translate(0,${config.ch})`}></g>
 
             <g className="y-axis" transform={`translate(${config.ml},0)`}></g>
+            <text textAnchor={"end"} className="axis-label" dx={config.height()/2} transform={`translate(${config.ml/3.25},${config.height() - config.mb}) rotate(270)`}>{(filterValue === "# of Tax Credit Units") ? ("Units (Count)") : ("USD")}</text>
           </g>
 
 

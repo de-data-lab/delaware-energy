@@ -1,42 +1,53 @@
-.sumPopup .mapboxgl-popup-content {
-    /* position */
+.sumPopup > .mapboxgl-popup-content {
     position: absolute;
     z-index: 2;
     width: 0;
+    max-height: 30rem;
+    background: transparent;
     color: var(--navy);
-    /* layout and size*/
     display: flex;
     flex-direction: column;
     gap: var(--padding-lg);
     margin: var(--margin-xxs) var(--margin-sm);
-    /* margin-top: 5.625rem; */
     padding: 0;
-    /* shape */
-    box-shadow: var(--box-shadow);
     border-radius: var(--border-sm);
-    /* color */
     opacity: 95%;
-    /* behavior */
-    /* cursor: grab;  */
     pointer-events: none;
   }
 
 .sumPopup-button-container {
     display: flex;
     flex-direction: column;
-    background-color: var(--white);
+    background: transparent;
     width: var(--map-menu-minwidth);
-    /* shape */
-    box-shadow: var(--box-shadow);
+    max-height: 30rem;
     border-radius: var(--border-sm);
     pointer-events: auto;
+    overflow:auto;
+    scroll-behavior: smooth;
+
+  }
+
+  /* sumPopup scrollbar */
+  .sumPopup-button-container::-webkit-scrollbar {
+    background: var(--background);
+    /* background: transparent; */
+    border-radius: var(--border-sm);
+    width: 10px;
+  }
+  .sumPopup-button-container::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: var(--border-sm);
   }
   
   /* Table styles on sumPopup */
+  .sumPopup-table, .sumPopup-message {
+    background-color: var(--white);
+  }
   .sumPopup-table {
     width: 100%;
+    border-radius: var(--border-sm) var(--border-sm) 0 0;
   }
-  
   .table-headers {
     background-color: var(--navy);
   }
@@ -118,8 +129,18 @@
   }
 
 
+  @media only screen and (max-width: 550px) {
+    .sumPopup > .mapboxgl-popup-content {
+    max-height: 15rem;
+    }
+    .sumPopup-button-container {
+      max-height: 15rem;
+    }
+    
+  }
+
   @media only screen and (min-width: 550px) {
-    .sumPopup .mapboxgl-popup-content {
+    .sumPopup > .mapboxgl-popup-content {
       right: 0;
       width: auto;
       margin: var(--margin-xxs);
@@ -135,9 +156,12 @@
 @media only screen and (min-width: 1281px) {
     .sumPopup .mapboxgl-popup-content {
       margin: var(--margin-lg) var(--margin-sm);
+      max-height: 50rem;
     }
   
     .sumPopup-button-container {
       width: var(--map-menu-maxwidth);
+      max-height: 50rem;
     }
+
   }

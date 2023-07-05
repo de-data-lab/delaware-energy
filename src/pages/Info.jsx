@@ -9,25 +9,16 @@ export const Info = () => {
         <h3 className="information-text">
           This interactive tool was made to visualize variables relating to the
           Low-Income Housing Tax Credits program within the state of Delaware
-          Senate districts. Made possible through the collaboration of Tech
+          legislative districts. Made possible through the collaboration of Tech
           Impact’s Data Innovation Lab with the Delaware State Housing
           Authority.
         </h3>
-        {/* <h2 className="information-subheader">How to use our map</h2>
-        <div className="information-text-container">
-            <li className="information-text">
-            Hover over a district to see its variable value
-            </li>
-            <li className="information-text">
-            Click on a district to sum its value to other districts
-            </li>
-        </div> */}
         <h2 className="information-header">Data Dictionary</h2>
         <div>
           <h2 className="information-subheader">District Boundaries</h2>
           <div className="information-text-container">
             <li className="information-text">
-              There are two Senate district boundary layers used in this map to account for the Senate boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator names are used regardless of the year selected. 
+              For both houses, there are two district boundary layers used in this map to account for the boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator and representative names are used regardless of the year selected. 
             </li>
             <ul className="circle-list">
               <li className="information-text">
@@ -41,7 +32,7 @@ export const Info = () => {
               <strong>Sum over all years - </strong>sum of a variable over all
               years collected.
             </li>
-            <ul className="circle-list">
+            <ul className="circle-list information-subtext-container">
               <li className="information-text">
               <strong>Average allocation amount per 100 persons - </strong>this variable now represents the total amount allocated to a district over all years relative to its population while accounting for how the population changes each year.
               </li>
@@ -54,7 +45,7 @@ export const Info = () => {
           <div className="information-text-container">
             <li className="information-text">
               <strong>Total tax credit units - </strong>number of tax credit
-              units allocated to a district in a certain year. (When looking at individual property info, total tax credits are equal to the total tax credits allocated to that property in a given year.)
+              units allocated to a district in a certain year. (When looking at individual property information, total tax credits are equal to the total tax credits allocated to that property in a given year.)
             </li>
             <ul className="circle-list">
               <li className="information-text">
@@ -64,7 +55,7 @@ export const Info = () => {
             </ul>
             <li className="information-text">
               <strong>Total allocation amount - </strong> amount of funding allocation that
-              a district received in a given year. (When looking at individual property info, total allocation amount is equal to the total funding allocated to that property in a given year.)
+              a district received in a given year. (When looking at individual property information, total allocation amount is equal to the total funding allocated to that property in a given year.)
             </li>
             <li className="information-text">
               <strong>Average allocation amount per 100 persons -</strong>{" "}
@@ -78,14 +69,14 @@ export const Info = () => {
         </div>
         <h2 className="information-header">Data Sources</h2>
         <div>
-          <h2 className="information-subheader">Delaware Senate Data</h2>
+          <h2 className="information-subheader">Delaware Legislative Data</h2>
           <div className="information-text-container">
             <li className="information-text">
-              Delaware Senate district boundaries (2011 and 2022) used in this app can be found
+              Delaware Senate district boundaries (2011 and 2022) and House of Representatives district boundaries (2010 and 2022) used in this app can be found
               on the{" "}
               <Link
                 className="information-link"
-                to="https://www2.census.gov/geo/tiger/GENZ2022/"
+                to="https://www2.census.gov/geo/tiger/"
                 target="_blank"
                 rel="noreferrer noopener"
               >
@@ -94,7 +85,7 @@ export const Info = () => {
               .
             </li>
             <li className="information-text">
-              Delaware district populations for each year were estimated using the 5-year "period" estimates from the {" "}
+              Delaware legislative district populations for each year were estimated using the 5-year "period" estimates from the {" "}
               <Link
                 className="information-link"
                 to="https://www.census.gov/data/developers/data-sets/acs-5year.html"
@@ -106,7 +97,7 @@ export const Info = () => {
               .
             </li>
             <li className="information-text">
-              Delaware Senate district data (2022 senator names) can be found on
+              Delaware Senate and House of Representatives district data (2022 senator and representative names) can be found on
               the{" "}
               <Link
                 className="information-link"

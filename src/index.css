@@ -16,11 +16,11 @@
   --primary-font: "Lato", Helvetica, sans-serif;
   --secondary-font: "Helvetica Neue", mono;
   /* Font sizes */
-  --font-size-xxl: clamp(1.3rem, 2.1vw + 0.8rem, 4.2rem);
-  --font-size-xl: clamp(1.2rem, 1.4vw + 0.9rem, 3.2rem);
-  --font-size-lg: clamp(1.1rem, 0.9vw + 0.9rem, 2.4rem);
-  --font-size-md: clamp(1rem, 0.6vw + 0.8rem, 1.8rem);
-  --font-size-sm: clamp(0.9rem, 0.3vw + 0.8rem, 1.3rem);
+  --font-size-xxl: clamp(1.3rem, 2.1vw + 0.8rem, 3.9rem);
+  --font-size-xl: clamp(1.2rem, 1.4vw + 0.9rem, 2.9rem);
+  --font-size-lg: clamp(1.1rem, 0.9vw + 0.9rem, 2.1rem);
+  --font-size-md: clamp(1rem, 0.6vw + 0.8rem, 1.5rem);
+  --font-size-sm: clamp(0.9rem, 0.3vw + 0.8rem, 1.1rem);
   --font-size-xs: clamp(0.8rem, 0.1vw + 0.8rem, 1rem);
   --font-size-xxs: clamp(0.8rem, 0vw + 0.8rem, 0.8rem);
   --font-size-xxxs: clamp(0.7rem, 0vw + 0.7rem, 0.7rem);
@@ -88,24 +88,3 @@ ul {
   flex: 1;
   background-color: var(--background);
 }
-
-/* makes sure react-select dropdowns are in front of custom collapse button */
-.react-select {
-  z-index: 4;
-}
-
-/* .spider-leg-container .spider-leg-pin{
-  position: relative;
-  width: 22px;
-  height: 22px;
-  margin-left: -8px;
-  margin-top: -18px;
-  background-image: url(https://api.mapbox.com/styles/v1/mapbox/dark-v9/sprite.png?access_token=pk.eyJ1Ijoic29jcmF0YSIsImEiOiJjaXJxc2wzam0waGU5ZmZtODhqd2ttamdxIn0.1ZQEByXoDD7fGIa9lUHIqg);
-  background-position: -110px -110px;
-}
-.spider-leg-container .spider-leg-line {
-  background-color: #f4f4f4;
-}
-.spider-leg-container:hover .spider-leg-line {
-  background-color: #f404f4;
-} */

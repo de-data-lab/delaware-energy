@@ -38,6 +38,12 @@
     transition: all .5s ease-out;
   }
 
+  .toggle-button:hover, .toggle-button:focus {
+    background-color: var(--light-navy);
+    color: var(--white);
+    transition: .3s ease-in;
+  }
+
   /* Desktop Styles */
   @media only screen and (min-width: 1281px)  {
     

@@ -1,128 +1,172 @@
 /* Menu Layout */
 
 .dropdown-menu {
-    visibility: visible;
-    
-    /* position */
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    
-    /* layout and size*/
-    display: flex;
-    flex-direction: column;
-    margin: var(--margin-xxs);
-    /* needed to get rid of bootstrap styling */
-    padding: 0;
-    /* PROBABLY NEED BETTER OPTION */
-    width: var(--map-menu-minwidth);
-    
-    /* color */
-    color: var(--navy);
-    background-color: var(--white);
-    opacity: 95%;
-    
-    /* shape */
-    box-shadow: var(--box-shadow);
-    border-radius: var(--border-sm);
-    
-    /* transition  */
-    transition: visibility 0s linear 0.3s, opacity 0.3s linear;
-    transition-delay: 0s;
-  }
-  
-  .menu-close {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s linear 0.3s, opacity 0.3s linear;
-  }
-  
-  /* Header font size and styles */
-  
-  .dropdown-header {
-    font-size: var(--font-size-md);
-    background-color: var(--navy);
-    color: var(--white);
-    padding: var(--padding-sm);
-    border-radius: var(--border-sm) var(--border-sm) 0 0;
-    text-align: center;
-    white-space: normal;
-  }
-  
-  /* Dropdowns layout and spacing */
-  
-  .select-container,
-  .select {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .select-container {
-    gap: var(--padding-md);
-    padding: var(--padding-lg);
-    padding-right: 3.75rem;
-  }
-  
-  .select {
-    gap: var(--padding-xs);
-  }
+  visibility: visible;
 
-  .toggle-container {
-    display: flex;
-    justify-content: space-between;
-  }
+  /* position */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 
-  
-  
-  /* Dropdowns font size and styles */
-  
-  .label-text {
-    font-size: var(--font-size-sm);
-    font-weight: bold;
-  }
-  
-  .data-source-text, .link-list {
-    font-size: var(--font-size-xxs);
-    /* color: var(--navy); */
+  /* layout and size*/
+  display: flex;
+  flex-direction: column;
+  margin: var(--margin-xxs);
+  /* needed to get rid of bootstrap styling */
+  padding: 0;
+  /* PROBABLY NEED BETTER OPTION */
+  width: var(--map-menu-minwidth);
 
-  }
-  
-  /* Data source link list */
-  
-  .data-source-flex {
-    display: flex;
-  }
-  
-  .data-source-text {
-    white-space: nowrap;
-    font-weight: bold;
-  }
-  
-  .link-list {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding-left: var(--padding-xxs);
-  }
-  
-  /* Data source link */
-  
-  .data-source-link {
-    text-decoration: none;
-    color: var(--blue);
-  }
-  
-  .data-source-link:hover {
-    text-decoration: underline;
-  }
+  /* color */
+  color: var(--navy);
+  background-color: var(--white);
+  opacity: 95%;
+
+  /* shape */
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-sm);
+
+  /* transition  */
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+  transition-delay: 0s;
+}
+
+.menu-close {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+}
+
+/* Dropdowns layout and spacing */
+
+.select-container,
+.select {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.select-container {
+  gap: var(--padding-md);
+  padding: var(--padding-lg);
+  padding-right: 3.75rem;
+}
+
+.select {
+  gap: var(--padding-xs);
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CUSTOM SELECT */
+
+.dropdown-button {
+  height: 2rem;
+  width: 2rem;
+  margin-left: .25rem;
+  background: none;
+  border: none;
+  border-radius: var(--border-lg);
+  z-index: 3;
+  position: relative;
+  cursor: pointer;
+  /* background-color: var(--white); */
+}
+
+.dropdown-button::after {
+  content: "";
+  background-repeat: no-repeat;
+  bottom: 0.4rem;
+  left: 0.52rem;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: url("/icons/arrow-icon.svg");
+  /* filter: brightness(0) saturate(100%) invert(7%) sepia(38%) saturate(7127%) hue-rotate(215deg) brightness(89%) contrast(92%); */
+  background-size: 1rem;
+  transform: rotate(270deg);
+}
+
+.dropdown-button-close {
+  transform: rotate(180deg);
+}
+
+.dropdown-button-open {
+  transform: rotate(0deg);
+}
+
+/* Dropdowns font size and styles */
+
+.label-text {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+}
+
+.data-source-text,
+.link-list {
+  font-size: var(--font-size-xxs);
+  /* color: var(--navy); */
+}
+
+/* properties toggle button */
+.form-switch .form-check-input {
+  /* height: 24px; */
+  /* width: 48px; */
+  font-size: var(--font-size-md);
+}
+.form-switch .form-check-input:focus {
+    outline: 2px solid var(--blue); 
+  outline-offset: 1px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0,0,0,0.25)'/></svg>");
+}
+.form-switch .form-check-input:checked {
+  background-color: var(--navy);
+  border-color: var(--navy);
+  /* background-color: #30D158;
+      border-color: #30D158; */
+  border: none;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(255,255,255,1.0)'/></svg>");
+}
+
+/* Data source link list */
+
+.data-source-flex {
+  display: flex;
+}
+
+.data-source-text {
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding-left: var(--padding-xxs);
+}
+
+/* Data source link */
+
+.data-source-link {
+  text-decoration: none;
+  color: var(--blue);
+}
+
+.data-source-link:hover {
+  text-decoration: underline;
+}
 
 /* Desktop Styles */
-  @media only screen and (min-width: 1281px)  {
-    .dropdown-menu {
-      width: var(--map-menu-maxwidth);
-      margin: var(--margin-lg) var(--margin-sm);
-    }
+@media only screen and (min-width: 1281px) {
+  .dropdown-menu {
+    width: var(--map-menu-maxwidth);
+    margin: var(--margin-lg) var(--margin-sm);
   }
+}
+

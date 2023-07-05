@@ -25,7 +25,7 @@
 /* Mapboxgl-legend overrides */
 
 :root {
-  --map-legend-minwidth: 20rem !important;
+  --map-legend-minwidth: 28rem !important;
   /* --map-legend-maxwidth: 25vw !important; */
   --map-legend-background: rgba(255, 255, 255, 0.95) !important;
   --map-legend-font: var(--font-size-md) var(--primary-font) !important;
@@ -53,5 +53,12 @@
   .mapboxgl-ctrl-legend {
     margin: var(--margin-xxs) !important;
     padding: var(--padding-xxs) !important;
+  }
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 1000px) {
+  :root {
+    --map-legend-minwidth: 20rem !important;
   }
 }

@@ -102,9 +102,9 @@ function ExploreDistrict({
           </h3>
         </div>
       </div>
-      <div className={"explore-container container-margin"}>
-        {selectedDistrict.length > 0 ? (
+      {selectedDistrict.length > 0 ? (
           <>
+            <div className="explore-container container-margin">
             <h1 className="explore-header">{exploreDistrict.label}</h1>
             <div>
               <div className="explore-subheader">
@@ -144,7 +144,7 @@ function ExploreDistrict({
                       District {exploreDistrict.value}
                     </th>
                     <th className="table-header"></th>
-                    <th className="table-header">State Average</th>
+                    <th className="table-header">State Average *</th>
                   </tr>
                   {selectedDistrict.map((district, i) => (
                     <>
@@ -223,15 +223,18 @@ function ExploreDistrict({
                 </tbody>
               </table>
             </div>
+          </div>
+          <p className="chart-note">* State Average represents the average of all  districts with tax credit units in that year (does not include districts with 0 tax credit units)</p>
           </>
         ) : (
-          <div className="not-found">
-            No LIHTC allocations for{" "}
-            <strong>District {exploreDistrict.value}</strong> in{" "}
-            <strong>{mapInfo[fundingSource].years[year]}</strong>
+          <div className="explore-container container-margin">
+            <div className="not-found">
+              No {fundingSource} allocations for{" "}
+              <strong>District {exploreDistrict.value}</strong> in{" "}
+              <strong>{mapInfo[fundingSource].years[year]}</strong>
+            </div>
           </div>
         )}
-      </div>
     </>
   );
 }

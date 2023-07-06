@@ -633,7 +633,6 @@ district,name,Funding Source,Tax Allocation Year,variable,value
 2,Stephanie T. Bolden,LIHTC,2022,Average Allocation per Tax Credit Unit,19607.843137254902
 3,Sherry Dorsey Walker,LIHTC,2022,Average Allocation per Tax Credit Unit,18867.924528301886
 1,Nnamdi O. Chukwuocha,LIHTC,2022,Average Allocation per Tax Credit Unit,0.0
-District Average,0,LIHTC,0,# of Tax Credit Units,0.0
 District Average,0,LIHTC,2016,# of Tax Credit Units,48.25
 District Average,0,LIHTC,2017,# of Tax Credit Units,76.14285714285714
 District Average,0,LIHTC,2018,# of Tax Credit Units,48.75
@@ -641,7 +640,6 @@ District Average,0,LIHTC,2019,# of Tax Credit Units,68.0
 District Average,0,LIHTC,2020,# of Tax Credit Units,56.4
 District Average,0,LIHTC,2021,# of Tax Credit Units,80.2
 District Average,0,LIHTC,2022,# of Tax Credit Units,55.666666666666664
-District Average,0,LIHTC,0,ALLOCATION AMOUNT,0.0
 District Average,0,LIHTC,2016,ALLOCATION AMOUNT,681844.75
 District Average,0,LIHTC,2017,ALLOCATION AMOUNT,796096.8571428572
 District Average,0,LIHTC,2018,ALLOCATION AMOUNT,732445.5
@@ -649,7 +647,6 @@ District Average,0,LIHTC,2019,ALLOCATION AMOUNT,921947.25
 District Average,0,LIHTC,2020,ALLOCATION AMOUNT,777159.2
 District Average,0,LIHTC,2021,ALLOCATION AMOUNT,1081077.0
 District Average,0,LIHTC,2022,ALLOCATION AMOUNT,634580.1666666666
-District Average,0,LIHTC,0,Average Allocation per 100 Persons,0.0
 District Average,0,LIHTC,2016,Average Allocation per 100 Persons,2991.3735695903015
 District Average,0,LIHTC,2017,Average Allocation per 100 Persons,3458.946817704384
 District Average,0,LIHTC,2018,Average Allocation per 100 Persons,3456.0887614122707
@@ -657,7 +654,6 @@ District Average,0,LIHTC,2019,Average Allocation per 100 Persons,4532.4567154242
 District Average,0,LIHTC,2020,Average Allocation per 100 Persons,3616.6647952165586
 District Average,0,LIHTC,2021,Average Allocation per 100 Persons,5003.090029011868
 District Average,0,LIHTC,2022,Average Allocation per 100 Persons,2726.361781863709
-District Average,0,LIHTC,0,Average Allocation per Tax Credit Unit,0.0
 District Average,0,LIHTC,2016,Average Allocation per Tax Credit Unit,15485.305899552803
 District Average,0,LIHTC,2017,Average Allocation per Tax Credit Unit,11161.192737664534
 District Average,0,LIHTC,2018,Average Allocation per Tax Credit Unit,14859.11605805959
@@ -665,7 +661,6 @@ District Average,0,LIHTC,2019,Average Allocation per Tax Credit Unit,12398.26501
 District Average,0,LIHTC,2020,Average Allocation per Tax Credit Unit,16131.742608058606
 District Average,0,LIHTC,2021,Average Allocation per Tax Credit Unit,14130.363787375414
 District Average,0,LIHTC,2022,Average Allocation per Tax Credit Unit,16652.04924055576
-District Average,0,LIHTC,0,Average Population per Tax Credit Unit,0.0
 District Average,0,LIHTC,2016,Average Population per Tax Credit Unit,534.8101780185758
 District Average,0,LIHTC,2017,Average Population per Tax Credit Unit,364.9370345084861
 District Average,0,LIHTC,2018,Average Population per Tax Credit Unit,511.4462223071047
@@ -673,7 +668,6 @@ District Average,0,LIHTC,2019,Average Population per Tax Credit Unit,412.8488746
 District Average,0,LIHTC,2020,Average Population per Tax Credit Unit,443.481497131799
 District Average,0,LIHTC,2021,Average Population per Tax Credit Unit,364.21257339731767
 District Average,0,LIHTC,2022,Average Population per Tax Credit Unit,552.1805458861646
-District Average,0,LIHTC,0,Population,23510.10714285714
 District Average,0,LIHTC,2016,Population,23087.75
 District Average,0,LIHTC,2017,Population,23172.285714285714
 District Average,0,LIHTC,2018,Population,21884.25

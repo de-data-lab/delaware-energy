@@ -12,26 +12,42 @@ import { Info } from "./pages/Info";
 import { Footer } from "./layout/Footer";
 
 function App() {
-
   // Dropdowns
   const [fundingSource, setFundingSource] = useState("LIHTC");
   // Dropdown for variable
   const [variable, setVariable] = useState("# of Tax Credit Units");
   // year
   const [year, setYear] = useState("Sum over All Time");
+  // Dropdown for senate or state of reps boundary
+  const [boundary, setBoundary] = useState("senate");
 
 
   return (
     <>
       <div id="page-container">
         <Header />
-          <div id="content-container">
+        <div id="content-container">
           <Routes>
-            <Route path="" element={<MapContainer MapContext={MapContext} fundingSource={fundingSource} setFundingSource={setFundingSource} variable={variable} setVariable={setVariable} year={year} setYear={setYear}/>} />
-            <Route path="explorer" element={<DistrictExplorer />}/>
+            <Route
+              path=""
+              element={
+                <MapContainer
+                  MapContext={MapContext}
+                  fundingSource={fundingSource}
+                  setFundingSource={setFundingSource}
+                  variable={variable}
+                  setVariable={setVariable}
+                  year={year}
+                  setYear={setYear}
+                  boundary={boundary}
+                  setBoundary={setBoundary}
+                />
+              }
+            />
+            <Route path="explorer" element={<DistrictExplorer />} />
             <Route path="info" element={<Info />} />
           </Routes>
-          </div>
+        </div>
         <Footer />
       </div>
     </>

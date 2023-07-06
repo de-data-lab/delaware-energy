@@ -38,7 +38,7 @@ export const PointInfo = ({feature, fundingSource}) => {
 
     return (
             <div tabIndex={0} className="popup-container">
-                <div className="sumPopup-button-container">
+                <div className="pointInfo-button-container">
                     <h3 className="dropdown-header">{projectName}</h3>
                     {/* <img src={photo} className="photo"></img> */}
                     <div className="content-container">

@@ -1,13 +1,13 @@
 .interaction-container {
-    background-color: rgb(255,255,255,.7);
+    background-color: rgb(255,255,255,.4);
     box-shadow: var(--box-shadow);
     margin-bottom: 3rem;
     padding: 1rem 0 2rem;
-    /* padding-bottom: 2rem; */
-    height: 12rem;
+    height: 15rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-evenly;
+    transition: all .5s ease-out;
 }
 
 .container-close {
@@ -28,7 +28,7 @@
     transform: rotate(90deg);
     left: calc(50% - 29px);
     /* (Dropdown menu width + button height) / 2 */
-    top: calc(12rem - 29px);
+    top: calc(15rem - 29px);
     transition: all .5s ease-out;
 }
 
@@ -38,10 +38,13 @@
     flex-wrap: wrap;
 }
 
+/* Button Container */
 .select-explorer {
+    width: 27rem;
+}
+.select-spacing {
     display: flex;
     flex-direction: column;
-    width: 25rem;
     margin: var(--margin-xxxs);
     color: var(--navy);
 }
@@ -51,47 +54,124 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-.explorer-button {
-    padding: var(--padding-xs);
-    margin: var(--margin-xxxs);
-    border: none;
-    color: var(--white);
-    width: 20rem;
-    border-radius: var(--border-sm);
+
+/* Custom Toggle Button */
+.toggleSwitch span span {
+	display: none;
+}  
+  
+.toggleSwitch {
+	display: inline-block;
+	position: relative;
+	overflow: visible;
+	padding: 0;
+	cursor: pointer;
+	width: 30rem;
+	background-color: var(--white);
+	border: 1px solid #ccc;
+	border-radius: var(--border-sm);
+	height: 44px;
 }
-.explorer-button:hover, .explorer-button:focus, .explorer-button:active {
+.toggleSwitch * {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.toggleSwitch label,
+.toggleSwitch > span {
+	line-height: 44px;
+}
+.toggleSwitch input {
+    display: none;
+}
+.toggleSwitch > span {
+	position: absolute;
+	left: 0;
+	width: calc(100% - 6px);
+	white-space: nowrap;
+    margin: 0 3px;
+}
+.toggleSwitch > span span {
+	position: absolute;
+	display: block;
+	font-size: var(--font-size-sm);
+	text-align: center;
+}
+/* switch */
+.toggleSwitch a {
+	position: absolute;
+	display: block;
+	top: 3px;
+	bottom: 3px;
+	padding: 0;
+	left: 3px;
+	width: 50%;
+	background-color: var(--navy);
+	border-radius: var(--border-sm);
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+.toggleSwitch > span span:hover .toggleSwitch a{
     background-color: var(--light-navy);
-    transition: ease-in .3s;
 }
-.selected {
-    background-color: var(--light-navy);
+/* left text */
+.toggleSwitch > span span:first-of-type {
+	color: var(--white);
+    width: 50%;
 }
-.unselected {
-    background-color: var(--navy);
+/* right text */
+.toggleSwitch > span span:last-of-type {
+	right:0;
+	color: #999;
+    width: 50%;
+}
+.toggleSwitch > span:before {
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+.toggleSwitch input:checked ~ a {
+	left: calc(50% - 3px);
+}
+.toggleSwitch input:checked ~ span span:first-of-type {
+	color: #999;
+}
+.toggleSwitch input:checked ~ span span:last-of-type {
+	color: var(--white);
 }
 
-/* @media only screen and (min-width: 1281px) {
-    .explorer-button {
-        margin: var(--margin-xxs);
-        padding: var(--padding-sm);
-    }
-    .select-explorer {
-        margin: var(--margin-xxs);
-    }
-  } */
+
+
+/* headings */
+.heading, .sub-heading {
+    text-align: center;
+    color: var(--navy);
+}
+.heading {
+    font-size: var(--font-size-lg);
+}
+.sub-heading {
+    font-size: var(--font-size-md);
+    font-weight: 300;
+}
 
 @media only screen and (max-width: 831px) {
     .interaction-container {
-        height: 22rem;
+        height: 21rem;
     }
-
     .collapse-button-open {
         left: calc(50% - 29px);
         /* (Dropdown menu width + button height) / 2 */
-        top: calc(22rem - 29px);
+        top: calc(21rem - 29px);
     }
+    
+  }
+@media only screen and (max-width: 700px) {
     .select-explorer {
         width: 22rem;
     }
-
+    .toggleSwitch {
+        width: 23rem;
+    }
   }

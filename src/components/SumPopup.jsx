@@ -13,6 +13,7 @@ export const SumPopup = ({
   clearSelection,
   mapData
 }) => {
+
   return (
     <div tabIndex={0} className="popup-container">
       <div className="sumPopup-button-container">
@@ -47,7 +48,7 @@ export const PopupText = ({ fundingSource, variable, year, array, mapData }) => 
   ]);
 
   // takes all variable values and sums them up
-  const variableArray = mapData.map(district => !district.properties[variable] ? 0 : district.properties[variable])
+  const variableArray = mapData.map(district => !district.properties[variable] ? 0 : Number(district.properties[variable]))
   const totalVariable = variableArray.length > 0 ? variableArray.reduce((a, b) => a + b) : ("");
 
   useEffect(() => {

@@ -7,42 +7,42 @@ import dshaData from "../data/DSHA_districted.json";
 
 function ExploreDistrict({
   chartData,
-  collapseButton,
   filterColumn,
   fundingSource,
   exploreDistrict,
   year,
+  boundary,
+  checked,
 }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-      csv(chartData).then((result) => {
-          const filteredDistricts = result.filter((i) =>
-            filterColumn
-              ? i[filterColumn] === `${exploreDistrict.value}` ||
-                i[filterColumn] === "District Average"
-              : i
-          );
+    csv(chartData).then((result) => {
+      const filteredDistricts = result.filter((i) =>
+        filterColumn
+          ? i[filterColumn] === `${exploreDistrict.value}` ||
+            i[filterColumn] === "District Average"
+          : i
+      );
 
-          const filteredYears = filteredDistricts.filter(
-            (feature) =>
-              parseFloat(feature["Tax Allocation Year"]) === parseFloat(year)
-          );
+      const filteredYears = filteredDistricts.filter(
+        (feature) =>
+          parseFloat(feature["Tax Allocation Year"]) === parseFloat(year)
+      );
 
-          // filter out avg pop per tax credit unit
-          const filteredData = filteredYears.filter(
-            (feature) =>
-              feature.variable !== "Average Population per Tax Credit Unit"
-          );
+      // filter out avg pop per tax credit unit
+      const filteredData = filteredYears.filter(
+        (feature) =>
+          feature.variable !== "Average Population per Tax Credit Unit"
+      );
 
-          const sortedData = filteredData.sort((a, b) =>
-            a.variable > b.variable ? 1 : -1
-          );
+      const sortedData = filteredData.sort((a, b) =>
+        a.variable > b.variable ? 1 : -1
+      );
 
-          setData(sortedData);
-        })
-
-  }, [exploreDistrict, year]);
+      setData(sortedData);
+    });
+  }, [exploreDistrict, year, boundary]);
 
   const properties = dshaData.features.filter(
     (item) =>
@@ -94,13 +94,17 @@ function ExploreDistrict({
 
   return (
     <>
-      <div
-        className={
-          "explore-container " + (collapseButton ? "container-margin" : "")
-        }
-      >
-        {selectedDistrict.length > 0 ? (
+      <div className="button-container">
+        <div className="select-spacing">
+          <h2 className="heading">{checked ? "Explore a District" : ""}</h2>
+          <h3 className="sub-heading">
+            {boundary ? "House of Representatives" : "State Senate"}
+          </h3>
+        </div>
+      </div>
+      {selectedDistrict.length > 0 ? (
           <>
+            <div className="explore-container container-margin">
             <h1 className="explore-header">{exploreDistrict.label}</h1>
             <div>
               <div className="explore-subheader">
@@ -113,7 +117,9 @@ function ExploreDistrict({
                   {selectedDistrict.map((district, i) => (
                     <>
                       {district.variable === "Population" ? (
-                        <h2 key={i} className="information-text">{district.value}</h2>
+                        <h2 key={i} className="information-text">
+                          {district.value}
+                        </h2>
                       ) : (
                         ""
                       )}
@@ -138,7 +144,7 @@ function ExploreDistrict({
                       District {exploreDistrict.value}
                     </th>
                     <th className="table-header"></th>
-                    <th className="table-header">State Average</th>
+                    <th className="table-header">State Average *</th>
                   </tr>
                   {selectedDistrict.map((district, i) => (
                     <>
@@ -158,7 +164,21 @@ function ExploreDistrict({
                                   }
                                 </strong>
                               </td>
-                              <td className="table-row">{district.value}</td>
+                              <td
+                                className={
+                                  "table-row " +
+                                  (parseFloat(
+                                    district.value.replace(/[^0-9\.]+/g, "")
+                                  ) >
+                                  parseFloat(
+                                    average[i].value.replace(/[^0-9\.]+/g, "")
+                                  )
+                                    ? "font-bold"
+                                    : "")
+                                }
+                              >
+                                {district.value}
+                              </td>
                               <td className="compare">
                                 {parseFloat(
                                   district.value.replace(/[^0-9\.]+/g, "")
@@ -203,11 +223,18 @@ function ExploreDistrict({
                 </tbody>
               </table>
             </div>
+          </div>
+          <p className="chart-note">* State Average represents the average of all  districts with tax credit units in that year (does not include districts with 0 tax credit units)</p>
           </>
         ) : (
-          <div className="not-found">No LIHTC allocations for <strong>District {exploreDistrict.value}</strong> in <strong>{mapInfo[fundingSource].years[year]}</strong></div>
+          <div className="explore-container container-margin">
+            <div className="not-found">
+              No {fundingSource} allocations for{" "}
+              <strong>District {exploreDistrict.value}</strong> in{" "}
+              <strong>{mapInfo[fundingSource].years[year]}</strong>
+            </div>
+          </div>
         )}
-      </div>
     </>
   );
 }

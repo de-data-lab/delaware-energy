@@ -16,17 +16,27 @@ import LegendControl from "mapboxgl-legend";
 import { PointInfo } from "../components/PointInfo";
 import { SumPopup } from "../components/SumPopup";
 import { Tooltip } from "../components/Tooltip";
+import { HoverInfo } from "../components/HoverInfo";
 
-import senateData from "../data/aggregated_with_geo2020.json";
-import mapDataPre2022 from "../data/aggregated_with_geo2010.json";
+import senateData2020 from "../data/aggregated_with_geo2020.json";
+import senateData2010 from "../data/aggregated_with_geo2010.json";
+import houseData2020 from "../data/reps_aggregated_with_geo2022.json";
+import houseData2010 from "../data/reps_aggregated_with_geo2011.json";
 
 mapboxgl.accessToken = import.meta.env.VITE_REACT_APP_MAPBOX_TOKEN;
 
 export const Map = ({ lng, lat, zoom }) => {
   const mapDiv = useRef(null);
   const map = useRef(null);
-  const { pointData, mapData, variable, fundingSource, building, year } =
-    useContext(MapContext);
+  const {
+    pointData,
+    mapData,
+    variable,
+    fundingSource,
+    building,
+    year,
+    boundary,
+  } = useContext(MapContext);
 
   // Creates popup for point info
   const popUpRef = useRef(
@@ -61,35 +71,68 @@ export const Map = ({ lng, lat, zoom }) => {
   const tooltipDiv = document.createElement("div");
   const tooltip = ReactDOM.createRoot(tooltipDiv);
 
+  // Info message
+  const infoMenuRef = useRef(
+    new mapboxgl.Popup({
+      className: "info-menu",
+      closeButton: true,
+      closeOnClick: false,
+      anchor: "none",
+    })
+  );
+
   // changes data based on whichever year is selected
   if (map.current) {
-    if (year === "2022" || year === "Sum over All Time") {  
-        map.current.getSource("delaware").setData(senateData)
-    } else {
-        map.current.getSource("delaware").setData(mapDataPre2022)
+    if (boundary === "senate") {
+      if (year === "2022" || year === "Sum over All Time") {
+        map.current.getSource("delaware").setData(senateData2020);
+      } else {
+        map.current.getSource("delaware").setData(senateData2010);
+      }
+    }
+    if (boundary === "house") {
+      if (year === "2022" || year === "Sum over All Time") {
+        map.current.getSource("delaware").setData(houseData2020);
+      } else {
+        map.current.getSource("delaware").setData(houseData2010);
+      }
     }
   }
 
   // Adds map layers
   const addMapLayers = () => {
     // ids for feature-states
-    let hoverId = null;
     let clickId = null;
     let array = [];
 
-    // map through data and return year
-    let filteredData = []
-    
-    if (year === "2022" || year === "Sum over All Time") {  
-      filteredData = senateData.features.filter(
-        (feature) => feature.properties["year"] === year
-      );
-    } else {
-      filteredData = mapDataPre2022.features.filter(
-        (feature) => feature.properties["year"] === year
-      );
+    // map through data and return data for specific years only
+    let filteredData = [];
+
+    // filtering data
+    if (boundary === "senate") {
+      if (year === "2022" || year === "Sum over All Time") {
+        filteredData = senateData2020.features.filter(
+          (feature) => feature.properties["year"] === year
+        );
+      } else {
+        filteredData = senateData2010.features.filter(
+          (feature) => feature.properties["year"] === year
+        );
+      }
     }
-    
+
+    if (boundary === "house") {
+      if (year === "2022" || year === "Sum over All Time") {
+        filteredData = houseData2020.features.filter(
+          (feature) => feature.properties["year"] === year
+        );
+      } else {
+        filteredData = houseData2010.features.filter(
+          (feature) => feature.properties["year"] === year
+        );
+      }
+    }
+
     // map through filtered data and return variable values for colorArray stops
     let numberFormatter = filteredData.map((tract) =>
       tract.properties[variable] === null
@@ -127,73 +170,83 @@ export const Map = ({ lng, lat, zoom }) => {
       default:
         break;
     }
-    
-      
+
     // FILL LAYER
     map.current.addLayer({
-    id: "fill",
-    type: "fill",
-    source: "delaware",
-    filter: ["==", "year", year],
-    layout: {
-    // Make the layer visible by default.
-    visibility: "visible",
-    },
-    paint: {
-    "fill-color": colorArray,
-    "fill-opacity": [
-      "case",
-      ["boolean", ["feature-state", "hover"], false],
-      0,
-      ["boolean", ["feature-state", "click"], false],
-      1,
-      0.75,
-    ],
-    },
-    metadata: {
-    name: legendName,
-    // temp fix for legend formatting
-    labels: {
-      0: "0",
-      1000: "1,000",
-      1500: "1,500",
-      2000: "2,000",
-      5000: "$5K",
-      // Avg allocation
-      2000: "$2K",
-      4000: "$4K",
-      6000: "$6K",
-      8000: "$8K",
-      10000: "$10K",
-      12000: "$12K",
-      14000: "$14K",
-      15000: "$15K",
-      16000: "$16K",
-      20000: "$20K",
-      25000: "$25K",
-      30000: "$30K",
-      40000: "$40K",
-      60000: "$60K",
-      80000: "$80K",
-      100000: "$100K",
-      200000: "$200K",
-      300000: "$300K",
-      400000: "$400K",
-      500000: "$500K",
-      600000: "$600K",
-      700000: "$700K",
-      800000: "$800K",
-      1000000: "$1M",
-      1200000: "$1.2M",
-      1400000: "$1.4M",
-      1500000: "$1.5M",
-      1600000: "$1.6M",
-      2000000: "$2M",
-      4000000: "$4M",
-      6000000: "$6M",
-      8000000: "$8M",
-    },
-    },
+      id: "fill",
+      type: "fill",
+      source: "delaware",
+      filter: ["==", "year", year],
+      // filter: ["all", ["==", "year", year], ["==", "boundary", boundary]],
+      layout: {
+        // Make the layer visible by default.
+        visibility: "visible",
+      },
+      paint: {
+        "fill-color": colorArray,
+        "fill-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0,
+          ["boolean", ["feature-state", "click"], false],
+          1,
+          0.75,
+        ],
+      },
+      metadata: {
+        name: legendName,
+        // temp fix for legend formatting
+        labels: {
+          0: "0",
+          // Avg allocation
+          1000: "$1K",
+          1500: "$1.5K",
+          2000: "$2K",
+          5000: "$5K",
+          2000: "$2K",
+          2500: "$2.5K",
+          3000: "$3K",
+          3500: "$3.5K",
+          4000: "$4K",
+          6000: "$6K",
+          7000: "$7K",
+          8000: "$8K",
+          10000: "$10K",
+          12000: "$12K",
+          14000: "$14K",
+          15000: "$15K",
+          16000: "$16K",
+          18000: "$18K",
+          20000: "$20K",
+          25000: "$25K",
+          30000: "$30K",
+          35000: "$35K",
+          40000: "$40K",
+          60000: "$60K",
+          80000: "$80K",
+          100000: "$100K",
+          200000: "$200K",
+          300000: "$300K",
+          400000: "$400K",
+          500000: "$500K",
+          600000: "$600K",
+          700000: "$700K",
+          800000: "$800K",
+          1000000: "$1M",
+          1200000: "$1.2M",
+          1400000: "$1.4M",
+          1500000: "$1.5M",
+          1600000: "$1.6M",
+          1800000: "$1.8M",
+          2000000: "$2M",
+          3000000: "$3M",
+          4000000: "$4M",
+          5000000: "$5M",
+          6000000: "$6M",
+          7000000: "$7M",
+          8000000: "$8M",
+        },
+      },
     });
 
     // OUTLINE LAYER
@@ -223,14 +276,15 @@ export const Map = ({ lng, lat, zoom }) => {
       },
     });
 
-
     // Hover on
     map.current.on("mousemove", "fill", (e) => onHover(e));
 
     // Hover off
-    map.current.on("mouseleave", "fill", (e) => offHover());
+    map.current.on("mouseleave", "fill", (e) => offHover(e));
 
-    function onHover(e) {
+    let hoverId = null;
+
+    const onHover = (e) => {
       map.current.getCanvas().style.cursor = "pointer";
 
       // new polygon hovered, previous one turned to false
@@ -262,6 +316,7 @@ export const Map = ({ lng, lat, zoom }) => {
         // create tooltip for hovering on districts
         tooltip.render(
           <Tooltip
+            boundary={boundary}
             feature={feature}
             variable={variable}
             fundingSource={fundingSource}
@@ -276,7 +331,7 @@ export const Map = ({ lng, lat, zoom }) => {
       }
     }
 
-    function offHover() {
+    const offHover = (e) => {
       map.current.getCanvas().style.cursor = "";
 
       if (hoverId !== null) {
@@ -288,7 +343,7 @@ export const Map = ({ lng, lat, zoom }) => {
 
       hoverId = null;
       tooltipRef.current.remove();
-    }
+    };
 
     // Home button functionality
     map.current.on("home", () => {
@@ -353,6 +408,9 @@ export const Map = ({ lng, lat, zoom }) => {
         .setDOMContent(sumPopup)
         .addTo(map.current);
 
+      // remove info message
+      infoMenuRef.current.remove();
+
       // if sum list is empty then remove popup
       if (array <= 0) {
         sumRef.current.remove();
@@ -401,23 +459,6 @@ export const Map = ({ lng, lat, zoom }) => {
 
   // Adds point layer to map
   const showProperties = () => {
-    // Change the cursor to a pointer when the mouse is over the points layer.
-    map.current.on("mouseenter", "properties", () => {
-      map.current.getCanvas().style.cursor = "pointer";
-    });
-
-    // Change it back to a pointer when it leaves.
-    map.current.on("mouseleave", "properties", () => {
-      map.current.getCanvas().style.cursor = "";
-    });
-
-    map.current.on("mouseenter", "clusters", () => {
-      map.current.getCanvas().style.cursor = "pointer";
-    });
-    map.current.on("mouseleave", "clusters", () => {
-      map.current.getCanvas().style.cursor = "";
-    });
-
     // unclustered points
     map.current.addLayer({
       id: "properties",
@@ -428,6 +469,8 @@ export const Map = ({ lng, lat, zoom }) => {
         "circle-color": [
           "case",
           ["boolean", ["feature-state", "clicked"], false],
+          "#1878dd",
+          ["boolean", ["feature-state", "hovered"], false],
           "#1878dd",
           "#0a2552",
         ],
@@ -441,8 +484,8 @@ export const Map = ({ lng, lat, zoom }) => {
     });
 
     // if year selected is ALL YEARS then remove filter from layer
-    if (year === 'Sum over All Time') {
-      map.current.setFilter('properties', null);
+    if (year === "Sum over All Time") {
+      map.current.setFilter("properties", null);
     }
 
     // Remove fill layer if it exists and darken outline layer when properties on
@@ -499,7 +542,80 @@ export const Map = ({ lng, lat, zoom }) => {
         { source: "points", id: clickedPointId },
         { clicked: true }
       );
+
+      // remove info message
+      infoMenuRef.current.remove();
     });
+
+    let hoveredPointId = null;
+    // When the user moves their mouse over the properties layer, change color of point
+    map.current.on("mousemove", "properties", (e) => {
+      // Change the cursor to a pointer when the mouse is over the points layer.
+      map.current.getCanvas().style.cursor = "pointer";
+
+      if (e.features.length > 0) {
+        if (hoveredPointId !== null) {
+          map.current.setFeatureState(
+            { source: "points", id: hoveredPointId },
+            { hovered: false }
+          );
+        }
+        hoveredPointId = e.features[0].id;
+        map.current.setFeatureState(
+          { source: "points", id: hoveredPointId },
+          { hovered: true }
+        );
+      }
+
+      if (e.features.length > 0) {
+        const feature = e.features[0];
+        // create tooltip for hovering on districts
+        tooltip.render(
+          <Tooltip
+          fundingSource={fundingSource}
+          variable={variable}
+          feature={feature}
+          boundary={boundary}
+          point={true}
+          />
+        );
+
+        // add popup to map
+        tooltipRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(tooltipDiv)
+          .addTo(map.current);
+      }
+    });
+
+    // // revert color on point back to default
+    map.current.on("mouseleave", "properties", () => {
+      map.current.getCanvas().style.cursor = "";
+
+      if (hoveredPointId !== null) {
+        map.current.setFeatureState(
+          { source: "points", id: hoveredPointId },
+          { hovered: false }
+        );
+      }
+
+      hoveredPointId = null;
+      tooltipRef.current.remove();
+    });
+  };
+
+  // Display info message on map load
+  const displayHoverInfo = () => {
+    // create info menu when not hovering on districts
+    const infoMenuDiv = document.createElement("div");
+
+    ReactDOM.createRoot(infoMenuDiv).render(<HoverInfo />);
+    // add popup to map
+    infoMenuRef.current
+      .setLngLat([0, 0])
+      .setDOMContent(infoMenuDiv)
+      .addTo(map.current);
+    // .togglePopup();
   };
 
   // Initial loading of data, setting global settings, adding nav controls
@@ -531,6 +647,7 @@ export const Map = ({ lng, lat, zoom }) => {
 
       map.current.addControl(legend, "bottom-right");
 
+      // data sources
       map.current.addSource("delaware", {
         type: "geojson",
         data: mapData,
@@ -543,6 +660,9 @@ export const Map = ({ lng, lat, zoom }) => {
         generateId: true,
       });
 
+      // load info message with instructions
+      displayHoverInfo();
+      // adds default/initial map layers
       addMapLayers();
     });
   }, []);
@@ -576,7 +696,7 @@ export const Map = ({ lng, lat, zoom }) => {
     }
   };
 
-  useUpdateEffect(update, [variable, fundingSource, building, year]);
+  useUpdateEffect(update, [variable, fundingSource, building, year, boundary]);
 
   return <div ref={mapDiv} id="mapDiv"></div>;
 };

@@ -24,14 +24,10 @@ function StackedBar({
   series,
   filterColumn,
   filterValue,
-  fundingSource,
   districtFilterValue,
   tooltipConfig,
-  handleDistrictChange,
-  district,
-  districtOptions,
-  collapseButton,
   reference,
+  boundary
 }) {
   const [data, setData] = useState([]);
   const [stackedData, setStackedData] = useState([]);
@@ -62,7 +58,7 @@ function StackedBar({
       
       setData(filteredDistricts);
     });
-  }, [filterValue, districtFilterValue]);
+  }, [filterValue, districtFilterValue, boundary]);
 
   /** @type ConfigObject */
   const config = {
@@ -93,10 +89,10 @@ function StackedBar({
       ),
       y: scaleLinear([config.ch, config.mt]).domain([0,yMax]),
     color: scaleOrdinal()
-      .domain(Array.from(new Set(data.map((d) => d[series]))))
+      .domain(Array.from(new Set(data.map((d) => d[series]).filter(d => d !== 0).sort((a,b) => a - b))))
       .range(colorScheme),
   };
-
+ 
   const yAxisFormat = (d) => {
     switch (filterValue) {
       case "ALLOCATION AMOUNT":
@@ -134,7 +130,7 @@ function StackedBar({
           .tickSize(10)
           .tickFormat((d) => {
             if (isNaN(parseFloat(d))) {
-              return "State Average";
+              return "State Average *";
             }
             return `District ${d}`;
           })
@@ -203,7 +199,6 @@ function StackedBar({
   const handleMouseOver = (anchor, data) => {
     showTooltip(anchor, data);
   };
-
 
   return (
     <>

@@ -2,7 +2,7 @@
 
 ## About this App
 
-This app was developed for the Delaware State Housing Authority and state of Delaware Legislators to visualize variables relating to the Low-Income Housing Tax Credits program within the state of Delaware Senate Districts. Made possible through the collaboration of Tech Impact’s Data Innovation Lab with the Delaware State Housing Authority.
+This app was developed for the Delaware State Housing Authority and state of Delaware Legislators to visualize variables relating to the Low-Income Housing Tax Credits program within the state of Delaware legislative Districts. Made possible through the collaboration of Tech Impact’s Data Innovation Lab with the Delaware State Housing Authority.
 
 ## Running App
 
@@ -12,20 +12,21 @@ This app was developed for the Delaware State Housing Authority and state of Del
 
 ## About the Data
 
-### Delaware Senate Data
-- Delaware senate district boundaries (2011 and 2022) used in this app can be found on the [U.S. Census Bureau website](https://www2.census.gov/geo/tiger/GENZ2022).
-- Delaware district populations for each year were estimated using the 5-year "period" estimates from the [American Community Survey](https://www.census.gov/data/developers/data-sets/acs-5year.html).
-- Delaware senate district data (2022 senator names) can be found on the [Delaware General Assembly website](https://legis.delaware.gov/Redistricting/2022FinalSenateDistricts).
+### Delaware Legislative Data
+- Delaware Senate district boundaries (2011 and 2022) and House of Representatives district boundaries (2010 and 2022) used in this app can be found on the <a href="https://www2.census.gov/geo/tiger/" target="_blank" rel="noopener">U.S. Census Bureau website</a>.
+- Delaware legislative district populations for each year were estimated using the 5-year "period" estimates from the <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html" target="_blank" rel="noopener">American Community Survey</a>.
+- Delaware Senate and House of Representatives district data (2022 senator and representative names) can be found on the <a href="https://legis.delaware.gov/Redistricting/2022FinalSenateDistricts" target="_blank" rel="noopener">Delaware General Assembly website</a>.
 
 ### Delaware Subsidized Housing Data
-- Delaware LIHTC funding source data (2016-2022) was provided by the [Delaware State Housing Authority](http://www.destatehousing.com).
+- Delaware LIHTC funding source data (2016-2022) was provided by the <a href="http://www.destatehousing.com" target="_blank" rel="noopener">Delaware State Housing Authority</a>.
 
 ## Screenshots
 <img src="public/images/screenshot-1.png" alt="Map view" width="640" height="320">
-<img src="public/images/screenshot-2.png" alt="Map view - with hover and click" width="640" height="320">
-<img src="public/images/screenshot-3.png" alt="District explorer - compare districts" width="640" height="320">
-<img src="public/images/screenshot-4.png" alt="District explorer - explore your district" width="640" height="320">
-<img src="public/images/screenshot-5.png" alt="Info Page" width="640" height="320">
+<img src="public/images/screenshot-2.png" alt="Map view - boundaries with hover and click" width="640" height="320">
+<img src="public/images/screenshot-3.png" alt="Map view - points with hover and click" width="640" height="320">
+<img src="public/images/screenshot-4.png" alt="District explorer - compare districts" width="640" height="320">
+<img src="public/images/screenshot-5.png" alt="District explorer - explore your district" width="640" height="320">
+<img src="public/images/screenshot-6.png" alt="Info Page" width="640" height="320">
 <!-- ![Map view](public/images/screenshot-1.png)
 ![Map view - with hover and click](public/images/screenshot-2.png)
 ![District explorer - compare districts](public/images/screenshot-3.png)

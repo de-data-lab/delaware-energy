@@ -18,7 +18,7 @@ export const Tooltip = ({
   let variableValue;
 
   if ((point === true) && fundingSource && boundary && feature) {
-    const district = boundary === "senate" ? (["Senate District"]) : ("[House District]");
+    const district = (boundary === "senate") ? ["Senate District"] : ["Representative District"];
 
     propertyName = feature?.properties?.["PROJECT NAME & ADDRESS"];
     districtName = feature?.properties?.[district];

@@ -17,7 +17,7 @@ function App() {
   // Dropdown for variable
   const [variable, setVariable] = useState("# of Tax Credit Units");
   // year
-  const [year, setYear] = useState("Sum over All Time");
+  const [year, setYear] = useState("2016");
   // Dropdown for senate or state of reps boundary
   const [boundary, setBoundary] = useState("senate");
 

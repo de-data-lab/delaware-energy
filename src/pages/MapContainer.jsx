@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import dshaData from "../data/DSHA_districted.json";
-import senateData from "../data/aggregated_with_geo2020.json";
+import senateData from "../data/aggregated_with_geo2010.json";
 
 import { DropdownMenu } from '../components/DropdownMenu';
 import { HoverInfo } from '../components/HoverInfo';

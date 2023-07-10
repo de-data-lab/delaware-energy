@@ -18,11 +18,11 @@ export const Info = () => {
           <h2 className="information-subheader">District Boundaries</h2>
           <div className="information-text-container">
             <li className="information-text">
-              For both houses, there are two district boundary layers used in this map to account for the boundary redistricting that occurs generally every 10 years. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator and representative names are used regardless of the year selected. 
+              Legislative boundary redistricting occurs generally every 10 years. To account for this, there are two district boundary layers for each legislative house. For years before 2022, the 2011 district boundaries are used. For 2022 and the sum over all years, the current (2022) district boundaries are used. Current (2022) senator and representative names are used regardless of the year selected. 
             </li>
             <ul className="circle-list">
               <li className="information-text">
-                Property data was assigned to a district based on the district boundaries in the year of the funding allocation. Some properties may have changed districts since the 2022 redistricting.
+                Property data was assigned to a district based on the district boundaries in the year of the funding allocation. Some properties may have changed districts after redistricting.
               </li>
             </ul>
           </div>

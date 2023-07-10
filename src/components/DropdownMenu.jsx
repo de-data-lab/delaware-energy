@@ -187,7 +187,7 @@ export const DropdownMenu = ({}) => {
               isRtl={false}
               name="year"
               options={yearOptions}
-              defaultValue={yearOptions[7]}
+              defaultValue={yearOptions[0]}
             />
           </div>
 

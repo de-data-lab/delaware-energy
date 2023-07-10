@@ -14,7 +14,7 @@ export const DistrictExplorer = ({}) => {
   // Dropdown for variable
   const [variable, setVariable] = useState("# of Tax Credit Units");
   // year
-  const [year, setYear] = useState("2022");
+  const [year, setYear] = useState("2016");
   // Button for switching page views (compare vs explore)
   const [checked, setChecked] = useState(false);
   // State for switching between senate and house data

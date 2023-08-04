@@ -1,56 +1,18 @@
-import React from "react";
-import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-export const MapContext = React.createContext();
-
-import "./index.css";
-
-import Header from "./layout/Header";
-import { MapContainer } from "./pages/MapContainer";
-import { DistrictExplorer } from "./pages/DistrictExplorer";
-import { Info } from "./pages/Info";
-import { Footer } from "./layout/Footer";
+import Map from "./components/map";
+import { useState, createContext } from "react";
+import "./App.css";
+export const MapContext = createContext()
+// import senateData2010 from "../data/senate_2010.json";
+// import senateData2022 from "../data/senate_2022.json";
+// const senateData2010Obj ={name:"senateData2010", data: senateData2010}
+// const senateData2022Obj ={name:"senateData2022", data: senateData2022}
 
 function App() {
-  // Dropdowns
-  const [fundingSource, setFundingSource] = useState("LIHTC");
-  // Dropdown for variable
-  const [variable, setVariable] = useState("# of Tax Credit Units");
-  // year
-  const [year, setYear] = useState("2016");
-  // Dropdown for senate or state of reps boundary
-  const [boundary, setBoundary] = useState("senate");
-
-
+  // const[source,setSource]= useState(senateData2010Obj)
   return (
-    <>
-      <div id="page-container">
-        <Header />
-        <div id="content-container">
-          <Routes>
-            <Route
-              path=""
-              element={
-                <MapContainer
-                  MapContext={MapContext}
-                  fundingSource={fundingSource}
-                  setFundingSource={setFundingSource}
-                  variable={variable}
-                  setVariable={setVariable}
-                  year={year}
-                  setYear={setYear}
-                  boundary={boundary}
-                  setBoundary={setBoundary}
-                />
-              }
-            />
-            <Route path="explorer" element={<DistrictExplorer />} />
-            <Route path="info" element={<Info />} />
-          </Routes>
-        </div>
-        <Footer />
-      </div>
-    </>
+    <div>
+      <Map />
+    </div>
   );
 }
 

@@ -18,7 +18,7 @@ export function handleMouseHover(e, map, source, tooltip) {
     const properties = e.features[0].properties;
     tooltip.setLngLat(e.lngLat).setHTML(`
     <div>
-    <h3>District:${properties["state legislative district (upper chamber)"]}</h3>
+    <h3>District:${properties.district}</h3>
     <p>Population:${properties["Estimated Population"]}</p>
     </div>
     `)

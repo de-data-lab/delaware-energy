@@ -1,5 +1,4 @@
-let hoveredFeatureId = null;
-export function handleMouseHover(e, map, source, tooltip) {
+export function handleMouseHover(e, map, source, tooltip, hoveredFeatureId) {
   map.getCanvas().style.cursor = "pointer";
   if (e.features.length > 0) {
     if (hoveredFeatureId != null) {
@@ -26,7 +25,7 @@ export function handleMouseHover(e, map, source, tooltip) {
   }
 }
 
-export function handleMouseLeave(e, map, source, tooltip) {
+export function handleMouseLeave(e, map, source, tooltip, hoveredFeatureId) {
     map.getCanvas().style.cursor =""
   if (hoveredFeatureId != null) {
     map.setFeatureState(

@@ -29,7 +29,6 @@ function DropdownMenu() {
   }));
 
   function updateSource(selectedBoundary, selectedYear) {
-    console.log("I ran")
     if (selectedBoundary === "senate") {
       const selectedData = allSenateData.find(
         (dataObj) => dataObj.year === selectedYear

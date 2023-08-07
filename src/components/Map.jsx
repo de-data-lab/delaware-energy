@@ -27,12 +27,68 @@ function Map() {
     setSource,
   } = useContext(MapContext);
 
-
   const tooltip = new mapboxgl.Popup({
     closeButton: false,
     closeOnClick: false,
   });
 
+  function addLayersAndInteractions() {
+    addNewLayer(map.current, source.name, source.data);
+
+    let hoveredFeatureId = null;
+
+    // map.current.on("mousemove", "fill", (e) =>
+    //   handleMouseHover(e, map.current, source.name, tooltip)
+    // );
+
+    map.current.on("mousemove", "fill", (e) => onHover(e));
+
+    function onHover(e) {
+      map.current.getCanvas().style.cursor = "pointer";
+      if (e.features.length > 0) {
+        if (hoveredFeatureId != null) {
+          map.current.setFeatureState(
+            { source: source.name, id: hoveredFeatureId },
+            { hover: false }
+          );
+        }
+        hoveredFeatureId = e.features[0].id;
+
+        map.current.setFeatureState(
+          { source: source.name, id: hoveredFeatureId },
+          { hover: true }
+        );
+
+        const properties = e.features[0].properties;
+        tooltip.setLngLat(e.lngLat).setHTML(`
+        <div>
+        <h3>District:${properties.district}</h3>
+        <p>Population:${properties["Estimated Population"]}</p>
+        </div>
+        `);
+        tooltip.addTo(map.current);
+      }
+    }
+
+    // map.current.on("mouseleave", "fill", (e) =>
+    //   handleMouseLeave(e, map.current, source.name, tooltip, hoveredFeatureId)
+    // );
+    
+    map.current.on("mouseleave", "fill", (e) => offHover(e))
+
+    function offHover(e){
+      map.current.getCanvas().style.cursor =""
+      if (hoveredFeatureId != null) {
+        map.current.setFeatureState(
+          { source: source.name, id: hoveredFeatureId },
+          { hover: false }
+        );
+        hoveredFeatureId = null;
+      }
+    
+      tooltip.remove()
+    }
+  }
   useEffect(() => {
     if (map.current) return;
     //makes new map
@@ -45,14 +101,7 @@ function Map() {
     });
 
     map.current.on("load", () => {
-      addNewLayer(map.current, source.name, source.data);
-
-      map.current.on("mousemove", "fill", (e) =>
-        handleMouseHover(e, map.current, source.name, tooltip)
-      );
-      map.current.on("mouseleave", "fill", (e) =>
-        handleMouseLeave(e, map.current, source.name, tooltip)
-      );
+      addLayersAndInteractions();
     });
   }, []);
 
@@ -67,14 +116,7 @@ function Map() {
       map.current.removeSource(source.name);
     }
 
-    addNewLayer(map.current, source.name, source.data);
-    
-    map.current.on("mousemove", "fill", (e) =>
-      handleMouseHover(e, map.current, source.name, tooltip)
-    );
-    map.current.on("mouseleave", "fill", (e) =>
-      handleMouseLeave(e, map.current, source.name, tooltip)
-    );
+    addLayersAndInteractions();
   }
 
   useUpdateEffect(update, [source]);

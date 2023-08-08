@@ -89,6 +89,7 @@ function Map() {
       tooltip.remove()
     }
   }
+  
   useEffect(() => {
     if (map.current) return;
     //makes new map

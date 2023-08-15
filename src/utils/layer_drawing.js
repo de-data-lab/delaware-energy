@@ -1,4 +1,23 @@
-export const addNewLayer = (map, sourceName, data) => {
+import colorPalette from "./colorPalette";
+
+export const addNewLayer = (map, sourceName, data, variable) => {
+  let aggregatedData = [];
+  aggregatedData = data.features.map((district) =>
+    district.properties[variable] === null ? 0 : district.properties[variable]
+  );
+  let stops = colorPalette(aggregatedData)
+
+  const colorArray =[
+    "interpolate",
+    ["linear"],
+    ["to-number", ["get", variable]]
+  ]
+  
+  stops.forEach((arr) =>{
+    colorArray.push(arr[0])
+    colorArray.push(arr[1])
+  })
+  
   map.addSource(sourceName, {
     type: "geojson",
     data: data,
@@ -11,12 +30,12 @@ export const addNewLayer = (map, sourceName, data) => {
     source: sourceName,
     layout: {},
     paint: {
-      "fill-color": "blue",
+      "fill-color": colorArray,
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
         1,
-        0.5,
+        0.75,
       ],
     },
   });

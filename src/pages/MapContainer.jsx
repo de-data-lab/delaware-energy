@@ -12,6 +12,10 @@ function MapContainer({
   setBoundary,
   source,
   setSource,
+  points,
+  setPoints,
+  pointSource,
+  setPointSource,
 }) {
   return (
     <MapContext.Provider
@@ -24,9 +28,13 @@ function MapContainer({
         setBoundary,
         source,
         setSource,
+        points,
+        setPoints,
+        pointSource,
+        setPointSource,
       }}
     >
-        <DropdownMenu/>
+      <DropdownMenu />
       <Map />
     </MapContext.Provider>
   );

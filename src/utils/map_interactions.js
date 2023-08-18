@@ -1,5 +1,4 @@
-let hoveredFeatureId = null;
-export function handleMouseHover(e, map, source, tooltip) {
+export function handleMouseHover(e, map, source, tooltip, hoveredFeatureId) {
   map.getCanvas().style.cursor = "pointer";
   if (e.features.length > 0) {
     if (hoveredFeatureId != null) {
@@ -16,18 +15,26 @@ export function handleMouseHover(e, map, source, tooltip) {
     );
 
     const properties = e.features[0].properties;
-    tooltip.setLngLat(e.lngLat).setHTML(`
-    <div>
-    <h3>District:${properties.district}</h3>
-    <p>Population:${properties["Estimated Population"]}</p>
-    </div>
-    `)
-    tooltip.addTo(map)
+    const tooltipContent = generateTooltipContent(properties);
+    function generateTooltipContent(properties) {
+      let tooltipHTML = "<div>";
+
+      for (const key in properties) {
+        if (key !== "index" && properties.hasOwnProperty(key)) {
+          tooltipHTML += `<h3>${key}: ${properties[key]}</h3>`;
+        }
+      }
+      tooltipHTML += "</div>";
+      return tooltipHTML
+    }
+
+    tooltip.setLngLat(e.lngLat).setHTML(tooltipContent);
+    tooltip.addTo(map);
   }
 }
 
-export function handleMouseLeave(e, map, source, tooltip) {
-    map.getCanvas().style.cursor =""
+export function handleMouseLeave(e, map, source, tooltip, hoveredFeatureId) {
+  map.getCanvas().style.cursor = "";
   if (hoveredFeatureId != null) {
     map.setFeatureState(
       { source: source, id: hoveredFeatureId },
@@ -36,5 +43,5 @@ export function handleMouseLeave(e, map, source, tooltip) {
     hoveredFeatureId = null;
   }
 
-  tooltip.remove()
+  tooltip.remove();
 }

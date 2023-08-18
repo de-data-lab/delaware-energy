@@ -1,0 +1,60 @@
+.toggle-button {
+    height: 3.625rem;
+    width: 3.625rem;
+    background-color: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-lg);
+    z-index: 3;
+    position: relative; 
+    cursor: pointer; 
+  }
+  
+  .toggle-button::after {
+    content: "";
+    background-repeat: no-repeat; 
+    top: .95rem;
+    left: .785rem;
+    width: 100%;  
+    height:100%; 
+    position: absolute;
+    background-image: url('/icons/arrow-icon.svg');
+    background-size: 1.75rem;
+  }
+
+  .button-open {
+    position: absolute;
+    left: calc(var(--map-menu-minwidth) - (var(--margin-xxs)));
+    /* (Dropdown menu width + button height) / 2 */
+    top: calc((var(--map-menu-minwidth) + 3.625rem) / 2);
+    transition: all .5s ease-out;
+  }
+  
+  .toggle-button-close {
+    position: absolute;
+    transform: rotate(180deg);
+    top: var(--margin-xxs);
+    left: var(--margin-xxs);
+    transition: all .5s ease-out;
+  }
+
+  .toggle-button:hover, .toggle-button:focus {
+    background-color: var(--light-navy);
+    color: var(--white);
+    transition: .3s ease-in;
+  }
+
+  /* Desktop Styles */
+  @media only screen and (min-width: 1281px)  {
+    
+    .button-open {
+      left: var(--map-menu-maxwidth);
+      top: 210px;
+    }
+
+    .toggle-button-close {
+      top: var(--margin-lg);
+      left: var(--margin-sm);
+    }
+
+  }

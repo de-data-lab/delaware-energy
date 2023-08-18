@@ -12,6 +12,14 @@ export const addNewLayer = (map, sourceName, data, variable) => {
     ["linear"],
     ["to-number", ["get", variable]]
   ]
+
+  function determineLegendTitle(){
+    if(variable==="Estimated Population"){
+      return "Estimated Population"
+    }else{
+      return "Test Legend Title"
+    }
+  }
   
   stops.forEach((arr) =>{
     colorArray.push(arr[0])
@@ -38,6 +46,9 @@ export const addNewLayer = (map, sourceName, data, variable) => {
         0.75,
       ],
     },
+    metadata:{
+      name:determineLegendTitle()
+    }
   });
 
   map.addLayer({

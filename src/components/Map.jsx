@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { useUpdateEffect } from "@reactuses/core";
-import "./Map.css"
+import "./Map.css";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import LegendControl from "mapboxgl-legend";
 import "mapboxgl-legend/dist/style.css";
 import { MapContext } from "../App";
 import { addNewLayer } from "../utils/layer_drawing";
-import { handleMouseHover, handleMouseLeave } from "../utils/map_interactions";
+import generateTooltipContent from "../utils/generateTooltipContent";
 import { addNewPointLayer } from "../utils/point_drawing";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
@@ -32,10 +32,10 @@ function Map() {
     setPointSource,
   } = useContext(MapContext);
 
-  const tooltip = new mapboxgl.Popup({
+  const tooltipRef = useRef(new mapboxgl.Popup({
     closeButton: false,
     closeOnClick: false,
-  });
+  }));
 
   function addLayersAndInteractions() {
     addNewLayer(map.current, source.name, source.data, variable);
@@ -69,13 +69,13 @@ function Map() {
         );
 
         const properties = e.features[0].properties;
-        tooltip.setLngLat(e.lngLat).setHTML(`
+        tooltipRef.current.setLngLat(e.lngLat).setHTML(`
         <div>
         <h3>District: ${properties["District"]}</h3>
         <p>${variable}: ${properties[variable]}</p>
         </div>
         `);
-        tooltip.addTo(map.current);
+        tooltipRef.current.addTo(map.current);
       }
     }
 
@@ -95,7 +95,7 @@ function Map() {
         hoveredFeatureId = null;
       }
 
-      tooltip.remove();
+      tooltipRef.current.remove();
     }
 
     map.current.on("mousemove", "points", (e) => onPointHover(e));
@@ -109,7 +109,12 @@ function Map() {
             { hover: false }
           );
         }
-        hoveredFeatureId = e.features[0].id;
+        if (hoveredFeatureId != null) {
+          map.current.setFeatureState(
+            { source: source.name, id: hoveredFeatureId },
+            { hover: false }
+          );
+        }
 
         map.current.setFeatureState(
           { source: source.name, id: hoveredPointId },
@@ -117,13 +122,9 @@ function Map() {
         );
 
         const properties = e.features[0].properties;
-        tooltip.setLngLat(e.lngLat).setHTML(`
-        <div>
-        <h3>Grantee: ${properties["Name of Grantee"]}</h3>
-        <p>Population:${properties["Estimated Population"]}</p>
-        </div>
-        `);
-        tooltip.addTo(map.current);
+        const tooltipContent = generateTooltipContent(properties);
+        tooltipRef.current.setLngLat(e.lngLat).setHTML(tooltipContent);
+        tooltipRef.current.addTo(map.current);
       }
     }
 
@@ -139,7 +140,7 @@ function Map() {
         hoveredPointId = null;
       }
 
-      tooltip.remove();
+      tooltipRef.current.remove();
     }
   }
 
@@ -157,9 +158,9 @@ function Map() {
     map.current.on("load", () => {
       addLayersAndInteractions();
       const legend = new LegendControl({
-        layers:["fill"]
-    });
-      map.current.addControl(legend, "top-right");
+        layers: ["fill"],
+      });
+      map.current.addControl(legend, "bottom-right");
     });
   }, []);
 
@@ -182,7 +183,7 @@ function Map() {
     addLayersAndInteractions();
   }
 
-  useUpdateEffect(update, [source, pointSource,variable]);
+  useUpdateEffect(update, [source, pointSource, variable]);
   return (
     <div>
       <div ref={mapContainer} className="map-container" />

@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { useUpdateEffect } from "@reactuses/core";
+import SumPopup from "./SumPopup";
+import ReactDOM from "react-dom/client";
+
 import "./Map.css";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -13,8 +16,6 @@ import { addNewPointLayer } from "../utils/point_drawing";
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
 function Map() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
   const [lng, setLng] = useState(-75.465);
   const [lat, setLat] = useState(39.063);
   const [zoom, setZoom] = useState(7.5);
@@ -32,10 +33,22 @@ function Map() {
     setPointSource,
   } = useContext(MapContext);
 
-  const tooltipRef = useRef(new mapboxgl.Popup({
-    closeButton: false,
-    closeOnClick: false,
-  }));
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const tooltipRef = useRef(
+    new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+    })
+  );
+  const sumRef = useRef(
+    new mapboxgl.Popup({
+      className: "sumPopup",
+      closeButton: false,
+      closeOnClick: false,
+      anchor: "none",
+    })
+  );
 
   function addLayersAndInteractions() {
     addNewLayer(map.current, source.name, source.data, variable);
@@ -45,6 +58,8 @@ function Map() {
 
     let hoveredFeatureId = null;
     let hoveredPointId = null;
+    let clickFillId = null;
+    let featureArray = [];
 
     // map.current.on("mousemove", "fill", (e) =>
     //   handleMouseHover(e, map.current, source.name, tooltip)
@@ -142,6 +157,67 @@ function Map() {
 
       tooltipRef.current.remove();
     }
+
+    const clearSelection = () => {
+      map.current.removeFeatureState({ source: source.name });
+      featureArray = [];
+      sumRef.current.remove();
+    };
+
+    map.current.on("click", "fill", (e) => onFillClick(e));
+
+    function onFillClick(e) {
+      clickFillId = e.features[0].id;
+      // Gets index of clicked feature for removing it from array
+      let index = featureArray
+        .map((feature) => feature.id)
+        .indexOf(clickFillId);
+      // Checks if feature already exists in array
+      let exists = featureArray.findIndex(
+        (feature) => feature.id === clickFillId
+      );
+
+      // Handles adding selected features to aggregated list
+      //  if feature doesn't exist yet push to array
+      if (exists < 0) {
+        featureArray.push(e.features[0]);
+        map.current.setFeatureState(
+          { source: source.name, id: clickFillId },
+          { click: true }
+        );
+      }
+
+      if (index > -1) {
+        featureArray.splice(index, 1);
+        map.current.setFeatureState(
+          { source: source.name, id: clickFillId },
+          { click: false }
+        );
+      }
+
+      //create popup node
+      const sumPopup = document.createElement("div");
+      ReactDOM.createRoot(sumPopup).render(
+        <SumPopup
+          variable={variable}
+          year={year}
+          featureArray={featureArray}
+          clearSelection={clearSelection}
+          source={source}
+        />
+      );
+
+      //add popup to map
+      sumRef.current
+        .setLngLat(e.lngLat)
+        .setDOMContent(sumPopup)
+        .addTo(map.current);
+
+      // if sum list is empty then remove popup
+      if (featureArray <= 0) {
+        sumRef.current.remove();
+      }
+    }
   }
 
   useEffect(() => {
@@ -180,10 +256,12 @@ function Map() {
     if (map.current.getSource(pointSource.name)) {
       map.current.removeSource(pointSource.name);
     }
+
+    sumRef.current.remove();
     addLayersAndInteractions();
   }
 
-  useUpdateEffect(update, [source, pointSource, variable]);
+  useUpdateEffect(update, [source, pointSource, variable, year]);
   return (
     <div>
       <div ref={mapContainer} className="map-container" />

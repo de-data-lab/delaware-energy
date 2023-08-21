@@ -1,0 +1,167 @@
+.sumPopup > .mapboxgl-popup-content {
+    position: absolute;
+    z-index: 2;
+    width: 0;
+    max-height: 30rem;
+    background: transparent;
+    color: var(--navy);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-lg);
+    margin: var(--margin-xxs) var(--margin-sm);
+    padding: 0;
+    border-radius: var(--border-sm);
+    opacity: 95%;
+    pointer-events: none;
+  }
+
+.sumPopup-button-container {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    width: var(--map-menu-minwidth);
+    max-height: 30rem;
+    border-radius: var(--border-sm);
+    pointer-events: auto;
+    overflow:auto;
+    scroll-behavior: smooth;
+
+  }
+
+  /* sumPopup scrollbar */
+  .sumPopup-button-container::-webkit-scrollbar {
+    background: var(--background);
+    /* background: transparent; */
+    border-radius: var(--border-sm);
+    width: 10px;
+  }
+  .sumPopup-button-container::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: var(--border-sm);
+  }
+  
+  /* Table styles on sumPopup */
+  .sumPopup-table, .sumPopup-message {
+    background-color: var(--white);
+  }
+  .sumPopup-table {
+    width: 100%;
+    border-radius: var(--border-sm) var(--border-sm) 0 0;
+  }
+  .table-headers {
+    background-color: var(--navy);
+  }
+
+  .table-head {
+    font-size: var(--font-size-sm);
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .table-headers > .table-head:nth-of-type(odd) {
+    border-radius: var(--border-sm) 0 0 0 ;
+  }
+  .table-headers > .table-head:nth-of-type(even) {
+    border-radius: 0 var(--border-sm) 0 0;
+  }
+
+  .sumPopup-row:nth-of-type(odd) {
+    background-color: var(--table-row);
+  }
+  .sumPopup-row:nth-of-type(odd) {
+    background-color: var(--table-row);
+  }
+
+  .sumPopup-row > td {
+    padding: var(--padding-xxxs) var(--padding-sm);
+  } 
+
+  .sumPopup-message, .table-head {
+    padding: var(--padding-xs) var(--padding-sm);
+  }
+  
+  td > h2 {
+    text-align: left;
+  }
+  td > h3 {
+    text-align: right;
+  }
+  
+  .district-number {
+    width: 40%;
+  }
+  
+  .total-label, .total, .sumPopup-message {
+    font-size: var(--font-size-sm);
+  }
+
+  .total-label, .total {
+    font-weight: bold;
+  }
+
+  .total {
+    text-align: right;
+    border-top: 2px solid var(--navy);
+  }
+
+  /* Clear button */
+  
+  .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0 0 10px 10px;
+    border: none;
+    background-color: var(--grey);
+    color: var(--white);
+  }
+  
+  .button:hover {
+    background-color: var(--red);
+    color: var(--white);
+    transition: 0.3s ease-out;
+  }
+  
+  .button-text {
+    font-size: var(--font-size-xs);
+    padding: 0 var(--padding-xs);
+  }
+
+
+  @media only screen and (max-width: 550px) {
+    .sumPopup > .mapboxgl-popup-content {
+    max-height: 15rem;
+    }
+    .sumPopup-button-container {
+      max-height: 15rem;
+    }
+    
+  }
+
+  @media only screen and (min-width: 550px) {
+    .sumPopup > .mapboxgl-popup-content {
+      right: 0;
+      width: auto;
+      margin: var(--margin-xxs);
+    }
+  
+    .sumPopup {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  /* Desktop styles */
+@media only screen and (min-width: 1281px) {
+    .sumPopup .mapboxgl-popup-content {
+      margin: var(--margin-lg) var(--margin-sm);
+      max-height: 50rem;
+    }
+  
+    .sumPopup-button-container {
+      width: var(--map-menu-maxwidth);
+      max-height: 50rem;
+    }
+
+  }

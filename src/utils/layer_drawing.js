@@ -5,27 +5,31 @@ export const addNewLayer = (map, sourceName, data, variable) => {
   aggregatedData = data.features.map((district) =>
     district.properties[variable] === null ? 0 : district.properties[variable]
   );
-  let stops = colorPalette(aggregatedData)
+  let stops = colorPalette(aggregatedData);
 
-  const colorArray =[
+  const colorArray = [
     "interpolate",
     ["linear"],
-    ["to-number", ["get", variable]]
-  ]
+    ["to-number", ["get", variable]],
+  ];
 
-  function determineLegendTitle(){
-    if(variable==="Estimated Population"){
-      return "Estimated Population"
-    }else{
-      return "Test Legend Title"
+  function determineLegendTitle() {
+    if (variable === "Estimated Population") {
+      return "Estimated Population";
+    }
+    if(variable === "Percentage of households using solar energy"){
+      return "Percentage of households using solar energy (in %)"
+    } 
+    else {
+      return "Test Legend Title";
     }
   }
-  
-  stops.forEach((arr) =>{
-    colorArray.push(arr[0])
-    colorArray.push(arr[1])
-  })
-  
+
+  stops.forEach((arr) => {
+    colorArray.push(arr[0]);
+    colorArray.push(arr[1]);
+  });
+
   map.addSource(sourceName, {
     type: "geojson",
     data: data,
@@ -42,13 +46,15 @@ export const addNewLayer = (map, sourceName, data, variable) => {
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
+        0,
+        ["boolean", ["feature-state", "click"], false],
         1,
         0.75,
       ],
     },
-    metadata:{
-      name:determineLegendTitle()
-    }
+    metadata: {
+      name: determineLegendTitle(),
+    },
   });
 
   map.addLayer({

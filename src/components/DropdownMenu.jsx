@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import Select from "react-select";
-import { allSenateData } from "../data/DSHA_Population_SLDU_all_years/SLDU_data_objects";
-import { allHouseData } from "../data/DSHA_Population_SLDL_all_years/SLDL_data_objects";
-import { allEEIFData } from "../data/DSHA_EEIF_all_years/EEIF_data_objects";
+import { allSenateData } from "../data/DSHA_SLDU_all_years_rev0/SLDU_data_objects"
+import { allHouseData } from "../data/DSHA_SLDL_all_years_rev0/SLDL_data_objects";
+import { allEEIFData } from "../data/DSHA_EEIF_all_years_rev0/EEIF_data_objects";
 import { MapContext } from "../App";
 import "./DropdownMenu.css";
 import DropdownCollapse from "./DropdownCollapse";

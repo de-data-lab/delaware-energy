@@ -1,7 +1,29 @@
 :root {
+  /* Colors */
+  --navy: #0a2552;
+  --white: #fdfdfd;
+  --grey: rgb(96, 96, 96, .9);
+  --blue: #1878dd;
+  --red: #DC3220;
+  --magenta: #D41159;
+  --black: rgb(0, 0, 0, .1);
+  --light-navy: #354b62;
+  --dark-navy: #1b2734;
+  --background: #DDDDDD;
+  --table-header: hsl(0 0% 0% / .35);
+  --table-row: hsl(0 0% 0% / .1);
   /* Font styles */
   --primary-font: "Lato", Helvetica, sans-serif;
   --secondary-font: "Helvetica Neue", mono;
+   /* Font sizes */
+   --font-size-xxl: clamp(1.3rem, 2.1vw + 0.8rem, 3.9rem);
+   --font-size-xl: clamp(1.2rem, 1.4vw + 0.9rem, 2.9rem);
+   --font-size-lg: clamp(1.1rem, 0.9vw + 0.9rem, 2.1rem);
+   --font-size-md: clamp(1rem, 0.6vw + 0.8rem, 1.5rem);
+   --font-size-sm: clamp(0.9rem, 0.3vw + 0.8rem, 1.1rem);
+   --font-size-xs: clamp(0.8rem, 0.1vw + 0.8rem, 1rem);
+   --font-size-xxs: clamp(0.8rem, 0vw + 0.8rem, 0.8rem);
+   --font-size-xxxs: clamp(0.7rem, 0vw + 0.7rem, 0.7rem);
   /* Border Radius */
   --border-sm: 10px;
   --border-lg: 35px;

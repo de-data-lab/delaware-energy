@@ -64,3 +64,27 @@ body {
   padding: 0;
   font-family: var(--primary-font);
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+  margin: 0;
+}
+.info-text-container {
+  padding: 0 0 var(--padding-xxxs) 0;
+}
+
+.info-text {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+table {
+  caption-side: bottom;
+  border-collapse: collapse;
+}

@@ -3,7 +3,7 @@ function DropdownCollapse({ button, toggleButton, openClass, closeClass, classNa
   return (
     <button
       tabIndex={tab === -1 ? -1 : 0}
-      className={`${className}` + (button ? closeClass : openClass)}
+      className={`${className} ` + (button ? closeClass : openClass)}
       aria-expanded={!button}
       aria-controls="dropdown-menu"
       aria-label="Toggle Dropdown Menu"

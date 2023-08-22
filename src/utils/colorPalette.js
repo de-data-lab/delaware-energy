@@ -4,7 +4,7 @@ function colorPalette(data) {
   // Necessary to convert to numbers from strings
   
   let domain = extent(data); // return min and max
-  let myColor = scaleSequential(interpolateBlues).domain(domain); // generate color scale
+  let myColor = scaleSequential(interpolateRdYlBu).domain(domain); // generate color scale
   let bin1 = bin(); 
   const myBin = bin1(data); // generate bins
   const stops = myBin.map(i => { 

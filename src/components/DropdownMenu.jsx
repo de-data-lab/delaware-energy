@@ -115,10 +115,6 @@ function DropdownMenu() {
     updatePointSource(e.value, year);
   }
 
-  // React select features
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isRtl, setIsRtl] = useState(false);
-
   // React-select styles for boundary dropdown
   const customStyles = {
     menu: (styles, state) => {
@@ -242,7 +238,7 @@ function DropdownMenu() {
           {/* Variable */}
           <div className="select">
             <label className="label-text" htmlFor="variable">
-              Select a variable:
+              Select an outcome:
             </label>
             <Select
               id="variable"

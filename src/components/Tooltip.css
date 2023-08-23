@@ -1,0 +1,13 @@
+/* so tooltip doesn't go behind legend */
+.map-tooltip {
+    z-index: 2;
+  }
+  
+  .tooltip-text {
+      font-size: var(--font-size-xs);
+      padding: .15rem 0;
+  }
+  
+  .tooltip-spacing {
+    padding-right: .25rem;
+  }

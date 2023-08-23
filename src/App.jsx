@@ -6,7 +6,7 @@ import { senateObj2014 } from "./data/DSHA_SLDU_all_years_rev0/SLDU_data_objects
 
 function App() {
   const [source, setSource] = useState(senateObj2014);
-  const [variable, setVariable] = useState("Estimated Population");
+  const [variable, setVariable] = useState("Total Population");
   const [points, setPoints] = useState(null);
   const [pointSource, setPointSource] = useState({name:null, data:null});
   const [year, setYear] = useState(2014);

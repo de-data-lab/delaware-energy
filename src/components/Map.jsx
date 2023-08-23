@@ -12,6 +12,7 @@ import { MapContext } from "../App";
 import { addNewLayer } from "../utils/layer_drawing";
 import generateTooltipContent from "../utils/generateTooltipContent";
 import { addNewPointLayer } from "../utils/point_drawing";
+import Tooltip from "./Tooltip";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
@@ -37,10 +38,14 @@ function Map() {
   const map = useRef(null);
   const tooltipRef = useRef(
     new mapboxgl.Popup({
+      className: "map-tooltip",
       closeButton: false,
       closeOnClick: false,
     })
   );
+  const tooltipDiv = document.createElement("div");
+  const tooltip = ReactDOM.createRoot(tooltipDiv);
+
   const sumRef = useRef(
     new mapboxgl.Popup({
       className: "sumPopup",
@@ -83,14 +88,14 @@ function Map() {
           { hover: true }
         );
 
-        const properties = e.features[0].properties;
-        tooltipRef.current.setLngLat(e.lngLat).setHTML(`
-        <div>
-        <h3>District: ${properties["District"]}</h3>
-        <p>${variable}: ${properties[variable]}</p>
-        </div>
-        `);
-        tooltipRef.current.addTo(map.current);
+        const feature = e.features[0];
+        tooltip.render(
+          <Tooltip feature={feature} variable={variable} boundary={boundary} />
+        );
+        tooltipRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(tooltipDiv)
+          .addTo(map.current);
       }
     }
 
@@ -136,10 +141,19 @@ function Map() {
           { hover: true }
         );
 
-        const properties = e.features[0].properties;
-        const tooltipContent = generateTooltipContent(properties);
-        tooltipRef.current.setLngLat(e.lngLat).setHTML(tooltipContent);
-        tooltipRef.current.addTo(map.current);
+        const feature = e.features[0];
+        tooltip.render(
+          <Tooltip feature={feature} variable={variable} boundary={boundary} point={true}/>
+        );
+        tooltipRef.current
+          .setLngLat(e.lngLat)
+          .setDOMContent(tooltipDiv)
+          .addTo(map.current);
+
+        //   const properties = e.features[0].properties;
+        //   const tooltipContent = generateTooltipContent(properties);
+        //   tooltipRef.current.setLngLat(e.lngLat).setHTML(tooltipContent);
+        //   tooltipRef.current.addTo(map.current);
       }
     }
 

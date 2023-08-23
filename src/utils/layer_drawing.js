@@ -14,8 +14,8 @@ export const addNewLayer = (map, sourceName, data, variable) => {
   ];
 
   function determineLegendTitle() {
-    if (variable === "Estimated Population") {
-      return "Estimated Population";
+    if (variable === "Total Population") {
+      return "Total Population";
     }
     if(variable === "Percentage of households using solar energy"){
       return "Percentage of households using solar energy (in %)"

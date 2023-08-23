@@ -34,7 +34,7 @@ function PopupText({ variable, year, featureArray, source }) {
     let sum = variableArray.reduce((a, b) => a + b, 0);
 
     switch (variable) {
-      case "Estimated Population":
+      case "Total Population":
         setSumValue({
           sumValue: `${sum}`,
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,

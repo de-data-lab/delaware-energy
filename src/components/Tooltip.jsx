@@ -33,16 +33,15 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
         </>
       ) : (
         <>
+          <h3 className="tooltip-text tooltip-title">
+            <strong className="tooltip-spacing">District {districtName} </strong>
+          </h3>
           {/* <h3 className="tooltip-text">
             <strong className="tooltip-spacing">
               {boundary === "senate" ? "Senator:" : "Representative:"}
             </strong>
             {legislatorName}
           </h3> */}
-          <h3 className="tooltip-text">
-            <strong className="tooltip-spacing">District</strong>
-            {districtName}
-          </h3>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">{variableName}:</strong>
             {variableValue}

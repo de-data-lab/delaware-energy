@@ -94,7 +94,6 @@ function DropdownMenu() {
         setPointSource({ name: null, data: null });
       } else {
         setPointSource(selectedPointData);
-        console.log(pointSource)
       }
     }
   }
@@ -111,10 +110,7 @@ function DropdownMenu() {
   }
 
   function handleVariableChange(e) {
-    console.log(variableOptions);
-    console.log(variable);
     setVariable(e.value);
-    console.log(variable);
   }
 
   function handlePointsChange(e) {

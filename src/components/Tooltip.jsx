@@ -54,7 +54,6 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
         </>
       ) : (
         <>
-          {console.log(feature)}
           <h3 className="tooltip-text tooltip-title">
             <strong className="tooltip-spacing">
               District {districtName}{" "}

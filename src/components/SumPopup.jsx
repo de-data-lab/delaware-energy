@@ -12,33 +12,31 @@ function PopupText({ variable, year, featureArray, source }) {
     {
       districtName: null,
       value: null,
+      value2: null,
     },
   ]);
   /* variable Two */
-  const [variableName2, setVariableName2] = useState(null);
+  const [variableName2, setVariableName2] = useState(
+    "EEIF Electricity Savings (kWh/yr)"
+  );
   const [sumValue2, setSumValue2] = useState({
     sumValue: null,
     sumPercent: null,
   });
-  const [featureProps2, setFeatureProps2] = useState([
-    {
-      districtName: null,
-      value: null,
-    },
-  ]);
+
   // takes all variable values and sums them up
-    /* Variable One */
+  /* Variable One */
   const variableArray = source.data.features.map((district) =>
     !district.properties[variable] ? 0 : district.properties[variable]
   );
   const totalVariable =
     variableArray.length > 0 ? variableArray.reduce((a, b) => a + b) : "";
 
- /* variable Two */
+  /* variable Two */
   const variable2Array = source.data.features.map((district) =>
-    !district.properties["Kilowatt Hours"]
+    !district.properties["EEIF Electricity Savings (kWh/yr)"]
       ? 0
-      : district.properties["Kilowatt Hours"]
+      : district.properties["EEIF Electricity Savings (kWh/yr)"]
   );
   const totalVariable2 =
     variable2Array.length > 0 ? variable2Array.reduce((a, b) => a + b) : "";
@@ -47,29 +45,23 @@ function PopupText({ variable, year, featureArray, source }) {
     let tempArray = featureArray.map((item) => ({
       districtName: item.properties["District"],
       value: !item.properties[variable] ? 0 : item.properties[variable],
+      value2: !item.properties["EEIF Electricity Savings (kWh/yr)"]
+        ? 0
+        : item.properties["EEIF Electricity Savings (kWh/yr)"],
     }));
 
     let variableArray = tempArray.map((item) => item.value);
+    let variable2Array = tempArray.map((item) => item.value2);
 
     setFeatureProps(tempArray);
     setVariableName(variable);
 
     let sum = variableArray.reduce((a, b) => a + b, 0);
+    let sum2 = variable2Array.reduce((a, b) => a + b, 0);
 
-    let tempArray2 = featureArray.map((item) => ({
-      districtName: item.properties["District"],
-      value2: !item.properties["Kilowatt Hours"]
-        ? 0
-        : item.properties["Kilowatt Hours"],
-    }));
-
-    let variable2Array = tempArray2.map((item) => item.value2);
-
-    setFeatureProps2(tempArray2);
-    setVariableName2("Kilowatt Hours");
+    setVariableName2("EEIF Electricity Savings (kWh/yr)");
 
     // Calculate sum and percentages for the new variable
-    let sum2 = variable2Array.reduce((a, b) => a + b, 0);
 
     switch (variable) {
       case "Total Population":
@@ -78,7 +70,23 @@ function PopupText({ variable, year, featureArray, source }) {
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
+      case "Solar Households per 1000":
+        setSumValue({
+          sumValue: `${sum}`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
+        });
+        break;
+      case "Solar Households per 1000":
+        setSumValue({
+          sumValue: `${sum}`,
+          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
+        });
+        break;
     }
+    setSumValue2({
+      sumValue: `${sum2}`,
+      sumPercent: `${((sum2 / totalVariable2) * 100).toFixed(1)}%`,
+    });
   }, [featureArray]);
 
   return (
@@ -104,7 +112,7 @@ function PopupText({ variable, year, featureArray, source }) {
               </td>
               <td className="table-data">
                 <h3 key={item.districtName} className="info-text">
-                  PlaceHolder
+                  {item.value2}
                 </h3>
               </td>
             </tr>
@@ -112,12 +120,17 @@ function PopupText({ variable, year, featureArray, source }) {
           <tr className="sumPopup-row">
             <td className="total-label">Total</td>
             <td className="total">{sumValue.sumValue}</td>
+            <td className="total">{sumValue2.sumValue}</td>
           </tr>
         </tbody>
       </table>
       <h3 className="sumPopup-message">
         <strong>{sumValue.sumPercent}</strong> of{" "}
         <strong>{variableName}</strong> in <strong>{year}</strong>
+      </h3>
+      <h3 className="sumPopup-message">
+        <strong>{sumValue2.sumPercent}</strong> of{" "}
+        <strong>{variableName2}</strong> in <strong>{year}</strong>
       </h3>
     </>
   );

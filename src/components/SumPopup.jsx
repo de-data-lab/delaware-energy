@@ -76,7 +76,7 @@ function PopupText({ variable, year, featureArray, source }) {
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
-      case "Solar Households per 1000":
+      case "Value of EEIF Grants Awarded":
         setSumValue({
           sumValue: `${sum}`,
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
@@ -119,7 +119,8 @@ function PopupText({ variable, year, featureArray, source }) {
           ))}
           <tr className="sumPopup-row">
             <td className="total-label">Total</td>
-            <td className="total">{sumValue.sumValue}</td>
+            <td className="total">
+              {variable === "Value of EEIF Grants Awarded" ? ("$" + sumValue.sumValue):(sumValue.sumValue)}</td>
             <td className="total">{sumValue2.sumValue}</td>
           </tr>
         </tbody>

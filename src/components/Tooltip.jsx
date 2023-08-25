@@ -12,6 +12,73 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
     variableValue = feature?.properties?.[variable];
   }
 
+  function generateFillTooltipContent(variable) {
+    if (variable === "Total Population") {
+      return (
+        <>
+          <h3 className="tooltip-text">
+            <strong className="tooltip-spacing">{variableName}:</strong>
+            {variableValue}
+          </h3>
+        </>
+      );
+    }
+    if (variable === "Solar Households per 1000") {
+      return (
+        <>
+          <h3 className="tooltip-text">
+            <strong className="tooltip-spacing">{variableName}:</strong>
+            {variableValue}
+          </h3>
+          <h3 className="tooltip-text">
+            <strong className="tooltip-spacing">
+              Owner Occupied Households:
+            </strong>
+            {feature.properties["Owner Occupied Households"]}
+          </h3>
+        </>
+      );
+    }
+    if (variable === "Value of EEIF Grants Awarded") {
+      return (
+        <>
+          <h3 className="tooltip-text">
+            <strong className="tooltip-spacing">{variableName}:</strong>$
+            {variableValue}
+          </h3>
+          {feature.properties["EEIF Electricity Savings (kWh/yr)"] > 0 && (
+            <h3 className="tooltip-text">
+              <strong className="tooltip-spacing">Electricity Savings:</strong>
+              {feature.properties["EEIF Electricity Savings (kWh/yr)"]} kWh/yr
+            </h3>
+          )}
+          {feature.properties["Natural Gas Savings (kBtus/yr)"] > 0 && (
+            <h3 className="tooltip-text">
+              <strong className="tooltip-spacing">Natural gas savings:</strong>
+              {feature.properties["EEIF Natural Gas Savings (kBtus/yr)"]}{" "}
+              Btus/yr
+            </h3>
+          )}
+          {feature.properties[
+            "EEIF Greenhouse Gas Emission Reduction (MtCO2e)"
+          ] > 0 && (
+            <h3 className="tooltip-text">
+              <strong className="tooltip-spacing">
+                Greenhouse Gas Emission Reduction:
+              </strong>
+              {
+                feature.properties[
+                  "EEIF Greenhouse Gas Emission Reduction (MtCO2e)"
+                ]
+              }{" "}
+              MtCO2e/yr
+            </h3>
+          )}
+        </>
+      );
+    }
+  }
+
   return (
     <>
       {point === true ? (
@@ -65,49 +132,7 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
             </strong>
             {legislatorName}
           </h3>
-          {variable === "Value of EEIF Grants Awarded" ? (
-            <h3 className="tooltip-text">
-              <strong className="tooltip-spacing">{variableName}:</strong>$
-              {variableValue}
-            </h3>
-          ) : (
-            <h3 className="tooltip-text">
-              <strong className="tooltip-spacing">{variableName}:</strong>
-              {variableValue}
-            </h3>
-          )}
-          {/* <h3 className="tooltip-text">
-            <strong className="tooltip-spacing">{variableName}:</strong>
-            {variableValue}
-          </h3> */}
-          {feature.properties["EEIF Electricity Savings (kWh/yr)"] > 0 && (
-            <h3 className="tooltip-text">
-              <strong className="tooltip-spacing">Electricity Savings:</strong>
-              {feature.properties["EEIF Electricity Savings (kWh/yr)"]} kWh/yr
-            </h3>
-          )}
-          {feature.properties["Natural Gas Savings (kBtus/yr)"] > 0 && (
-            <h3 className="tooltip-text">
-              <strong className="tooltip-spacing">Natural gas savings:</strong>
-              {feature.properties["EEIF Natural Gas Savings (kBtus/yr)"]}{" "}
-              Btus/yr
-            </h3>
-          )}
-          {feature.properties[
-            "EEIF Greenhouse Gas Emission Reduction (MtCO2e)"
-          ] > 0 && (
-            <h3 className="tooltip-text">
-              <strong className="tooltip-spacing">
-                Greenhouse Gas Emission Reduction:
-              </strong>
-              {
-                feature.properties[
-                  "EEIF Greenhouse Gas Emission Reduction (MtCO2e)"
-                ]
-              }{" "}
-              MtCO2e/yr
-            </h3>
-          )}
+          {generateFillTooltipContent(variable)}
         </>
       )}
     </>

@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import Select from "react-select";
-import { allSenateData } from "../data/DSHA_SLDU_all_years_rev0/SLDU_data_objects";
-import { allHouseData } from "../data/DSHA_SLDL_all_years_rev0/SLDL_data_objects";
-import { allEEIFData } from "../data/DSHA_EEIF_all_years_rev0/EEIF_data_objects";
+import { allSenateData } from "../data/DSHA_SLDU_all_years/SLDU_data_objects";
+import { allHouseData } from "../data/DSHA_SLDL_all_years/SLDL_data_objects";
+import { allEEIFData } from "../data/DSHA_EEIF_all_years/EEIF_data_objects";
 import { MapContext } from "../App";
 import "./DropdownMenu.css";
 import DropdownCollapse from "./DropdownCollapse";
@@ -44,7 +44,13 @@ function DropdownMenu() {
     dataObject.data.features.forEach((feature) => {
       const properties = feature.properties;
       Object.keys(properties).forEach((key) => {
-        if (key !== "District") {
+        if (key !== "District" &&
+         key!== "Name"  &&
+         key!== "Solar Households" &&
+         key!== "Owner Occupied Households" &&
+         key!== "EEIF Electricity Savings (kWh/yr)" &&
+         key !== "EEIF Natural Gas Savings (kBtus/yr)" &&
+         key !== "EEIF Greenhouse Gas Emission Reduction (MtCO2e)") {
           uniqueKeys.add(key);
         }
       });
@@ -88,6 +94,7 @@ function DropdownMenu() {
         setPointSource({ name: null, data: null });
       } else {
         setPointSource(selectedPointData);
+        console.log(pointSource)
       }
     }
   }

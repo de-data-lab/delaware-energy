@@ -2,14 +2,14 @@ import MapContainer from "./pages/MapContainer";
 import { useState, createContext } from "react";
 export const MapContext = createContext();
 
-import { senateObj2014 } from "./data/DSHA_SLDU_all_years_rev0/SLDU_data_objects"
+import { senateObj2016 } from "./data/DSHA_SLDU_all_years/SLDU_data_objects"
 
 function App() {
-  const [source, setSource] = useState(senateObj2014);
+  const [source, setSource] = useState(senateObj2016);
   const [variable, setVariable] = useState("Total Population");
   const [points, setPoints] = useState(null);
   const [pointSource, setPointSource] = useState({name:null, data:null});
-  const [year, setYear] = useState(2014);
+  const [year, setYear] = useState(2016);
   const [boundary, setBoundary] = useState("senate");
 
   return (

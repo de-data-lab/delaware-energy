@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import Select from "react-select";
-import { allSenateData } from "../data/DSHA_SLDU_all_years/SLDU_data_objects";
-import { allHouseData } from "../data/DSHA_SLDL_all_years/SLDL_data_objects";
-import { allEEIFData } from "../data/DSHA_EEIF_all_years/EEIF_data_objects";
 import { MapContext } from "../App";
-import "./DropdownMenu.css";
+import { allEEIFData } from "../data/DSHA_EEIF_all_years/EEIF_data_objects";
+import { allHouseData } from "../data/DSHA_SLDL_all_years/SLDL_data_objects";
+import { allSenateData } from "../data/DSHA_SLDU_all_years/SLDU_data_objects";
 import DropdownCollapse from "./DropdownCollapse";
+import "./DropdownMenu.css";
 
 function DropdownMenu() {
   const {

@@ -13,6 +13,7 @@ import { addNewLayer } from "../utils/layer_drawing";
 import generateTooltipContent from "../utils/generateTooltipContent";
 import { addNewPointLayer } from "../utils/point_drawing";
 import Tooltip from "./Tooltip";
+import ResetControl from '../utils/ResetControl'; 
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
 
@@ -158,6 +159,8 @@ function Map() {
       }
     }
 
+   
+
     map.current.on("mouseleave", "points", (e) => offPointHover(e));
 
     function offPointHover(e) {
@@ -178,6 +181,16 @@ function Map() {
       featureArray = [];
       sumRef.current.remove();
     };
+
+    map.current.on("reset", () => {
+      clearSelection()
+      map.current.easeTo({
+        center: [lng, lat],
+        zoom: zoom,
+        bearing: 0,
+        pitch: 0,
+      });
+    });
 
     map.current.on("click", "fill", (e) => onFillClick(e));
 
@@ -209,6 +222,8 @@ function Map() {
           { click: false }
         );
       }
+
+      
 
       //create popup node
       const sumPopup = document.createElement("div");
@@ -252,6 +267,7 @@ function Map() {
         layers: ["fill"],
       });
       map.current.addControl(legend, "bottom-right");
+      map.current.addControl(new ResetControl(), "bottom-left");
     });
   }, []);
 

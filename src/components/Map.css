@@ -12,9 +12,24 @@
     border-radius: (--border-sm);
   }
   
-  .home-btn {
-    background: url("/icons/home-icon.svg");
-    background-size: 80%;
+
+  .reset-btn {
+    background: url("/icons/reset-icon.svg");
+    background-size: 70%;
+    background-repeat: no-repeat; 
+    background-position:center;
+    margin-left: 13rem;
+    height: 50px; 
+    width: 50px;
+    padding:.5rem;
+    background-color: var(--white); 
+    border-radius: var( --border-sm);
+    margin: var(--margin-lg);
+    box-shadow: var(--box-shadow);
+    cursor:pointer; 
+}
+  .reset-btn button {
+    visibility: hidden;
   }
   
   /* Mapboxgl-legend overrides */

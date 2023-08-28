@@ -1,4 +1,6 @@
 import "./Tooltip.css";
+import { withCommas } from '../utils/formatters';
+
 function Tooltip({ feature, point, variable, boundary, pointSource }) {
   let legislatorName = feature?.properties?.["Name"];
   let granteeName;
@@ -18,7 +20,7 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
         <>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">{variableName}:</strong>
-            {variableValue}
+            {withCommas(variableValue)}
           </h3>
         </>
       );
@@ -28,13 +30,13 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
         <>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">{variableName}:</strong>
-            {variableValue}
+            {withCommas(variableValue)}
           </h3>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">
               Owner Occupied Households:
             </strong>
-            {feature.properties["Owner Occupied Households"]}
+            {withCommas(feature.properties["Owner Occupied Households"])}
           </h3>
         </>
       );
@@ -44,18 +46,18 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
         <>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">{variableName}:</strong>$
-            {variableValue}
+            {withCommas(variableValue)}
           </h3>
           {feature.properties["EEIF Electricity Savings (kWh/yr)"] > 0 && (
             <h3 className="tooltip-text">
               <strong className="tooltip-spacing">Electricity Savings:</strong>
-              {feature.properties["EEIF Electricity Savings (kWh/yr)"]} kWh/yr
+              {withCommas(feature.properties["EEIF Electricity Savings (kWh/yr)"])} kWh/yr
             </h3>
           )}
           {feature.properties["Natural Gas Savings (kBtus/yr)"] > 0 && (
             <h3 className="tooltip-text">
               <strong className="tooltip-spacing">Natural gas savings:</strong>
-              {feature.properties["EEIF Natural Gas Savings (kBtus/yr)"]}{" "}
+              {withCommas(feature.properties["EEIF Natural Gas Savings (kBtus/yr)"])}{" "}
               Btus/yr
             </h3>
           )}
@@ -67,9 +69,9 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
                 Greenhouse Gas Emission Reduction:
               </strong>
               {
-                feature.properties[
+                withCommas(feature.properties[
                   "EEIF Greenhouse Gas Emission Reduction (MtCO2e)"
-                ]
+                ])
               }{" "}
               MtCO2e/yr
             </h3>
@@ -89,7 +91,7 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
           </h3>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">Amount Awarded:</strong>$
-            {feature.properties["Award ($)"]}
+            {withCommas(feature.properties["Award ($)"])}
           </h3>
           <h3 className="tooltip-text">
             <strong className="tooltip-spacing">
@@ -100,13 +102,13 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
           {feature.properties["Electricity Savings (kWh/yr)"] && (
             <h3 className="tooltip-text">
               <strong className="tooltip-spacing">Electricity Savings:</strong>
-              {feature.properties["Electricity Savings (kWh/yr)"]} kWh/yr
+              {withCommas(feature.properties["Electricity Savings (kWh/yr)"])} kWh/yr
             </h3>
           )}
           {feature.properties["Natural Gas Savings (kBtus/yr)"] && (
             <h3 className="tooltip-text">
               <strong className="tooltip-spacing">Natural gas savings:</strong>
-              {feature.properties["Natural Gas Savings (kBtus/yr)"]} Btus/yr
+              {withCommas(feature.properties["Natural Gas Savings (kBtus/yr)"])} Btus/yr
             </h3>
           )}
           {feature.properties["Greenhouse Gas Emission Reduction (MtCO2e)"] && (
@@ -114,7 +116,7 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
               <strong className="tooltip-spacing">
                 Greenhouse Gas Emission Reduction:
               </strong>
-              {feature.properties["Greenhouse Gas Emission Reduction (MtCO2e)"]}{" "}
+              {withCommas(feature.properties["Greenhouse Gas Emission Reduction (MtCO2e)"])}{" "}
               MtCO2e/yr
             </h3>
           )}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./SumPopup.css";
+import { withCommas } from '../utils/formatters';
 
 function PopupText({ variable, year, featureArray, source }) {
   /* Variable One */
@@ -66,25 +67,25 @@ function PopupText({ variable, year, featureArray, source }) {
     switch (variable) {
       case "Total Population":
         setSumValue({
-          sumValue: `${sum}`,
+          sumValue: `${withCommas(sum)}`,
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
       case "Solar Households per 1000":
         setSumValue({
-          sumValue: `${sum}`,
+          sumValue: `${withCommas(sum)}`,
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
       case "Value of EEIF Grants Awarded":
         setSumValue({
-          sumValue: `${sum}`,
+          sumValue: `${withCommas(sum)}`,
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
         break;
     }
     setSumValue2({
-      sumValue: `${sum2}`,
+      sumValue: `${withCommas(sum2)}`,
       sumPercent: `${((sum2 / totalVariable2) * 100).toFixed(1)}%`,
     });
   }, [featureArray]);
@@ -107,12 +108,12 @@ function PopupText({ variable, year, featureArray, source }) {
               </td>
               <td className="table-data">
                 <h3 key={item.districtName} className="info-text">
-                  {item.value}
+                  {withCommas(item.value)}
                 </h3>
               </td>
               <td className="table-data">
                 <h3 key={item.districtName} className="info-text">
-                  {item.value2}
+                  {withCommas(item.value2)}
                 </h3>
               </td>
             </tr>
@@ -120,8 +121,8 @@ function PopupText({ variable, year, featureArray, source }) {
           <tr className="sumPopup-row">
             <td className="total-label">Total</td>
             <td className="total">
-              {variable === "Value of EEIF Grants Awarded" ? ("$" + sumValue.sumValue):(sumValue.sumValue)}</td>
-            <td className="total">{sumValue2.sumValue}</td>
+              {variable === "Value of EEIF Grants Awarded" ? ("$" + withCommas(sumValue.sumValue)):(withCommas(sumValue.sumValue))}</td>
+            <td className="total">{withCommas(sumValue2.sumValue)}</td>
           </tr>
         </tbody>
       </table>
@@ -130,7 +131,7 @@ function PopupText({ variable, year, featureArray, source }) {
         <strong>{variableName}</strong> in <strong>{year}</strong>
       </h3>
       <h3 className="sumPopup-message">
-        <strong>{sumValue2.sumPercent}</strong> of{" "}
+        <strong>{withCommas(sumValue2.sumPercent)}</strong> of{" "}
         <strong>{variableName2}</strong> in <strong>{year}</strong>
       </h3>
     </>

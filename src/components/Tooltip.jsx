@@ -29,7 +29,7 @@ function Tooltip({ feature, point, variable, boundary, pointSource }) {
       return (
         <>
           <h3 className="tooltip-text">
-            <strong className="tooltip-spacing">{variableName}:</strong>
+            <strong className="tooltip-spacing">{variableName + " Households"}:</strong>
             {withCommas(variableValue)}
           </h3>
           <h3 className="tooltip-text">

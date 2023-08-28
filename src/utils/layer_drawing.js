@@ -18,7 +18,7 @@ export const addNewLayer = (map, sourceName, data, variable) => {
       return "Total Population";
     }
     if(variable === "Solar Households per 1000"){
-      return "Solar Households per 1000"
+      return "Solar Households per 1000 Households"
     } 
     if(variable === "Value of EEIF Grants Awarded"){
       return "Value of EEIF Grants Awarded in Dollars";

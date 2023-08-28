@@ -43,6 +43,7 @@ function DropdownMenu() {
 
     dataObject.data.features.forEach((feature) => {
       const properties = feature.properties;
+
       Object.keys(properties).forEach((key) => {
         if (key !== "District" &&
          key!== "Name"  &&
@@ -56,11 +57,13 @@ function DropdownMenu() {
       });
     });
 
+    
+
     return Array.from(uniqueKeys);
   }
   const variableOptions = extractKeys(source).map((option) => ({
     value: option,
-    label: option,
+    label: option === "Solar Households per 1000" ? "Solar Households per 1000 Households" : option
   }));
 
   const pointOptions = [

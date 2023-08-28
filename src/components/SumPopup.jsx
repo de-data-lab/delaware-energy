@@ -96,7 +96,7 @@ function PopupText({ variable, year, featureArray, source }) {
         <thead>
           <tr className="table-headers">
             <th className="table-head">District</th>
-            <th className="table-head">{variableName}</th>
+            <th className="table-head">{variableName === "Solar Households per 1000" ? "Solar Households per 1000 Households" : variableName}</th>
             <th className="table-head">{variableName2}</th>
           </tr>
         </thead>
@@ -128,7 +128,7 @@ function PopupText({ variable, year, featureArray, source }) {
       </table>
       <h3 className="sumPopup-message">
         <strong>{sumValue.sumPercent}</strong> of{" "}
-        <strong>{variableName}</strong> in <strong>{year}</strong>
+        <strong>{variableName === "Solar Households per 1000" ? "Solar Households per 1000 Households" : variableName}</strong> in <strong>{year}</strong>
       </h3>
       <h3 className="sumPopup-message">
         <strong>{withCommas(sumValue2.sumPercent)}</strong> of{" "}

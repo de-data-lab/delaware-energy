@@ -70,6 +70,7 @@ function Map() {
     //   handleMouseHover(e, map.current, source.name, tooltip)
     // );
 
+    map.current.doubleClickZoom.disable();
     map.current.on("mousemove", "fill", (e) => onFillHover(e));
 
     function onFillHover(e) {

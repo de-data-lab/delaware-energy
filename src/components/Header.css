@@ -1,0 +1,14 @@
+.header {
+    background-color: var(--navy);
+    color: var(--white);
+    height:80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: var(--padding-sm); */
+  }
+  
+  
+  .header-title {
+    font-size: var(--font-size-lg);
+  }

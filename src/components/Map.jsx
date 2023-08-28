@@ -278,9 +278,9 @@ function Map() {
 
   useUpdateEffect(update, [source, pointSource, variable, year]);
   return (
-    <div>
+
       <div ref={mapContainer} className="map-container" />
-    </div>
+  
   );
 }
 

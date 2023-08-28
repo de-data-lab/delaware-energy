@@ -49,8 +49,8 @@
   --map-menu-maxwidth: 25rem;
 }
 .map-container {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 }
 
 *,
@@ -87,4 +87,18 @@ ul {
 table {
   caption-side: bottom;
   border-collapse: collapse;
+}
+
+#page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+#content-container {
+  position: relative;
+  z-index: 0;
+  flex: 1;
+  background-color: var(--background);
 }

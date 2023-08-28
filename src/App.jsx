@@ -3,6 +3,8 @@ import { useState, createContext } from "react";
 export const MapContext = createContext();
 
 import { senateObj2016 } from "./data/DSHA_SLDU_all_years/SLDU_data_objects"
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const [source, setSource] = useState(senateObj2016);
@@ -13,7 +15,11 @@ function App() {
   const [boundary, setBoundary] = useState("senate");
 
   return (
-    <div>
+    <div id="page-container">
+      <Header>
+        Energy Efficiency Investment Funds Across Delaware's Legislative Districts
+      </Header>
+      <div id="content-container">
       <MapContainer
         MapContext={MapContext}
         variable={variable}
@@ -29,6 +35,8 @@ function App() {
         pointSource={pointSource}
         setPointSource={setPointSource}
       />
+      </div>
+      <Footer/>
     </div>
   );
 }

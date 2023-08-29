@@ -28,10 +28,11 @@ function PopupText({ variable, year, featureArray, source }) {
   // takes all variable values and sums them up
   /* Variable One */
   const variableArray = source.data.features.map((district) =>
-    !district.properties[variable] ? 0 : district.properties[variable]
+    !district.properties[variable] ? 0 : variable === "Solar Households per 1000" ? district.properties["Solar Households"] : district.properties[variable]
   );
-  const totalVariable =
-    variableArray.length > 0 ? variableArray.reduce((a, b) => a + b) : "";
+  const totalVariable = variableArray.length > 0 ? variableArray.reduce((a, b) => a + b) : "";
+
+  const solarTotal = source.data.features.map((district) => district.properties["Solar Households"]).reduce((a, b) => a+b, 0);
 
   /* variable Two */
   const variable2Array = source.data.features.map((district) =>
@@ -45,20 +46,23 @@ function PopupText({ variable, year, featureArray, source }) {
   useEffect(() => {
     let tempArray = featureArray.map((item) => ({
       districtName: item.properties["District"],
+      solarHouseholds: item.properties["Solar Households"],
       value: !item.properties[variable] ? 0 : item.properties[variable],
       value2: !item.properties["EEIF Electricity Savings (kWh/yr)"]
         ? 0
         : item.properties["EEIF Electricity Savings (kWh/yr)"],
-    }));
+    })).sort((a, b) => a.districtName > b.districtName ? 1 : -1)
 
     let variableArray = tempArray.map((item) => item.value);
     let variable2Array = tempArray.map((item) => item.value2);
+    let solarTotalArray = tempArray.map((item) => item.solarHouseholds);
 
     setFeatureProps(tempArray);
     setVariableName(variable);
 
-    let sum = variableArray.reduce((a, b) => a + b, 0);
+    let sum = variableArray.reduce((a, b) => a + b, 0) 
     let sum2 = variable2Array.reduce((a, b) => a + b, 0);
+    let solarSum = solarTotalArray.reduce((a, b) => a + b, 0);
 
     setVariableName2("EEIF Electricity Savings (kWh/yr)");
 
@@ -74,7 +78,8 @@ function PopupText({ variable, year, featureArray, source }) {
       case "Solar Households per 1000":
         setSumValue({
           sumValue: `${withCommas(sum)}`,
-          sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
+          solarSum: `${solarSum}`,
+          sumPercent: `${((solarSum / solarTotal) * 100).toFixed(1)}%`
         });
         break;
       case "Value of EEIF Grants Awarded":
@@ -82,6 +87,7 @@ function PopupText({ variable, year, featureArray, source }) {
           sumValue: `${withCommas(sum)}`,
           sumPercent: `${((sum / totalVariable) * 100).toFixed(1)}%`,
         });
+       
         break;
     }
     setSumValue2({
@@ -97,6 +103,11 @@ function PopupText({ variable, year, featureArray, source }) {
           <tr className="table-headers">
             <th className="table-head">District</th>
             <th className="table-head">{variableName === "Solar Households per 1000" ? "Solar Households per 1000 Households" : variableName}</th>
+              {
+                variable === "Solar Households per 1000" && (
+                  <th className="table-head">Total Solar Households</th>
+                )
+              }
             <th className="table-head">{variableName2}</th>
           </tr>
         </thead>
@@ -111,6 +122,15 @@ function PopupText({ variable, year, featureArray, source }) {
                   {withCommas(item.value)}
                 </h3>
               </td>
+              {
+                variable === "Solar Households per 1000" && (
+                  <td className="table-data">
+                <h3 key={item.districtName} className="info-text">
+                  {item.solarHouseholds}
+                </h3>
+              </td>
+                )
+              }
               <td className="table-data">
                 <h3 key={item.districtName} className="info-text">
                   {withCommas(item.value2)}
@@ -121,19 +141,30 @@ function PopupText({ variable, year, featureArray, source }) {
           <tr className="sumPopup-row">
             <td className="total-label">Total</td>
             <td className="total">
-              {variable === "Value of EEIF Grants Awarded" ? ("$" + withCommas(sumValue.sumValue)):(withCommas(sumValue.sumValue))}</td>
+              {
+              variable === "Value of EEIF Grants Awarded" ? ("$" + withCommas(sumValue.sumValue)) :
+              variable === "Solar Households per 1000" ? '' :
+              withCommas(sumValue.sumValue)
+              }
+            </td>
+            {
+              variable === "Solar Households per 1000" && (
+              <td className="total">{ sumValue.solarSum }</td>
+            )}
             <td className="total">{withCommas(sumValue2.sumValue)}</td>
           </tr>
         </tbody>
       </table>
+      <div style={{width: "var(--map-menu-maxwidth)", backgroundColor:"white"}}>
       <h3 className="sumPopup-message">
         <strong>{sumValue.sumPercent}</strong> of{" "}
-        <strong>{variableName === "Solar Households per 1000" ? "Solar Households per 1000 Households" : variableName}</strong> in <strong>{year}</strong>
+        <strong>{variableName === "Solar Households per 1000" ? "Solar Households" : variableName}</strong> in <strong>{year}</strong>
       </h3>
       <h3 className="sumPopup-message">
         <strong>{withCommas(sumValue2.sumPercent)}</strong> of{" "}
         <strong>{variableName2}</strong> in <strong>{year}</strong>
       </h3>
+      </div>
     </>
   );
 }

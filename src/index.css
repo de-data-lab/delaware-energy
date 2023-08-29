@@ -46,7 +46,7 @@
   --margin-lg: 2.625rem;
   /* Menu sizing */
   --map-menu-minwidth: 18rem;
-  --map-menu-maxwidth: 25rem;
+  --map-menu-maxwidth: 30rem;
 }
 .map-container {
   height: 100%;

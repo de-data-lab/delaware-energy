@@ -47,6 +47,7 @@ function PopupText({ variable, year, featureArray, source }) {
     let tempArray = featureArray.map((item) => ({
       districtName: item.properties["District"],
       solarHouseholds: item.properties["Solar Households"],
+      totalHouseholds: item.properties["Owner Occupied Households"],
       value: !item.properties[variable] ? 0 : item.properties[variable],
       value2: !item.properties["EEIF Electricity Savings (kWh/yr)"]
         ? 0
@@ -56,6 +57,7 @@ function PopupText({ variable, year, featureArray, source }) {
     let variableArray = tempArray.map((item) => item.value);
     let variable2Array = tempArray.map((item) => item.value2);
     let solarTotalArray = tempArray.map((item) => item.solarHouseholds);
+    let householdsArray = tempArray.map((item) => item.totalHouseholds);
 
     setFeatureProps(tempArray);
     setVariableName(variable);
@@ -63,6 +65,7 @@ function PopupText({ variable, year, featureArray, source }) {
     let sum = variableArray.reduce((a, b) => a + b, 0) 
     let sum2 = variable2Array.reduce((a, b) => a + b, 0);
     let solarSum = solarTotalArray.reduce((a, b) => a + b, 0);
+    let householdsSum = householdsArray.reduce((a, b) => a + b, 0);
 
     setVariableName2("EEIF Electricity Savings (kWh/yr)");
 
@@ -79,6 +82,7 @@ function PopupText({ variable, year, featureArray, source }) {
         setSumValue({
           sumValue: `${withCommas(sum)}`,
           solarSum: `${solarSum}`,
+          householdsSum: householdsSum,
           sumPercent: `${((solarSum / solarTotal) * 100).toFixed(1)}%`
         });
         break;
@@ -143,7 +147,7 @@ function PopupText({ variable, year, featureArray, source }) {
             <td className="total">
               {
               variable === "Value of EEIF Grants Awarded" ? ("$" + withCommas(sumValue.sumValue)) :
-              variable === "Solar Households per 1000" ? '' :
+              variable === "Solar Households per 1000" ? (((sumValue.solarSum / sumValue.householdsSum)*1000).toFixed(2)) :
               withCommas(sumValue.sumValue)
               }
             </td>
@@ -157,8 +161,8 @@ function PopupText({ variable, year, featureArray, source }) {
       </table>
       <div style={{width: "var(--map-menu-maxwidth)", backgroundColor:"white"}}>
       <h3 className="sumPopup-message">
-        <strong>{sumValue.sumPercent}</strong> of{" "}
-        <strong>{variableName === "Solar Households per 1000" ? "Solar Households" : variableName}</strong> in <strong>{year}</strong>
+        <strong> {variableName === "Solar Households per 1000" ? "Represents " : ''} {sumValue.sumPercent}</strong> of{" "}
+        <strong>{variableName === "Solar Households per 1000" ? "Solar Households" : variableName}</strong> {variableName==="Solar Households per 1000" ? 'in the state' : ''} in <strong>{year}</strong>
       </h3>
       <h3 className="sumPopup-message">
         <strong>{withCommas(sumValue2.sumPercent)}</strong> of{" "}

@@ -52,7 +52,10 @@
   height: 100%;
   width: 100%;
 }
-
+.graph-div {
+  height: 100%;
+  width: 100%;
+}
 *,
 *::before,
 *::after {

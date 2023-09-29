@@ -15,10 +15,11 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Label,
 } from "recharts";
 
 function GraphContainer() {
-  const [variable, setVariable] = useState("Value of EEIF Grants Awarded");
+  const [variable, setVariable] = useState("Total Population");
   const [boundary, setBoundary] = useState("senate");
   const [districtList, setDistrictList] = useState([]);
   const [selectedDistricts, setSelectedDistricts] = useState([]);
@@ -118,19 +119,7 @@ function GraphContainer() {
     setGraphData(selectedDistrictData);
   }, [boundary, selectedDistricts, variable]);
 
-  // function generateStackedBars(obj) {
-  //   const keys = Object.keys(obj).filter((key) => key !== "name");
 
-  //   const bars = keys.map((key) => (
-  //     <Bar
-  //       key={key}
-  //       dataKey={key}
-  //       stackId="stack"
-  //       fill={`#${Math.floor(Math.random() * 16777215).toString(16)}`}
-  //     />
-  //   ));
-  //   return bars;
-  // }
   return (
     <div>
       <div className="menu-div">
@@ -168,10 +157,12 @@ function GraphContainer() {
       </div>
       <div className="graph-div">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart width={500} height={300} data={graphData}>
+          <BarChart data={graphData} margin={{top:20, left:40, bottom:20, right:20}}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis>
+              <Label value={variable} angle="-90" position="insideLeft" offset="-20"/>
+              </YAxis>
             <Tooltip />
             <Legend />
             <Bar dataKey="2016" stackId="a" fill="red" />

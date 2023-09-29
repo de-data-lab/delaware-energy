@@ -24,3 +24,14 @@ export function calculateAverage(features, key) {
 export function generateStateAverage(allDataObj, key) {
   return { name: "State Average", ...generateAverage(allDataObj, key) };
 }
+
+export function generateDistrictData(allDataObj,key, districtNum){
+  return allDataObj.reduce((result, dataObj)=>{
+    console.log(districtNum)
+    console.log(dataObj.data.features)
+    const foundDistrict = dataObj.data.features.find(obj => obj.properties["District"] === districtNum)
+    console.log(foundDistrict.properties[key])
+    result[dataObj.year] = foundDistrict.properties[key]
+    return result
+  },{name: `District ${districtNum}`})
+}

@@ -10,21 +10,28 @@ const HeaderLogo = () => {
 };
 
 function HeaderLinks() {
-  <div className="navbar-nax">
-    <NavLink className="nav-link" to="/">
-      Map
-    </NavLink>
-    <NavLink className="nav-link" to="/graphs">
-      Map
-    </NavLink>
-  </div>;
+
+  return (
+    <div className="collapse navbar-collapse nav-links" id="navbarNavAltMarkup">
+  <div className="navbar-nav ms-auto">
+      <NavLink className="nav-link" to="/">
+        Map
+      </NavLink>
+      <NavLink className="nav-link" to="/graph">
+        Graph
+      </NavLink>
+  </div>
+  </div>
+  )
 }
 
 const Header = ({ children }) => {
   return (
     <div className="header">
+      <nav className="w-100 navbar navbar-expand-lg navbar-dark">
       <h1 className="header-title">{children}</h1>
       <HeaderLinks />
+      </nav>
     </div>
   );
 };

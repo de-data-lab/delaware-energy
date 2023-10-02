@@ -135,7 +135,7 @@ function GraphContainer() {
         }
       >
         <Select
-          className="boundary-select"
+          className="graph-option boundary-select"
           tabIndex={0}
           defaultValue={boundaryOptions[0]}
           onChange={(e) => handleBoundaryChange(e)}
@@ -145,8 +145,7 @@ function GraphContainer() {
           options={boundaryOptions}
         />
         <Select
-          className="basic-multi-select react-select"
-          classNamePrefix="select"
+          className="graph-option basic-multi-select react-select"
           tabIndex={0}
           onChange={(e) => handleDistrictChange(e)}
           label="Multiple select"
@@ -158,7 +157,7 @@ function GraphContainer() {
         />
         <Select
           id="variable"
-          className="variable-select"
+          className="variable-select graph-option"
           defaultValue={variableOptions[0]}
           onChange={(e) => handleVariableChange(e)}
           options={variableOptions}
@@ -182,10 +181,16 @@ function GraphContainer() {
         </div>
       </div>
       <div className="graph-div">
-        <ResponsiveContainer width="100%" height="100%">
+        <div className="chart-title-block">
+       <h2 className="chart-title">asnfipaf</h2>
+       <h3 className="chart-subtitle">asnfipaf</h3>
+       </div>
+        <ResponsiveContainer width="100%" height="80%">
+         
           <BarChart
+            maxBarSize={250}
             data={graphData}
-            margin={{ top: 20, left: 40, bottom: 20, right: 40 }}
+            margin={{ top: 20, left: 40, bottom: 30, right: 40 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
@@ -208,6 +213,7 @@ function GraphContainer() {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      
     </div>
   );
 }

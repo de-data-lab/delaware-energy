@@ -3,11 +3,17 @@
     box-shadow: var(--box-shadow);
     margin-bottom: 3rem;
     padding: 1rem 0 2rem;
-    height: 15rem;
+    /* height: 15rem; */
     display: flex;
-    flex-direction: column;
+    gap: 1rem;
+    flex-wrap: wrap; 
+    /* flex-direction: column; */
     justify-content: space-evenly;
     transition: all .5s ease-out;
+}
+
+.graph-option {
+    flex: 1 1 3rem;
 }
 
 .container-close {
@@ -63,9 +69,29 @@
     justify-content: center;
     align-items: center;
   }
+
   .graph-div {
-    height: 600px;
+    margin: 1rem auto; 
+    height: auto;
     width: 600px;
     background-color: white;
     box-shadow: var(--box-shadow);
+  }
+
+  .chart-title-block {
+    padding: 3rem 0 1.5rem 0rem; 
+  }
+  
+  .chart-title {
+    text-align: center;
+    color: var(--navy);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+  }
+
+  .chart-subtitle {
+    text-align: center;
+    color: var(--navy);
+    font-size: var(--font-size-md);
+    font-weight: 300;
   }

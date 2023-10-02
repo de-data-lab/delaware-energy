@@ -1,0 +1,71 @@
+.interaction-container {
+    background-color: rgb(255,255,255,.4);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 3rem;
+    padding: 1rem 0 2rem;
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    transition: all .5s ease-out;
+}
+
+.container-close {
+    display: none;
+}
+
+.collapse-button-close {
+    position: absolute;
+    transform: rotate(270deg);
+    top: var(--margin-xxs);
+    left: var(--margin-xxs);
+    transition: all .5s ease-out;
+    margin-bottom: 2rem;
+}
+
+.collapse-button-open {
+    position: absolute;
+    transform: rotate(90deg);
+    left: calc(50% - 29px);
+    /* (Dropdown menu width + button height) / 2 */
+    top: calc(15rem - 29px);
+    transition: all .5s ease-out;
+}
+
+.select-spacing {
+    display: flex;
+    flex-direction: column;
+    margin: var(--margin-xxxs);
+    color: var(--navy);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* headings */
+.heading, .sub-heading {
+    text-align: center;
+    color: var(--navy);
+}
+.heading {
+    font-size: var(--font-size-lg);
+}
+.sub-heading {
+    font-size: var(--font-size-md);
+    font-weight: 300;
+}
+.graph-container{
+    height: 100%;
+    width: 100%; display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .graph-div {
+    height: 600px;
+    width: 600px;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+  }

@@ -17,6 +17,8 @@ import {
   ResponsiveContainer,
   Label,
 } from "recharts";
+import DropdownCollapse from "../components/DropdownCollapse";
+import "./GraphContainer.css";
 
 function GraphContainer() {
   const [variable, setVariable] = useState("Total Population");
@@ -113,16 +115,25 @@ function GraphContainer() {
         );
       }
     }
-    selectedDistrictData.push(averageData)
+    selectedDistrictData.push(averageData);
     console.log(selectedDistrictData);
-    
+
     setGraphData(selectedDistrictData);
   }, [boundary, selectedDistricts, variable]);
 
+  const [collapseButton, setCollapseButton] = useState(false);
+
+  const collapseMenu = () => {
+    setCollapseButton(!collapseButton);
+  };
 
   return (
-    <div>
-      <div className="menu-div">
+    <div className="main-container">
+      <div
+        className={
+          "interaction-container " + (collapseButton ? "container-close" : "")
+        }
+      >
         <Select
           className="boundary-select"
           tabIndex={0}
@@ -155,14 +166,38 @@ function GraphContainer() {
           isRtl={false}
         />
       </div>
+      <DropdownCollapse
+        className={"toggle-button"}
+        button={collapseButton}
+        toggleButton={collapseMenu}
+        openClass={"collapse-button-open"}
+        closeClass={"collapse-button-close"}
+      />
+      <div className="button-container">
+        <div className="select-spacing">
+          <h2 className="heading">Compare Districts</h2>
+          <h3 className="sub-heading">
+            {boundary === "house" ? "House of Representatives" : "State Senate"}
+          </h3>
+        </div>
+      </div>
       <div className="graph-div">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={graphData} margin={{top:20, left:40, bottom:20, right:20}}>
+          <BarChart
+            data={graphData}
+            margin={{ top: 20, left: 40, bottom: 20, right: 40 }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis>
-              <Label value={variable} angle="-90" position="insideLeft" offset="-20"/>
-              </YAxis>
+              <Label
+                value={variable}
+                angle="-90"
+                position="insideLeft"
+                offset="-20"
+                style={{ textAnchor: "middle" }}
+              />
+            </YAxis>
             <Tooltip />
             <Legend />
             <Bar dataKey="2016" stackId="a" fill="red" />

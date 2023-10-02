@@ -52,9 +52,18 @@
   height: 100%;
   width: 100%;
 }
+.graph-container{
+  height: 100%;
+  width: 100%; display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .graph-div {
   height: 600px;
   width: 600px;
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  
 }
 *,
 *::before,

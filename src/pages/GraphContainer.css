@@ -12,9 +12,7 @@
     transition: all .5s ease-out;
 }
 
-.graph-option {
-    flex: 1 1 3rem;
-}
+
 
 .container-close {
     display: none;
@@ -95,3 +93,22 @@
     font-size: var(--font-size-md);
     font-weight: 300;
   }
+
+  .label-container {
+    margin-bottom: 10px; /* Add spacing between label and dropdown */
+  }
+  
+  .label-text {
+    display: block;
+    margin-bottom: 5px; /* Add spacing between label and dropdown */
+  }
+
+  .graph-option {
+    width: 27rem;
+}
+
+@media only screen and (max-width: 700px) {
+    .select-explorer {
+        width: 22rem;
+    }
+}

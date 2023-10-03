@@ -18,10 +18,7 @@ function App() {
 
   return (
     <div id="page-container">
-      <Header>
-        Energy Efficiency Investment Funds Across Delaware's Legislative
-        Districts
-      </Header>
+      <Header/>
       <div id="content-container">
         <Routes>
           <Route

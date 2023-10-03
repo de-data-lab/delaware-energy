@@ -19,7 +19,7 @@ export function calculateAverage(features, key) {
     }
   }, 0);
 
-  return total / features.length;
+  return Math.round(total / features.length);
 }
 export function generateStateAverage(allDataObj, key) {
   return { name: "State Average", ...generateAverage(allDataObj, key) };

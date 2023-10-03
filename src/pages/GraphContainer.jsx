@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import Select from "react-select";
+import { useEffect, useState, Children } from "react";
+import Select, { components } from "react-select";
 import { allHouseData } from "../data/DSHA_SLDL_all_years/SLDL_data_objects";
 import { allSenateData } from "../data/DSHA_SLDU_all_years/SLDU_data_objects";
 import {
@@ -123,55 +123,101 @@ function GraphContainer() {
 
   const [collapseButton, setCollapseButton] = useState(false);
 
-  const collapseMenu = () => {
-    setCollapseButton(!collapseButton);
-  };
+  // const collapseMenu = () => {
+  //   setCollapseButton(!collapseButton);
+  // };
 
+  const ValueContainer = ({ children, getValue, ...props }) => {
+    var values = getValue();
+    var valueLabel = "";
+
+    // if more than one value selected, add "& x more" to end of value
+    if (values.length > 0) {
+      valueLabel += props.selectProps.getOptionLabel(values[0]);
+      if (values.length > 1) {
+        valueLabel += ` & ${values.length - 1} more...`;
+      }
+    } else {
+      valueLabel += "Select Districts";
+    }
+    // Keep standard placeholder and input from react-select
+    var childsToRender = Children.toArray(children).filter(
+      (child) =>
+        ["Input", "DummyInput", "Placeholder"].indexOf(child.type.name) >= 0
+    );
+
+    return (
+      <components.ValueContainer {...props}>
+        {!props.selectProps.inputValue && valueLabel}
+        {childsToRender}
+      </components.ValueContainer>
+    );
+  };
   return (
     <div className="main-container">
       <div
         className={
-          "interaction-container " + (collapseButton ? "container-close" : "")
+          "interaction-container "
+          // + (collapseButton ? "container-close" : "")
         }
       >
-        <Select
-          className="graph-option boundary-select"
-          tabIndex={0}
-          defaultValue={boundaryOptions[0]}
-          onChange={(e) => handleBoundaryChange(e)}
-          label="Single select"
-          isRtl={false}
-          isSearchable={false}
-          options={boundaryOptions}
-        />
-        <Select
-          className="graph-option basic-multi-select react-select"
-          tabIndex={0}
-          onChange={(e) => handleDistrictChange(e)}
-          label="Multiple select"
-          isRtl={false}
-          isSearchable={true}
-          options={districtOptions}
-          isMulti
-          value={selectedDistricts}
-        />
-        <Select
-          id="variable"
-          className="variable-select graph-option"
-          defaultValue={variableOptions[0]}
-          onChange={(e) => handleVariableChange(e)}
-          options={variableOptions}
-          isSearchable={true}
-          isRtl={false}
-        />
+        <div className="label-container">
+          <label className="label-text" htmlFor="boundary">
+            Select a Boundary:
+          </label>
+          <Select
+            id="boundary"
+            className="graph-option boundary-select"
+            tabIndex={0}
+            defaultValue={boundaryOptions[0]}
+            onChange={(e) => handleBoundaryChange(e)}
+            label="Single select"
+            isRtl={false}
+            isSearchable={false}
+            options={boundaryOptions}
+          />
+        </div>
+        <div className="label-container">
+          <label className="label-text" htmlFor="districts">
+            Select Districts:
+          </label>
+          <Select
+            id="districts"
+            className="graph-option basic-multi-select react-select"
+            tabIndex={0}
+            onChange={(e) => handleDistrictChange(e)}
+            label="Multiple select"
+            isRtl={false}
+            isSearchable={true}
+            options={districtOptions}
+            isMulti
+            components={{ ValueContainer }}
+            value={selectedDistricts}
+            classNamePrefix="select"
+          />
+        </div>
+        <div className="label-container">
+          <label className="label-text" htmlFor="variable">
+            Select an Outcome:
+          </label>
+          <Select
+            id="variable"
+            className="variable-select graph-option"
+            defaultValue={variableOptions[0]}
+            onChange={(e) => handleVariableChange(e)}
+            options={variableOptions}
+            isSearchable={true}
+            isRtl={false}
+          />
+        </div>
       </div>
-      <DropdownCollapse
+      {/* <DropdownCollapse
         className={"toggle-button"}
         button={collapseButton}
         toggleButton={collapseMenu}
         openClass={"collapse-button-open"}
         closeClass={"collapse-button-close"}
-      />
+      /> */}
       <div className="button-container">
         <div className="select-spacing">
           <h2 className="heading">Compare Districts</h2>
@@ -182,11 +228,9 @@ function GraphContainer() {
       </div>
       <div className="graph-div">
         <div className="chart-title-block">
-       <h2 className="chart-title">asnfipaf</h2>
-       <h3 className="chart-subtitle">asnfipaf</h3>
-       </div>
+          <h2 className="chart-title">{variable}</h2>
+        </div>
         <ResponsiveContainer width="100%" height="80%">
-         
           <BarChart
             maxBarSize={250}
             data={graphData}
@@ -205,15 +249,14 @@ function GraphContainer() {
             </YAxis>
             <Tooltip />
             <Legend />
-            <Bar dataKey="2016" stackId="a" fill="red" />
-            <Bar dataKey="2018" stackId="a" fill="orange" />
-            <Bar dataKey="2019" stackId="a" fill="yellow" />
-            <Bar dataKey="2020" stackId="a" fill="green" />
-            <Bar dataKey="2021" stackId="a" fill="blue" />
+            <Bar dataKey="2016" stackId="a" fill="#d7191c" />
+            <Bar dataKey="2018" stackId="a" fill="#fdae61" />
+            <Bar dataKey="2019" stackId="a" fill="green" />
+            <Bar dataKey="2020" stackId="a" fill="#abd9e9" />
+            <Bar dataKey="2021" stackId="a" fill="#2c7bb6" />
           </BarChart>
         </ResponsiveContainer>
       </div>
-      
     </div>
   );
 }

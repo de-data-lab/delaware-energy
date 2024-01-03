@@ -1,7 +1,5 @@
 # Energy Efficiency Investment Funds Across Delaware's Legislative Districts
 
-Map
-
 ## About this App
 
 This branch was developed for the data lab as a tech demo to visualize variables relating to the Energy Efficiency Investment Funds Across Delaware's Legislative Districts.

@@ -155,12 +155,7 @@ function GraphContainer() {
   };
   return (
     <div className="main-container">
-      <div
-        className={
-          "interaction-container "
-          // + (collapseButton ? "container-close" : "")
-        }
-      >
+      <div className={"interaction-container "}>
         <div className="label-container">
           <label className="label-text" htmlFor="boundary">
             Select a Boundary:
@@ -211,13 +206,6 @@ function GraphContainer() {
           />
         </div>
       </div>
-      {/* <DropdownCollapse
-        className={"toggle-button"}
-        button={collapseButton}
-        toggleButton={collapseMenu}
-        openClass={"collapse-button-open"}
-        closeClass={"collapse-button-close"}
-      /> */}
       <div className="button-container">
         <div className="select-spacing">
           <h2 className="heading">Compare Districts</h2>

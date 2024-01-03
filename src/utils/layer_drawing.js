@@ -108,6 +108,7 @@ export const addNewLayer = (map, sourceName, data, variable) => {
     layout: {},
     paint: {
       "fill-color": colorArray,
+      "fill-color-transition":{duration:20000},
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],

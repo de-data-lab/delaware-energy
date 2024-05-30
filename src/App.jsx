@@ -1,56 +1,51 @@
-import React from "react";
-import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-export const MapContext = React.createContext();
+import MapContainer from "./pages/MapContainer";
+import { useState, createContext } from "react";
+import { Routes, Route } from "react-router-dom";
+export const MapContext = createContext();
 
-import "./index.css";
-
-import Header from "./layout/Header";
-import { MapContainer } from "./pages/MapContainer";
-import { DistrictExplorer } from "./pages/DistrictExplorer";
-import { Info } from "./pages/Info";
-import { Footer } from "./layout/Footer";
+import { senateObj2016 } from "./data/DSHA_SLDU_all_years/SLDU_data_objects";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import GraphContainer from "./pages/GraphContainer";
 
 function App() {
-  // Dropdowns
-  const [fundingSource, setFundingSource] = useState("LIHTC");
-  // Dropdown for variable
-  const [variable, setVariable] = useState("# of Tax Credit Units");
-  // year
-  const [year, setYear] = useState("2016");
-  // Dropdown for senate or state of reps boundary
+  const [source, setSource] = useState(senateObj2016);
+  const [variable, setVariable] = useState("Total Population");
+  const [points, setPoints] = useState(null);
+  const [pointSource, setPointSource] = useState({ name: null, data: null });
+  const [year, setYear] = useState(2016);
   const [boundary, setBoundary] = useState("senate");
 
-
   return (
-    <>
-      <div id="page-container">
-        <Header />
-        <div id="content-container">
-          <Routes>
-            <Route
-              path=""
-              element={
-                <MapContainer
-                  MapContext={MapContext}
-                  fundingSource={fundingSource}
-                  setFundingSource={setFundingSource}
-                  variable={variable}
-                  setVariable={setVariable}
-                  year={year}
-                  setYear={setYear}
-                  boundary={boundary}
-                  setBoundary={setBoundary}
-                />
-              }
-            />
-            <Route path="explorer" element={<DistrictExplorer />} />
-            <Route path="info" element={<Info />} />
-          </Routes>
-        </div>
-        <Footer />
+    <div id="page-container">
+      <Header/>
+      <div id="content-container">
+        <Routes>
+          <Route
+            path=""
+            element={
+              <MapContainer
+                MapContext={MapContext}
+                variable={variable}
+                setVariable={setVariable}
+                year={year}
+                setYear={setYear}
+                boundary={boundary}
+                setBoundary={setBoundary}
+                source={source}
+                setSource={setSource}
+                points={points}
+                setPoints={setPoints}
+                pointSource={pointSource}
+                setPointSource={setPointSource}
+              />
+            }
+          />
+          <Route path="/graph" element={<GraphContainer />} />
+        </Routes>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }
 

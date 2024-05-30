@@ -1,0 +1,114 @@
+.interaction-container {
+    background-color: rgb(255,255,255,.4);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 3rem;
+    padding: 1rem 0 2rem;
+    /* height: 15rem; */
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap; 
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    transition: all .5s ease-out;
+}
+
+
+
+.container-close {
+    display: none;
+}
+
+.collapse-button-close {
+    position: absolute;
+    transform: rotate(270deg);
+    top: var(--margin-xxs);
+    left: var(--margin-xxs);
+    transition: all .5s ease-out;
+    margin-bottom: 2rem;
+}
+
+.collapse-button-open {
+    position: absolute;
+    transform: rotate(90deg);
+    left: calc(50% - 29px);
+    /* (Dropdown menu width + button height) / 2 */
+    top: calc(15rem - 29px);
+    transition: all .5s ease-out;
+}
+
+.select-spacing {
+    display: flex;
+    flex-direction: column;
+    margin: var(--margin-xxxs);
+    color: var(--navy);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* headings */
+.heading, .sub-heading {
+    text-align: center;
+    color: var(--navy);
+}
+.heading {
+    font-size: var(--font-size-lg);
+}
+.sub-heading {
+    font-size: var(--font-size-md);
+    font-weight: 300;
+}
+.graph-container{
+    height: 100%;
+    width: 100%; display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .graph-div {
+    margin: 1rem auto; 
+    height: auto;
+    width: 600px;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+  }
+
+  .chart-title-block {
+    padding: 3rem 0 1.5rem 0rem; 
+  }
+  
+  .chart-title {
+    text-align: center;
+    color: var(--navy);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+  }
+
+  .chart-subtitle {
+    text-align: center;
+    color: var(--navy);
+    font-size: var(--font-size-md);
+    font-weight: 300;
+  }
+
+  .label-container {
+    margin-bottom: 10px; /* Add spacing between label and dropdown */
+  }
+  
+  .label-text {
+    display: block;
+    margin-bottom: 5px; /* Add spacing between label and dropdown */
+  }
+
+  .graph-option {
+    width: 27rem;
+}
+
+@media only screen and (max-width: 700px) {
+    .select-explorer {
+        width: 22rem;
+    }
+}

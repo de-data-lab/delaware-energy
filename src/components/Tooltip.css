@@ -1,13 +1,18 @@
 /* so tooltip doesn't go behind legend */
 .map-tooltip {
-  z-index: 2;
-}
+    z-index: 2;
+  }
+  
+  .tooltip-text {
+      font-size: var(--font-size-xs);
+      padding: .15rem 0;
+  }
 
-.tooltip-text {
-    font-size: var(--font-size-xs);
-    padding: .15rem 0;
-}
-
-.tooltip-spacing {
-  padding-right: .25rem;
-}
+  .tooltip-title{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tooltip-spacing {
+    padding-right: .25rem;
+  }

@@ -1,72 +1,125 @@
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 import Select from "react-select";
 import { MapContext } from "../App";
-import mapInfo from "../utils/mapInfo";
-
+import { allEEIFData } from "../data/DSHA_EEIF_all_years/EEIF_data_objects";
+import { allHouseData } from "../data/DSHA_SLDL_all_years/SLDL_data_objects";
+import { allSenateData } from "../data/DSHA_SLDU_all_years/SLDU_data_objects";
+import DropdownCollapse from "./DropdownCollapse";
 import "./DropdownMenu.css";
-import { DropdownCollapse } from "./DropdownCollapse";
 
-export const DropdownMenu = ({}) => {
-  const { setVariable, fundingSource, building, setBuilding, setYear, boundary, setBoundary } =
-    useContext(MapContext);
+function DropdownMenu() {
+  const {
+    variable,
+    setVariable,
+    year,
+    setYear,
+    boundary,
+    setBoundary,
+    source,
+    setSource,
+    points,
+    setPoints,
+    pointSource,
+    setPointSource,
+  } = useContext(MapContext);
 
   const [button, setButton] = useState(false);
   const [dropdownButton, setDropdownButton] = useState(false);
-  const { source } = mapInfo[fundingSource].meta;
 
   const toggleButton = () => {
     setButton(!button);
   };
-
-  const toggleBuildings = () => {
-    setBuilding(!building);
-  };
-
-  // React multi select options
-  const variableOptions = Object.keys(mapInfo[fundingSource].columns)
-    // filters out avg pop per tax credit and population
-    .filter((feature) => {
-      return (
-        feature !== "Average Population per Tax Credit Unit" &&
-        feature !== "Population"
-      );
-    })
-    .map((item) => ({
-      value: item,
-      label: mapInfo[fundingSource].columns[item],
-    }));
-
-  const yearOptions = Object.keys(mapInfo[fundingSource].years).map((item) => ({
-    value:
-      item !== "Sum over All Time"
-        ? mapInfo[fundingSource].years[item]
-        : "Sum over All Time",
-    label: mapInfo[fundingSource].years[item],
-  }));
-
   const boundaryOptions = [
     { value: "senate", label: "Senate Districts" },
-    {
-      value: "house",
-      label: "House of Representatives Districts",
-    }
+    { value: "house", label: "House of Representative Districts" },
+  ];
+  const yearOptions = allHouseData.map((houseObj) => ({
+    value: houseObj.year,
+    label: houseObj.year,
+  }));
+
+  function extractKeys(dataObject) {
+    const uniqueKeys = new Set();
+
+    dataObject.data.features.forEach((feature) => {
+      const properties = feature.properties;
+
+      Object.keys(properties).forEach((key) => {
+        if (key !== "District" &&
+         key!== "Name"  &&
+         key!== "Solar Households" &&
+         key!== "Owner Occupied Households" &&
+         key!== "EEIF Electricity Savings (kWh/yr)" &&
+         key !== "EEIF Natural Gas Savings (kBtus/yr)" &&
+         key !== "EEIF Greenhouse Gas Emission Reduction (MtCO2e)") {
+          uniqueKeys.add(key);
+        }
+      });
+    });
+
+    
+
+    return Array.from(uniqueKeys);
+  }
+  const variableOptions = extractKeys(source).map((option) => ({
+    value: option,
+    label: option === "Solar Households per 1000" ? "Solar Households per 1000 Households" : option
+  }));
+
+  const pointOptions = [
+    { value: null, label: "Display no points" },
+    { value: "EEIF", label: "Energy Efficiency Investment Fund Grants" },
   ];
 
-  // Handle change of select dropdowns
-  const handleChange = (selectedOption) => {
-    setVariable(selectedOption.value);
-  };
-  const handleYearChange = (e) => {
-    setYear(e.value);
-  };
-  
-  const handleBoundaryChange = (e) => {
-    setBoundary(e.value);
-  };
+  function updateSource(selectedBoundary, selectedYear) {
+    if (selectedBoundary === "senate") {
+      const selectedData = allSenateData.find(
+        (dataObj) => dataObj.year === selectedYear
+      );
+      setSource(selectedData);
+    } else if (selectedBoundary === "house") {
+      const selectedData = allHouseData.find(
+        (dataObj) => dataObj.year === selectedYear
+      );
+      setSource(selectedData);
+    }
+  }
 
-  // React select features
-  const [isSearchable, setIsSearchable] = useState(true);
-  const [isRtl, setIsRtl] = useState(false);
+  function updatePointSource(selectedPoints, selectedYear) {
+    if (selectedPoints === null) {
+      setPointSource({ name: null, data: null });
+    }
+    if (selectedPoints === "EEIF") {
+      const selectedPointData = allEEIFData.find(
+        (dataObj) => dataObj.year === selectedYear
+      );
+      if (selectedPointData === undefined) {
+        setPointSource({ name: null, data: null });
+      } else {
+        setPointSource(selectedPointData);
+      }
+    }
+  }
+
+  function handleBoundaryChange(e) {
+    setBoundary(e.value);
+    updateSource(e.value, year);
+  }
+
+  function handleYearChange(e) {
+    setYear(e.value);
+    updateSource(boundary, e.value);
+    updatePointSource(points, e.value);
+  }
+
+  function handleVariableChange(e) {
+    setVariable(e.value);
+  }
+
+  function handlePointsChange(e) {
+    setPoints(e.value);
+    updatePointSource(e.value, year);
+  }
 
   // React-select styles for boundary dropdown
   const customStyles = {
@@ -141,10 +194,9 @@ export const DropdownMenu = ({}) => {
       />
 
       <div
-        className={"dropdown-menu " + (button ? "menu-close" : "")}
         id="dropdown-menu"
+        className={"dropdown-menu " + (button ? "menu-close" : "")}
       >
-        {/* <h2 className="dropdown-header">Senate Districts</h2> */}
         <Select
           className="boundary-select"
           tabIndex={0}
@@ -167,102 +219,62 @@ export const DropdownMenu = ({}) => {
               closeClass={"dropdown-button-close"}
               openClass={"dropdown-button-open"}
               /> 
-            ), 
-            // IndicatorSeparator: () => null,
+            ),
           }}
         />
 
         <div className="select-container">
-          {/* YEAR */}
+          {/* Year */}
           <div className="select">
             <label className="label-text" htmlFor="year">
               Select a year:
             </label>
             <Select
               id="year"
-              onChange={(e) => handleYearChange(e)}
               className="basic-single"
               classNamePrefix="select"
+              defaultValue={yearOptions[0]}
               isSearchable={true}
               isRtl={false}
-              name="year"
+              onChange={(e) => handleYearChange(e)}
               options={yearOptions}
-              defaultValue={yearOptions[0]}
             />
           </div>
 
-          {/* FUNDING SOURCE */}
-          {/* <div className="select">
-            <label className="label-text" htmlFor="funding">Select a funding source:</label>
-            <select
-              id="funding"
-              className="select-text"
-              onChange={(e) => {
-                setFundingSource(e.target.value);
-              }}
-            >
-              {Object.keys(mapInfo).map((item) => (
-                <option key={item} value={item}>
-                  {mapInfo[item].meta.displayName}
-                </option>
-              ))}
-            </select>
-          </div> */}
-
-          {/* VARIABLE */}
+          {/* Variable */}
           <div className="select">
             <label className="label-text" htmlFor="variable">
-              Select a variable:
+              Select an outcome:
             </label>
             <Select
               id="variable"
-              onChange={(e) => handleChange(e)}
-              className="basic-single"
-              classNamePrefix="select"
+              className="variable-select"
+              defaultValue={variableOptions[0]}
+              onChange={(e) => handleVariableChange(e)}
+              options={variableOptions}
               isSearchable={true}
               isRtl={false}
-              name="variable"
-              options={variableOptions}
-              defaultValue={variableOptions[0]}
             />
           </div>
-
-          {/* Building toggle */}
-          <div className="toggle-container">
-            <label className="label-text" htmlFor="flexSwitchCheckDefault">
-              Show property locations:
+          {/* Point-select */}
+          <div className="select">
+            <label className="label-text" htmlFor="point-select">
+              Select points:
             </label>
-            <div className="form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-                onClick={toggleBuildings}
-              ></input>
-            </div>
-          </div>
-
-          {/* Data source */}
-          <div className="data-source-flex">
-            <p className="data-source-text">Data Source:</p>
-            <ul className="link-list">
-              {source.map((source) => (
-                <li key={source}>
-                  <a
-                    href={source.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="data-source-link"
-                  >
-                    {source.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <Select
+              id="point-select"
+              className="point-select"
+              defaultValue={pointOptions[0]}
+              onChange={(e) => handlePointsChange(e)}
+              options={pointOptions}
+              isSearchable={true}
+              isRtl={false}
+            />
           </div>
         </div>
       </div>
     </>
   );
-};
+}
+
+export default DropdownMenu;
